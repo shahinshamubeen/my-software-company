@@ -1,0 +1,213 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+
+// All case studies data
+const caseStudies = [
+    {
+        id: "nexus-ai",
+        title: "Nexus AI Platform",
+        category: "AI & Machine Learning",
+        description:
+            "Enterprise-grade AI orchestration platform serving 10M+ daily predictions",
+        image: "/work/nexus-ai.jpg",
+        stats: { metric: "Latency Reduced", value: "40%" },
+        tags: ["Python", "TensorFlow", "AWS", "Kubernetes"],
+        color: "#00FF9D",
+    },
+    {
+        id: "velocity-fintech",
+        title: "Velocity FinTech",
+        category: "Financial Services",
+        description:
+            "Real-time payment processing system handling $2B+ monthly transactions",
+        image: "/work/velocity.jpg",
+        stats: { metric: "Transaction Speed", value: "3x" },
+        tags: ["Go", "PostgreSQL", "Redis", "gRPC"],
+        color: "#6366F1",
+    },
+    {
+        id: "healthbridge",
+        title: "HealthBridge",
+        category: "Healthcare",
+        description:
+            "HIPAA-compliant telemedicine platform connecting 50K+ patients monthly",
+        image: "/work/healthbridge.jpg",
+        stats: { metric: "User Satisfaction", value: "98%" },
+        tags: ["React Native", "Node.js", "MongoDB", "WebRTC"],
+        color: "#BF00FF",
+    },
+    {
+        id: "quantum-commerce",
+        title: "Quantum Commerce",
+        category: "E-Commerce",
+        description:
+            "Headless commerce platform powering 500+ global storefronts",
+        image: "/work/quantum.jpg",
+        stats: { metric: "Conversion Rate", value: "+65%" },
+        tags: ["Next.js", "GraphQL", "Stripe", "Contentful"],
+        color: "#FF9900",
+    },
+    {
+        id: "aether-blockchain",
+        title: "Aether Protocol",
+        category: "Blockchain",
+        description: "Layer 2 scaling solution processing 100K+ TPS",
+        image: "/work/aether.jpg",
+        stats: { metric: "Gas Savings", value: "95%" },
+        tags: ["Rust", "Solidity", "ZK-Proofs", "Ethereum"],
+        color: "#E10098",
+    },
+    {
+        id: "nova-analytics",
+        title: "Nova Analytics",
+        category: "Data & Analytics",
+        description:
+            "Real-time business intelligence dashboard for Fortune 500",
+        image: "/work/nova.jpg",
+        stats: { metric: "Insights Generation", value: "10x" },
+        tags: ["Python", "Apache Spark", "Snowflake", "React"],
+        color: "#00ADD8",
+    },
+];
+
+const categories = [
+    "All",
+    "AI & Machine Learning",
+    "Financial Services",
+    "Healthcare",
+    "E-Commerce",
+    "Blockchain",
+    "Data & Analytics",
+];
+---
+
+<Layout
+    title="Work"
+    description="Explore our portfolio of successful projects across AI, FinTech, Healthcare, and more."
+>
+    <section class="pt-32 pb-16">
+        <div class="section-container">
+            {/* Header */}
+            <div class="text-center mb-16">
+                <span
+                    class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-cyber-lime border border-cyber-lime/30 rounded-full"
+                >
+                    Our Portfolio
+                </span>
+                <h1
+                    class="text-display-lg font-display font-bold text-white mb-4"
+                >
+                    Featured Work
+                </h1>
+                <p class="max-w-2xl mx-auto text-white/60">
+                    Real results for ambitious companies. Explore how we've
+                    helped businesses transform their operations and scale their
+                    impact.
+                </p>
+            </div>
+
+            {/* Filter Tabs */}
+            <div class="flex flex-wrap justify-center gap-2 mb-12">
+                {
+                    categories.map((category, index) => (
+                        <button
+                            class={`px-4 py-2 rounded-lg font-mono text-sm transition-all duration-200 border ${
+                                index === 0
+                                    ? "bg-cyber-lime text-obsidian border-cyber-lime"
+                                    : "border-white/20 text-white/60 hover:border-white/40 hover:text-white"
+                            }`}
+                            data-category={category}
+                        >
+                            {category}
+                        </button>
+                    ))
+                }
+            </div>
+
+            {/* Projects Grid */}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {
+                    caseStudies.map((study) => (
+                        <a
+                            href={`/work/${study.id}`}
+                            class="group relative overflow-hidden rounded-2xl bg-carbon border border-glass-border hover:border-white/20 transition-all duration-500"
+                            transition:name={`project-hero-${study.id}`}
+                        >
+                            {/* Image Placeholder */}
+                            <div class="aspect-[4/3] relative overflow-hidden">
+                                <div
+                                    class="absolute inset-0"
+                                    style={`background: linear-gradient(135deg, ${study.color}20, ${study.color}05)`}
+                                />
+                                <div class="absolute inset-0 grid-lines opacity-50" />
+
+                                {/* Hover Overlay */}
+                                <div class="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="px-4 py-2 glass-card text-sm font-medium text-white">
+                                        View Case Study
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Content */}
+                            <div class="p-6">
+                                <span
+                                    class="text-xs font-mono uppercase tracking-wider"
+                                    style={`color: ${study.color}`}
+                                >
+                                    {study.category}
+                                </span>
+                                <h3 class="mt-2 text-xl font-display font-semibold text-white group-hover:text-cyber-lime transition-colors">
+                                    {study.title}
+                                </h3>
+                                <p class="mt-2 text-sm text-white/60 line-clamp-2">
+                                    {study.description}
+                                </p>
+
+                                {/* Stats Badge */}
+                                <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                                    <span
+                                        class="text-2xl font-bold font-mono"
+                                        style={`color: ${study.color}`}
+                                    >
+                                        {study.stats.value}
+                                    </span>
+                                    <span class="text-xs text-white/50 uppercase">
+                                        {study.stats.metric}
+                                    </span>
+                                </div>
+
+                                {/* Tags */}
+                                <div class="mt-4 flex flex-wrap gap-2">
+                                    {study.tags.map((tag) => (
+                                        <span class="px-2 py-1 text-xs font-mono text-white/40 bg-white/5 rounded">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Accent Border */}
+                            <div
+                                class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                style={`background: ${study.color}`}
+                            />
+                        </a>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    <Footer />
+</Layout>
+
+<style>
+    .line-clamp-2 {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+</style>

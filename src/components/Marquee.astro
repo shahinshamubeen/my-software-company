@@ -1,0 +1,87 @@
+---
+// Scrolling marquee band with keywords
+const keywords = [
+    "DEPLOY",
+    "SCALE",
+    "OPTIMIZE",
+    "INNOVATE",
+    "BUILD",
+    "SHIP",
+    "ITERATE",
+    "AUTOMATE",
+];
+---
+
+<section
+    class="py-8 bg-gradient-to-r from-cyber-lime/5 via-electric-indigo/5 to-electric-purple/5 border-y border-glass-border overflow-hidden"
+>
+    <div class="marquee-container">
+        <div class="marquee-track">
+            {
+                [...Array(3)].map(() => (
+                    <div class="marquee-content">
+                        {keywords.map((word, index) => (
+                            <span class="inline-flex items-center gap-4 px-8">
+                                <span class="text-2xl sm:text-3xl md:text-4xl font-display font-bold text-white/20 uppercase tracking-wider">
+                                    {word}
+                                </span>
+                                <span class="w-2 h-2 bg-cyber-lime rounded-full" />
+                            </span>
+                        ))}
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>
+
+<style>
+    .marquee-track {
+        display: flex;
+        width: fit-content;
+        animation: scroll 40s linear infinite;
+    }
+
+    .marquee-content {
+        display: flex;
+        flex-shrink: 0;
+    }
+
+    @keyframes scroll {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(calc(-100% / 3));
+        }
+    }
+
+    /* Pause on hover */
+    .marquee-container:hover .marquee-track {
+        animation-play-state: paused;
+    }
+
+    /* Fade edges */
+    .marquee-container {
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 10%,
+            black 90%,
+            transparent
+        );
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 10%,
+            black 90%,
+            transparent
+        );
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .marquee-track {
+            animation: none;
+        }
+    }
+</style>

@@ -1,0 +1,123 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: '/', label: 'Home', icon: 'home' },
+  { href: '/work', label: 'Work', icon: 'briefcase' },
+  { href: '/services', label: 'Services', icon: 'layers' },
+  { href: '/about', label: 'About', icon: 'users' },
+  { href: '/contact', label: 'Contact', icon: 'mail' },
+];
+
+function isActive(href: string): boolean {
+  if (href === '/') return currentPath === '/';
+  return currentPath.startsWith(href);
+}
+---
+
+<nav class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 px-2 sm:px-0">
+  <div class="glass-card px-2 py-2 sm:px-4 flex items-center gap-1 sm:gap-2 border border-glass-border">
+    {navLinks.map((link) => (
+      <a
+        href={link.href}
+        class:list={[
+          'nav-link group relative px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg transition-all duration-300',
+          'flex flex-col sm:flex-row items-center gap-1 sm:gap-2',
+          'text-xs sm:text-sm font-medium',
+          isActive(link.href)
+            ? 'bg-cyber-lime/10 text-cyber-lime'
+            : 'text-white/60 hover:text-white hover:bg-white/5',
+        ]}
+        aria-current={isActive(link.href) ? 'page' : undefined}
+      >
+        <!-- Icon -->
+        <span class="nav-icon w-5 h-5 flex items-center justify-center">
+          {link.icon === 'home' && (
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+          )}
+          {link.icon === 'briefcase' && (
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
+          )}
+          {link.icon === 'layers' && (
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+          )}
+          {link.icon === 'users' && (
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          )}
+          {link.icon === 'mail' && (
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          )}
+        </span>
+        
+        <!-- Label -->
+        <span class="hidden sm:inline">{link.label}</span>
+        
+        <!-- Active Indicator -->
+        {isActive(link.href) && (
+          <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-cyber-lime rounded-full sm:hidden"></span>
+        )}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<style>
+  .nav-link {
+    position: relative;
+  }
+  
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(99, 102, 241, 0.1));
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .nav-link:hover::before {
+    opacity: 1;
+  }
+  
+  /* Tooltip on mobile */
+  @media (max-width: 639px) {
+    .nav-link::after {
+      content: attr(aria-label);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 8px;
+      background: rgba(0, 0, 0, 0.9);
+      border-radius: 4px;
+      font-size: 10px;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    
+    .nav-link:active::after {
+      opacity: 1;
+    }
+  }
+</style>

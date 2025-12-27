@@ -1,0 +1,322 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+
+// Team members data
+const team = [
+    {
+        name: "Alex Chen",
+        role: "Founder & CEO",
+        bio: "Former Google engineer. 15+ years building scalable systems.",
+        image: "/team/alex.jpg",
+        hobby: "rock climbing",
+        social: { twitter: "#", linkedin: "#", github: "#" },
+    },
+    {
+        name: "Sarah Martinez",
+        role: "CTO",
+        bio: "Ex-Meta ML lead. PhD in distributed systems.",
+        image: "/team/sarah.jpg",
+        hobby: "chess",
+        social: { twitter: "#", linkedin: "#", github: "#" },
+    },
+    {
+        name: "James Kim",
+        role: "VP of Engineering",
+        bio: "Built payment systems at Stripe. 200+ engineers managed.",
+        image: "/team/james.jpg",
+        hobby: "woodworking",
+        social: { twitter: "#", linkedin: "#", github: "#" },
+    },
+    {
+        name: "Emily Zhang",
+        role: "Head of Design",
+        bio: "Former Airbnb design lead. Award-winning product designer.",
+        image: "/team/emily.jpg",
+        hobby: "photography",
+        social: { twitter: "#", linkedin: "#", github: "#" },
+    },
+    {
+        name: "Marcus Johnson",
+        role: "Principal Engineer",
+        bio: "Open source contributor. Kubernetes maintainer.",
+        image: "/team/marcus.jpg",
+        hobby: "gaming",
+        social: { twitter: "#", linkedin: "#", github: "#" },
+    },
+    {
+        name: "Priya Patel",
+        role: "AI/ML Lead",
+        bio: "Former OpenAI researcher. Published in NeurIPS.",
+        image: "/team/priya.jpg",
+        hobby: "cooking",
+        social: { twitter: "#", linkedin: "#", github: "#" },
+    },
+];
+
+// Process steps
+const process = [
+    {
+        step: "01",
+        title: "Discovery",
+        description:
+            "We dive deep into your business, users, and goals to understand the full scope of the challenge.",
+    },
+    {
+        step: "02",
+        title: "Strategy",
+        description:
+            "We craft a roadmap that aligns technical architecture with business objectives.",
+    },
+    {
+        step: "03",
+        title: "Design",
+        description:
+            "We design intuitive interfaces and robust system architectures in parallel.",
+    },
+    {
+        step: "04",
+        title: "Build",
+        description:
+            "Agile development with continuous deployment. You see progress weekly.",
+    },
+    {
+        step: "05",
+        title: "Launch",
+        description:
+            "We deploy to production with monitoring, then iterate based on real data.",
+    },
+    {
+        step: "06",
+        title: "Scale",
+        description:
+            "Ongoing partnership to optimize performance and add capabilities.",
+    },
+];
+
+// Stats
+const stats = [
+    { value: "150+", label: "Projects Delivered" },
+    { value: "50+", label: "Engineers" },
+    { value: "12", label: "Countries" },
+    { value: "98%", label: "Client Retention" },
+];
+---
+
+<Layout
+    title="About"
+    description="Learn about Apex Labs - the team, our process, and why we build the way we do."
+>
+    {/* Hero */}
+    <section class="pt-32 pb-16">
+        <div class="section-container">
+            <div class="max-w-4xl mx-auto text-center">
+                <span
+                    class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-cyber-lime border border-cyber-lime/30 rounded-full"
+                >
+                    About Us
+                </span>
+                <h1
+                    class="text-display-lg font-display font-bold text-white mb-6"
+                >
+                    We're engineers who build for ambitious companies
+                </h1>
+                <p class="text-xl text-white/60">
+                    Apex Labs is a collective of senior engineers, designers,
+                    and strategists who have built products at the world's most
+                    innovative companies. We bring that expertise to help you
+                    build what's next.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    {/* Stats */}
+    <section class="py-16 border-y border-glass-border">
+        <div class="section-container">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                {
+                    stats.map((stat) => (
+                        <div class="text-center">
+                            <span class="block text-4xl md:text-5xl font-bold font-mono text-cyber-lime">
+                                {stat.value}
+                            </span>
+                            <span class="text-sm text-white/50 uppercase tracking-wide">
+                                {stat.label}
+                            </span>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    {/* Our Process */}
+    <section
+        id="process"
+        class="py-24 bg-gradient-to-b from-obsidian via-carbon to-obsidian"
+    >
+        <div class="section-container">
+            <div class="text-center mb-16">
+                <span
+                    class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-electric-indigo border border-electric-indigo/30 rounded-full"
+                >
+                    How We Work
+                </span>
+                <h2
+                    class="text-display-md font-display font-bold text-white mb-4"
+                >
+                    Our Process
+                </h2>
+                <p class="max-w-2xl mx-auto text-white/60">
+                    A battle-tested methodology refined over hundreds of
+                    projects.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {
+                    process.map((item, index) => (
+                        <div class="group p-6 rounded-xl glass-card border border-glass-border hover:border-white/20 transition-all duration-300">
+                            <span class="text-5xl font-mono font-bold text-white/10 group-hover:text-cyber-lime/20 transition-colors">
+                                {item.step}
+                            </span>
+                            <h3 class="mt-4 text-xl font-display font-semibold text-white">
+                                {item.title}
+                            </h3>
+                            <p class="mt-2 text-white/60">{item.description}</p>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    {/* Team */}
+    <section class="py-24">
+        <div class="section-container">
+            <div class="text-center mb-16">
+                <span
+                    class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-electric-purple border border-electric-purple/30 rounded-full"
+                >
+                    The Team
+                </span>
+                <h2
+                    class="text-display-md font-display font-bold text-white mb-4"
+                >
+                    Meet the Builders
+                </h2>
+                <p class="max-w-2xl mx-auto text-white/60">
+                    Senior practitioners from the world's most innovative
+                    companies.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {
+                    team.map((member) => (
+                        <div class="group relative overflow-hidden rounded-2xl bg-carbon border border-glass-border hover:border-white/20 transition-all duration-300">
+                            {/* Image Placeholder */}
+                            <div class="aspect-square relative overflow-hidden bg-gradient-to-br from-graphite to-carbon">
+                                <div class="absolute inset-0 grid-lines opacity-50" />
+
+                                {/* Initials Placeholder */}
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span class="text-6xl font-display font-bold text-white/10">
+                                        {member.name
+                                            .split(" ")
+                                            .map((n) => n[0])
+                                            .join("")}
+                                    </span>
+                                </div>
+
+                                {/* Hobby Overlay on Hover */}
+                                <div class="absolute inset-0 bg-cyber-lime/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                    <span class="px-4 py-2 glass-card text-sm font-medium text-white">
+                                        Loves {member.hobby}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Content */}
+                            <div class="p-6">
+                                <h3 class="text-lg font-display font-semibold text-white">
+                                    {member.name}
+                                </h3>
+                                <span class="text-sm text-cyber-lime font-mono">
+                                    {member.role}
+                                </span>
+                                <p class="mt-2 text-sm text-white/60">
+                                    {member.bio}
+                                </p>
+
+                                {/* Social Links */}
+                                <div class="mt-4 flex gap-3">
+                                    <a
+                                        href={member.social.twitter}
+                                        class="text-white/40 hover:text-white transition-colors"
+                                    >
+                                        <svg
+                                            class="w-5 h-5"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                        >
+                                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                        </svg>
+                                    </a>
+                                    <a
+                                        href={member.social.linkedin}
+                                        class="text-white/40 hover:text-white transition-colors"
+                                    >
+                                        <svg
+                                            class="w-5 h-5"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                        >
+                                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                        </svg>
+                                    </a>
+                                    <a
+                                        href={member.social.github}
+                                        class="text-white/40 hover:text-white transition-colors"
+                                    >
+                                        <svg
+                                            class="w-5 h-5"
+                                            viewBox="0 0 24 24"
+                                            fill="currentColor"
+                                        >
+                                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+    {/* CTA */}
+    <section
+        class="py-24 bg-gradient-to-b from-obsidian via-carbon to-obsidian"
+    >
+        <div class="section-container">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2
+                    class="text-display-md font-display font-bold text-white mb-6"
+                >
+                    Ready to build something great?
+                </h2>
+                <p class="text-xl text-white/60 mb-8">
+                    Let's talk about your project and see how we can help.
+                </p>
+                <a href="/contact" class="btn-brutal text-lg">
+                    Start a Conversation
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <Footer />
+</Layout>

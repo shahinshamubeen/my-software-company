@@ -1,0 +1,383 @@
+/* Apex Labs - Global Styles
+   Cyber-Industrial Design System
+   Neo-Brutalism + Glassmorphism
+*/
+
+/* ===== FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+/* ===== TAILWIND v4 ===== */
+@import "tailwindcss";
+
+/* ===== CSS CUSTOM PROPERTIES ===== */
+:root {
+  /* Colors */
+  --color-obsidian: #050505;
+  --color-void: #0A0A0A;
+  --color-carbon: #121212;
+  --color-graphite: #1A1A1A;
+  --color-slate: #2A2A2A;
+  --color-cyber-lime: #00FF9D;
+  --color-electric-indigo: #6366F1;
+  --color-terminal-green: #00FF41;
+  --color-electric-purple: #BF00FF;
+  --color-warning-yellow: #FFD700;
+  --color-hot-pink: #FF006E;
+
+  /* Glassmorphism */
+  --glass-blur: 16px;
+  --glass-bg: rgba(10, 10, 10, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Brutalist */
+  --brutal-border: 3px;
+  --brutal-shadow-offset: 4px;
+
+  /* Animation */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+
+  /* Scrollbar */
+  --scrollbar-width: 8px;
+  --scrollbar-track: var(--color-carbon);
+  --scrollbar-thumb: var(--color-cyber-lime);
+}
+
+/* ===== TAILWIND THEME EXTENSION ===== */
+@theme {
+  /* Colors */
+  --color-obsidian: #050505;
+  --color-void: #0A0A0A;
+  --color-carbon: #121212;
+  --color-graphite: #1A1A1A;
+  --color-slate: #2A2A2A;
+  --color-cyber-lime: #00FF9D;
+  --color-electric-indigo: #6366F1;
+  --color-terminal-green: #00FF41;
+  --color-electric-purple: #BF00FF;
+  --color-warning-yellow: #FFD700;
+  --color-hot-pink: #FF006E;
+  --color-glass-white: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Fonts */
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+
+  /* Animations */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-glow: pulseGlow 2s ease-in-out infinite;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-spin-slow: spin 20s linear infinite;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ===== BASE STYLES ===== */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--color-obsidian);
+  color: white;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-obsidian);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-cyber-lime);
+  color: var(--color-obsidian);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-terminal-green);
+}
+
+/* Focus styles */
+*:focus-visible {
+  outline: 2px solid var(--color-cyber-lime);
+  outline-offset: 2px;
+}
+
+/* ===== COMPONENT UTILITIES ===== */
+/* Glass Card */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+}
+
+/* Brutal Card */
+.brutal-card {
+  border: var(--brutal-border) solid currentColor;
+  box-shadow: var(--brutal-shadow-offset) var(--brutal-shadow-offset) 0 0 currentColor;
+  transition: all var(--transition-fast) ease;
+}
+
+.brutal-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: calc(var(--brutal-shadow-offset) + 2px) calc(var(--brutal-shadow-offset) + 2px) 0 0 currentColor;
+}
+
+/* Neon Text */
+.text-neon-lime {
+  color: var(--color-cyber-lime);
+  text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+.text-neon-indigo {
+  color: var(--color-electric-indigo);
+  text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+}
+
+.text-neon-purple {
+  color: var(--color-electric-purple);
+  text-shadow: 0 0 10px rgba(191, 0, 255, 0.5);
+}
+
+/* Gradient Text */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-cyber-lime), var(--color-electric-indigo));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dot Matrix Grid Background */
+.dot-matrix {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Grid Lines Background */
+.grid-lines {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* Custom font sizes */
+.text-display-xl {
+  font-size: clamp(3rem, 10vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+}
+
+.text-display-lg {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.text-display-md {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+/* Button Styles */
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-cyber-lime);
+  color: var(--color-obsidian);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.3);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+.btn-outline {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--color-cyber-lime);
+  color: var(--color-cyber-lime);
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-cyber-lime);
+  color: var(--color-obsidian);
+}
+
+.btn-outline:active {
+  transform: scale(0.95);
+}
+
+.btn-brutal {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-cyber-lime);
+  color: var(--color-obsidian);
+  font-weight: 700;
+  border: 3px solid var(--color-obsidian);
+  box-shadow: 4px 4px 0 0 #000;
+  transition: all 150ms ease;
+}
+
+.btn-brutal:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 0 #000;
+}
+
+.btn-brutal:active {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 0 #000;
+}
+
+/* Code Block */
+.code-block {
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-terminal-green);
+}
+
+/* Section Container */
+.section-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .section-container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ===== VIEW TRANSITIONS ===== */
+::view-transition-old(root) {
+  animation: slide-out-left 0.3s ease-in-out;
+}
+
+::view-transition-new(root) {
+  animation: slide-in-right 0.3s ease-in-out;
+}
+
+@keyframes slide-out-left {
+  to {
+    transform: translateX(-10%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(10%);
+    opacity: 0;
+  }
+}
+
+/* Morph transition for shared elements */
+::view-transition-group(hero-image) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
