@@ -1,85 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
+import { caseStudies } from "../data/caseStudies";
 
-// All case studies data
-const caseStudies = [
-    {
-        id: "nexus-ai",
-        title: "Nexus AI Platform",
-        category: "AI & Machine Learning",
-        description:
-            "Enterprise-grade AI orchestration platform serving 10M+ daily predictions",
-        image: "/work/nexus-ai.jpg",
-        stats: { metric: "Latency Reduced", value: "40%" },
-        tags: ["Python", "TensorFlow", "AWS", "Kubernetes"],
-        color: "#00FF9D",
-    },
-    {
-        id: "velocity-fintech",
-        title: "Velocity FinTech",
-        category: "Financial Services",
-        description:
-            "Real-time payment processing system handling $2B+ monthly transactions",
-        image: "/work/velocity.jpg",
-        stats: { metric: "Transaction Speed", value: "3x" },
-        tags: ["Go", "PostgreSQL", "Redis", "gRPC"],
-        color: "#6366F1",
-    },
-    {
-        id: "healthbridge",
-        title: "HealthBridge",
-        category: "Healthcare",
-        description:
-            "HIPAA-compliant telemedicine platform connecting 50K+ patients monthly",
-        image: "/work/healthbridge.jpg",
-        stats: { metric: "User Satisfaction", value: "98%" },
-        tags: ["React Native", "Node.js", "MongoDB", "WebRTC"],
-        color: "#BF00FF",
-    },
-    {
-        id: "quantum-commerce",
-        title: "Quantum Commerce",
-        category: "E-Commerce",
-        description:
-            "Headless commerce platform powering 500+ global storefronts",
-        image: "/work/quantum.jpg",
-        stats: { metric: "Conversion Rate", value: "+65%" },
-        tags: ["Next.js", "GraphQL", "Stripe", "Contentful"],
-        color: "#FF9900",
-    },
-    {
-        id: "aether-blockchain",
-        title: "Aether Protocol",
-        category: "Blockchain",
-        description: "Layer 2 scaling solution processing 100K+ TPS",
-        image: "/work/aether.jpg",
-        stats: { metric: "Gas Savings", value: "95%" },
-        tags: ["Rust", "Solidity", "ZK-Proofs", "Ethereum"],
-        color: "#E10098",
-    },
-    {
-        id: "nova-analytics",
-        title: "Nova Analytics",
-        category: "Data & Analytics",
-        description:
-            "Real-time business intelligence dashboard for Fortune 500",
-        image: "/work/nova.jpg",
-        stats: { metric: "Insights Generation", value: "10x" },
-        tags: ["Python", "Apache Spark", "Snowflake", "React"],
-        color: "#00ADD8",
-    },
-];
-
-const categories = [
-    "All",
-    "AI & Machine Learning",
-    "Financial Services",
-    "Healthcare",
-    "E-Commerce",
-    "Blockchain",
-    "Data & Analytics",
-];
+// All categories
+const categories = ["All", ...new Set(caseStudies.map((s) => s.category))];
 ---
 
 <Layout
@@ -158,7 +83,10 @@ const categories = [
                                 >
                                     {study.category}
                                 </span>
-                                <h3 class="mt-2 text-xl font-display font-semibold text-white group-hover:text-cyber-lime transition-colors">
+                                <h3
+                                    class="mt-2 text-xl font-display font-semibold text-white group-hover:text-cyber-lime transition-colors"
+                                    transition:name={`project-title-${study.id}`}
+                                >
                                     {study.title}
                                 </h3>
                                 <p class="mt-2 text-sm text-white/60 line-clamp-2">

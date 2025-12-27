@@ -1,0 +1,68 @@
+---
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import ScrollytellingHome from "../components/ScrollytellingHome";
+
+const title = "Apex Labs - We Engineer Reality";
+const description =
+    "A cutting-edge software development agency building the future through innovative technology solutions. Full-stack expertise in AI, cloud infrastructure, and product development.";
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+        <!-- SEO Meta Tags -->
+        <title>{title}</title>
+        <meta name="description" content={description} />
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content="/og-image.png" />
+
+        <!-- Theme Color -->
+        <meta name="theme-color" content="#050505" />
+
+        <!-- Preconnect to Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <!-- Generator -->
+        <meta name="generator" content={Astro.generator} />
+
+        <!-- View Transitions -->
+        <ClientRouter />
+    </head>
+    <body class="bg-obsidian text-white overflow-x-hidden">
+        <!-- Scrollytelling Homepage -->
+        <ScrollytellingHome client:load />
+
+        <!-- Navigation Toggle -->
+        <a
+            href="/"
+            class="fixed bottom-8 left-8 z-50 px-4 py-2 rounded-full glass-card border border-white/20 text-sm font-mono text-white/60 hover:text-white hover:border-cyber-lime transition-all"
+        >
+            ← Classic Home
+        </a>
+
+        <!-- Background Grid Effect -->
+        <div
+            class="fixed inset-0 pointer-events-none z-0 dot-matrix opacity-20"
+            aria-hidden="true"
+        >
+        </div>
+    </body>
+</html>
+
+<style>
+    /* Ensure scrollytelling content is above background */
+    :global(.relative) {
+        position: relative;
+        z-index: 1;
+    }
+</style>
