@@ -23,7 +23,9 @@ import KineticHeadline from "./KineticHeadline";
     </div>
 
     <!-- Hero Content -->
-    <div class="relative z-10 section-container text-center">
+    <div
+        class="relative z-10 section-container text-center pointer-events-none"
+    >
         <!-- Eyebrow Tag -->
         <div
             class="inline-flex items-center gap-2 px-4 py-2 mb-6 glass-card text-sm font-mono text-cyber-lime"
@@ -38,7 +40,7 @@ import KineticHeadline from "./KineticHeadline";
 
         <!-- Subheadline -->
         <p
-            class="max-w-2xl mx-auto mt-6 text-lg sm:text-xl text-white/60 leading-relaxed"
+            class="max-w-2xl mx-auto mt-6 text-lg sm:text-xl text-white/70 leading-relaxed"
         >
             We transform ambitious ideas into
             <span class="text-cyber-lime">market-leading digital products</span
@@ -48,7 +50,7 @@ import KineticHeadline from "./KineticHeadline";
 
         <!-- CTA Buttons -->
         <div
-            class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
+            class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 pointer-events-auto"
         >
             <a href="/work" class="btn-brutal text-lg group">
                 <span class="flex items-center gap-2">
@@ -70,48 +72,15 @@ import KineticHeadline from "./KineticHeadline";
             </a>
             <a href="/contact" class="btn-outline text-lg"> Start a Project </a>
         </div>
-
-        <!-- Stats Row -->
-        <div
-            class="flex flex-wrap items-center justify-center gap-8 sm:gap-12 mt-16 pt-8 border-t border-glass-border"
-        >
-            <div class="stat-item text-center">
-                <span
-                    class="block text-3xl sm:text-4xl font-bold text-cyber-lime font-mono"
-                    >150+</span
-                >
-                <span class="text-sm text-white/50 uppercase tracking-wide"
-                    >Projects Delivered</span
-                >
-            </div>
-            <div class="stat-item text-center">
-                <span
-                    class="block text-3xl sm:text-4xl font-bold text-electric-indigo font-mono"
-                    >98%</span
-                >
-                <span class="text-sm text-white/50 uppercase tracking-wide"
-                    >Client Retention</span
-                >
-            </div>
-            <div class="stat-item text-center">
-                <span
-                    class="block text-3xl sm:text-4xl font-bold text-electric-purple font-mono"
-                    >12</span
-                >
-                <span class="text-sm text-white/50 uppercase tracking-wide"
-                    >Industry Awards</span
-                >
-            </div>
-        </div>
     </div>
 
     <!-- Scroll Indicator -->
     <div
-        class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/40"
+        class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60"
     >
         <span class="text-xs uppercase tracking-widest">Scroll</span>
         <div
-            class="w-px h-8 bg-gradient-to-b from-white/40 to-transparent animate-pulse"
+            class="w-px h-8 bg-gradient-to-b from-white/60 to-transparent animate-pulse"
         >
         </div>
     </div>

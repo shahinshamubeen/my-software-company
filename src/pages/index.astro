@@ -4,6 +4,7 @@ import Hero from "../components/Hero.astro";
 import TechStack from "../components/TechStack";
 import FeaturedWork from "../components/FeaturedWork.astro";
 import ServicesPreview from "../components/ServicesPreview.astro";
+import Testimonials from "../components/Testimonials";
 import Marquee from "../components/Marquee.astro";
 import Footer from "../components/Footer.astro";
 ---
@@ -21,17 +22,12 @@ import Footer from "../components/Footer.astro";
 	<!-- Featured Work Section -->
 	<FeaturedWork />
 
+	<!-- Testimonials Section -->
+	<Testimonials client:visible />
+
 	<!-- Services Preview Section -->
 	<ServicesPreview />
 
 	<!-- Footer -->
 	<Footer />
-
-	<!-- Scrollytelling Homepage Toggle -->
-	<a
-		href="/home2"
-		class="fixed bottom-8 left-8 z-50 px-4 py-2 rounded-full glass-card border border-white/20 text-sm font-mono text-white/60 hover:text-white hover:border-cyber-lime transition-all"
-	>
-		Try Immersive Mode →
-	</a>
 </Layout>

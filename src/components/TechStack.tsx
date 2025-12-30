@@ -101,16 +101,23 @@ function TechCard({
         />
       )}
       
-      {/* Symbol Badge */}
+      {/* Logo */}
       <div 
-        className="w-12 h-12 mx-auto mb-3 rounded-lg flex items-center justify-center font-mono font-bold text-lg border-2"
+        className="w-14 h-14 mx-auto mb-3 rounded-xl flex items-center justify-center p-2 border transition-all duration-300"
         style={{ 
-          borderColor: tech.color,
-          color: tech.color,
-          backgroundColor: `${tech.color}10`,
+          borderColor: isHighlighted ? tech.color : 'rgba(255,255,255,0.1)',
+          backgroundColor: isHighlighted ? `${tech.color}15` : 'rgba(255,255,255,0.05)',
         }}
       >
-        {tech.symbol}
+        <img 
+          src={tech.icon} 
+          alt={tech.name}
+          className="w-full h-full object-contain"
+          style={{
+            filter: tech.id === 'nextjs' || tech.id === 'vercel' ? 'invert(1)' : 'none',
+          }}
+          loading="lazy"
+        />
       </div>
       
       {/* Name */}

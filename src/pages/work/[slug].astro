@@ -1,27 +1,34 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
+import Breadcrumb from "../../components/Breadcrumb.astro";
 import Scrollytelling from "../../components/Scrollytelling";
-import { caseStudies, getCaseStudy } from "../../data/caseStudies";
-import type { GetStaticPaths } from "astro";
+import RelatedProjects from "../../components/RelatedProjects";
+import { caseStudies, getCaseStudy, type CaseStudy } from "../../data/caseStudies";
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths = (async () => {
     return caseStudies.map((study) => ({
         params: { slug: study.id },
         props: { study },
     }));
-};
+}) satisfies GetStaticPaths;
 
-const { study } = Astro.props;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-if (!study) {
-    return Astro.redirect("/work");
-}
+const { study } = Astro.props as Props;
 
 // Find next/prev projects for navigation
 const currentIndex = caseStudies.findIndex((s) => s.id === study.id);
 const prevProject = caseStudies[currentIndex - 1];
 const nextProject = caseStudies[currentIndex + 1];
+
+// Breadcrumb items
+const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Work", href: "/work" },
+    { label: study.title },
+];
 ---
 
 <Layout title={study.title} description={study.longDescription}>
@@ -35,24 +42,8 @@ const nextProject = caseStudies[currentIndex + 1];
         </div>
 
         <div class="section-container relative z-10">
-            <a
-                href="/work"
-                class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors mb-8"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-                Back to Work
-            </a>
+            {/* Breadcrumb Navigation */}
+            <Breadcrumb items={breadcrumbItems} />
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 {/* Content */}
@@ -290,6 +281,14 @@ const nextProject = caseStudies[currentIndex + 1];
             </div>
         </div>
     </section>
+
+    {/* Related Projects */}
+    <RelatedProjects 
+        client:visible
+        currentId={study.id}
+        currentCategory={study.category}
+        projects={caseStudies}
+    />
 
     {/* CTA */}
     <section

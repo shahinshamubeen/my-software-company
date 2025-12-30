@@ -1,7 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Breadcrumb from "../components/Breadcrumb.astro";
 import ScopeConfigurator from "../components/ScopeConfigurator";
 import Footer from "../components/Footer.astro";
+
+// Breadcrumb items
+const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Services" },
+];
 
 // Services data
 const services = [
@@ -159,6 +166,9 @@ const services = [
     {/* Hero Section */}
     <section class="pt-32 pb-16">
         <div class="section-container">
+            {/* Breadcrumb */}
+            <Breadcrumb items={breadcrumbItems} />
+            
             <div class="text-center mb-16">
                 <span
                     class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-electric-indigo border border-electric-indigo/30 rounded-full"
@@ -170,7 +180,7 @@ const services = [
                 >
                     Our Services
                 </h1>
-                <p class="max-w-2xl mx-auto text-white/60">
+                <p class="max-w-2xl mx-auto text-white/70">
                     From initial concept to production scale, we provide
                     comprehensive engineering services to transform your vision
                     into reality.

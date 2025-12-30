@@ -1,0 +1,64 @@
+---
+export interface BreadcrumbItem {
+    label: string;
+    href?: string;
+}
+
+interface Props {
+    items: BreadcrumbItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb" class="mb-8">
+    <ol
+        class="flex items-center flex-wrap gap-2 text-sm"
+        itemscope
+        itemtype="https://schema.org/BreadcrumbList"
+    >
+        {
+            items.map((item, index) => (
+                <li
+                    class="flex items-center"
+                    itemprop="itemListElement"
+                    itemscope
+                    itemtype="https://schema.org/ListItem"
+                >
+                    {index > 0 && (
+                        <svg
+                            class="w-4 h-4 mx-2 text-white/30"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            aria-hidden="true"
+                        >
+                            <polyline points="9 18 15 12 9 6" />
+                        </svg>
+                    )}
+                    {item.href ? (
+                        <a
+                            href={item.href}
+                            class="text-white/60 hover:text-cyber-lime transition-colors"
+                            itemprop="item"
+                        >
+                            <span itemprop="name">{item.label}</span>
+                        </a>
+                    ) : (
+                        <span
+                            class="text-white/90 font-medium"
+                            itemprop="name"
+                            aria-current="page"
+                        >
+                            {item.label}
+                        </span>
+                    )}
+                    <meta itemprop="position" content={String(index + 1)} />
+                </li>
+            ))
+        }
+    </ol>
+</nav>

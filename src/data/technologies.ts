@@ -3,9 +3,12 @@ export interface Technology {
   name: string;
   category: 'frontend' | 'backend' | 'cloud' | 'ai' | 'mobile' | 'database';
   color: string;
-  symbol: string;
+  icon: string; // URL to brand icon from CDN
   related: string[];
 }
+
+// Using devicon CDN for official brand logos
+const iconBase = 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons';
 
 export const technologies: Technology[] = [
   // Frontend
@@ -14,7 +17,7 @@ export const technologies: Technology[] = [
     name: 'React',
     category: 'frontend',
     color: '#61DAFB',
-    symbol: 'Re',
+    icon: `${iconBase}/react/react-original.svg`,
     related: ['nextjs', 'typescript', 'tailwind', 'framer'],
   },
   {
@@ -22,7 +25,7 @@ export const technologies: Technology[] = [
     name: 'Next.js',
     category: 'frontend',
     color: '#FFFFFF',
-    symbol: 'Nx',
+    icon: `${iconBase}/nextjs/nextjs-original.svg`,
     related: ['react', 'vercel', 'typescript'],
   },
   {
@@ -30,7 +33,7 @@ export const technologies: Technology[] = [
     name: 'Vue.js',
     category: 'frontend',
     color: '#4FC08D',
-    symbol: 'Vu',
+    icon: `${iconBase}/vuejs/vuejs-original.svg`,
     related: ['nuxt', 'typescript', 'tailwind'],
   },
   {
@@ -38,7 +41,7 @@ export const technologies: Technology[] = [
     name: 'Astro',
     category: 'frontend',
     color: '#FF5D01',
-    symbol: 'As',
+    icon: `${iconBase}/astro/astro-original.svg`,
     related: ['react', 'vue', 'tailwind', 'vercel'],
   },
   {
@@ -46,7 +49,7 @@ export const technologies: Technology[] = [
     name: 'TypeScript',
     category: 'frontend',
     color: '#3178C6',
-    symbol: 'Ts',
+    icon: `${iconBase}/typescript/typescript-original.svg`,
     related: ['react', 'nodejs', 'nextjs'],
   },
   {
@@ -54,7 +57,7 @@ export const technologies: Technology[] = [
     name: 'Tailwind',
     category: 'frontend',
     color: '#06B6D4',
-    symbol: 'Tw',
+    icon: `${iconBase}/tailwindcss/tailwindcss-original.svg`,
     related: ['react', 'nextjs', 'astro'],
   },
   
@@ -64,7 +67,7 @@ export const technologies: Technology[] = [
     name: 'Node.js',
     category: 'backend',
     color: '#339933',
-    symbol: 'No',
+    icon: `${iconBase}/nodejs/nodejs-original.svg`,
     related: ['typescript', 'express', 'postgresql'],
   },
   {
@@ -72,7 +75,7 @@ export const technologies: Technology[] = [
     name: 'Python',
     category: 'backend',
     color: '#3776AB',
-    symbol: 'Py',
+    icon: `${iconBase}/python/python-original.svg`,
     related: ['django', 'fastapi', 'tensorflow'],
   },
   {
@@ -80,7 +83,7 @@ export const technologies: Technology[] = [
     name: 'Go',
     category: 'backend',
     color: '#00ADD8',
-    symbol: 'Go',
+    icon: `${iconBase}/go/go-original-wordmark.svg`,
     related: ['kubernetes', 'docker', 'grpc'],
   },
   {
@@ -88,7 +91,7 @@ export const technologies: Technology[] = [
     name: 'Rust',
     category: 'backend',
     color: '#DEA584',
-    symbol: 'Rs',
+    icon: `${iconBase}/rust/rust-original.svg`,
     related: ['wasm', 'kubernetes'],
   },
   {
@@ -96,7 +99,7 @@ export const technologies: Technology[] = [
     name: 'GraphQL',
     category: 'backend',
     color: '#E10098',
-    symbol: 'Gq',
+    icon: `${iconBase}/graphql/graphql-plain.svg`,
     related: ['nodejs', 'react', 'apollo'],
   },
   
@@ -106,7 +109,7 @@ export const technologies: Technology[] = [
     name: 'AWS',
     category: 'cloud',
     color: '#FF9900',
-    symbol: 'Aw',
+    icon: `${iconBase}/amazonwebservices/amazonwebservices-original-wordmark.svg`,
     related: ['kubernetes', 'docker', 'terraform'],
   },
   {
@@ -114,7 +117,7 @@ export const technologies: Technology[] = [
     name: 'GCP',
     category: 'cloud',
     color: '#4285F4',
-    symbol: 'Gc',
+    icon: `${iconBase}/googlecloud/googlecloud-original.svg`,
     related: ['kubernetes', 'tensorflow', 'bigquery'],
   },
   {
@@ -122,7 +125,7 @@ export const technologies: Technology[] = [
     name: 'Vercel',
     category: 'cloud',
     color: '#FFFFFF',
-    symbol: 'Ve',
+    icon: `${iconBase}/vercel/vercel-original.svg`,
     related: ['nextjs', 'react', 'edge'],
   },
   {
@@ -130,7 +133,7 @@ export const technologies: Technology[] = [
     name: 'Docker',
     category: 'cloud',
     color: '#2496ED',
-    symbol: 'Dk',
+    icon: `${iconBase}/docker/docker-original.svg`,
     related: ['kubernetes', 'aws', 'nodejs'],
   },
   {
@@ -138,7 +141,7 @@ export const technologies: Technology[] = [
     name: 'Kubernetes',
     category: 'cloud',
     color: '#326CE5',
-    symbol: 'K8',
+    icon: `${iconBase}/kubernetes/kubernetes-original.svg`,
     related: ['docker', 'aws', 'gcp', 'go'],
   },
   
@@ -148,7 +151,7 @@ export const technologies: Technology[] = [
     name: 'OpenAI',
     category: 'ai',
     color: '#00A67E',
-    symbol: 'Oi',
+    icon: 'https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg',
     related: ['python', 'langchain', 'nodejs'],
   },
   {
@@ -156,7 +159,7 @@ export const technologies: Technology[] = [
     name: 'TensorFlow',
     category: 'ai',
     color: '#FF6F00',
-    symbol: 'Tf',
+    icon: `${iconBase}/tensorflow/tensorflow-original.svg`,
     related: ['python', 'gcp', 'keras'],
   },
   {
@@ -164,7 +167,7 @@ export const technologies: Technology[] = [
     name: 'LangChain',
     category: 'ai',
     color: '#1C3C3C',
-    symbol: 'Lc',
+    icon: 'https://python.langchain.com/img/brand/wordmark.png',
     related: ['openai', 'python', 'pinecone'],
   },
   
@@ -174,7 +177,7 @@ export const technologies: Technology[] = [
     name: 'React Native',
     category: 'mobile',
     color: '#61DAFB',
-    symbol: 'Rn',
+    icon: `${iconBase}/react/react-original.svg`,
     related: ['react', 'typescript', 'expo'],
   },
   {
@@ -182,7 +185,7 @@ export const technologies: Technology[] = [
     name: 'Flutter',
     category: 'mobile',
     color: '#02569B',
-    symbol: 'Fl',
+    icon: `${iconBase}/flutter/flutter-original.svg`,
     related: ['dart', 'firebase'],
   },
   {
@@ -190,7 +193,7 @@ export const technologies: Technology[] = [
     name: 'Swift',
     category: 'mobile',
     color: '#F05138',
-    symbol: 'Sw',
+    icon: `${iconBase}/swift/swift-original.svg`,
     related: ['ios', 'xcode'],
   },
   
@@ -200,7 +203,7 @@ export const technologies: Technology[] = [
     name: 'PostgreSQL',
     category: 'database',
     color: '#4169E1',
-    symbol: 'Pg',
+    icon: `${iconBase}/postgresql/postgresql-original.svg`,
     related: ['nodejs', 'prisma', 'supabase'],
   },
   {
@@ -208,7 +211,7 @@ export const technologies: Technology[] = [
     name: 'MongoDB',
     category: 'database',
     color: '#47A248',
-    symbol: 'Md',
+    icon: `${iconBase}/mongodb/mongodb-original.svg`,
     related: ['nodejs', 'mongoose'],
   },
   {
@@ -216,7 +219,7 @@ export const technologies: Technology[] = [
     name: 'Redis',
     category: 'database',
     color: '#DC382D',
-    symbol: 'Rd',
+    icon: `${iconBase}/redis/redis-original.svg`,
     related: ['nodejs', 'caching'],
   },
 ];

@@ -64,7 +64,7 @@ const caseStudies = [
             </div>
             <a
                 href="/work"
-                class="mt-4 md:mt-0 inline-flex items-center gap-2 text-white/60 hover:text-cyber-lime transition-colors group"
+                class="mt-4 md:mt-0 inline-flex items-center gap-2 text-white/70 hover:text-cyber-lime transition-colors group"
             >
                 <span>View all projects</span>
                 <svg
@@ -89,9 +89,10 @@ const caseStudies = [
                 caseStudies.map((study, index) => (
                     <a
                         href={`/work/${study.id}`}
-                        class="group relative overflow-hidden rounded-2xl bg-carbon border border-glass-border hover:border-white/20 transition-all duration-500"
+                        class="group relative overflow-hidden rounded-2xl bg-carbon border border-glass-border hover:border-white/20 transition-all duration-500 focus-visible:ring-2 focus-visible:ring-cyber-lime focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian"
                         style={`--accent-color: ${study.color}`}
                         transition:name={`project-card-${study.id}`}
+                        aria-label={`View case study: ${study.title} - ${study.category}`}
                     >
                         {/* Image Placeholder */}
                         <div class="aspect-[4/3] relative overflow-hidden">
@@ -127,7 +128,7 @@ const caseStudies = [
                             </h3>
 
                             {/* Description */}
-                            <p class="mt-2 text-sm text-white/60 line-clamp-2">
+                            <p class="mt-2 text-sm text-white/70 line-clamp-2">
                                 {study.description}
                             </p>
 
@@ -139,7 +140,7 @@ const caseStudies = [
                                 >
                                     {study.stats.value}
                                 </span>
-                                <span class="text-xs text-white/50 uppercase">
+                                <span class="text-xs text-white/70 uppercase">
                                     {study.stats.metric}
                                 </span>
                             </div>

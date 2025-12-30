@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
+import ContactForm from "../components/ContactForm";
+import BookingButton from "../components/BookingButton";
 
 // FAQ data
 const faqs = [
@@ -49,7 +51,7 @@ const faqs = [
                 >
                     Start a conversation
                 </h1>
-                <p class="text-xl text-white/60">
+                <p class="text-xl text-white/70">
                     Tell us about your project and we'll get back to you within
                     24 hours with our thoughts on how we can help.
                 </p>
@@ -61,143 +63,7 @@ const faqs = [
     <section class="py-16">
         <div class="section-container">
             <div class="max-w-2xl mx-auto">
-                <form class="space-y-6" action="#" method="POST">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label
-                                for="name"
-                                class="block text-sm font-medium text-white mb-2"
-                            >
-                                Name
-                            </label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="name"
-                                required
-                                class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:border-cyber-lime transition-colors"
-                                placeholder="John Doe"
-                            />
-                        </div>
-                        <div>
-                            <label
-                                for="email"
-                                class="block text-sm font-medium text-white mb-2"
-                            >
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                required
-                                class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:border-cyber-lime transition-colors"
-                                placeholder="john@company.com"
-                            />
-                        </div>
-                    </div>
-
-                    <div>
-                        <label
-                            for="company"
-                            class="block text-sm font-medium text-white mb-2"
-                        >
-                            Company
-                        </label>
-                        <input
-                            type="text"
-                            id="company"
-                            name="company"
-                            class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:border-cyber-lime transition-colors"
-                            placeholder="Acme Inc."
-                        />
-                    </div>
-
-                    <div>
-                        <label
-                            for="budget"
-                            class="block text-sm font-medium text-white mb-2"
-                        >
-                            Budget Range
-                        </label>
-                        <select
-                            id="budget"
-                            name="budget"
-                            class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:border-cyber-lime transition-colors"
-                        >
-                            <option value="" class="bg-obsidian"
-                                >Select a range</option
-                            >
-                            <option value="50-100k" class="bg-obsidian"
-                                >$50,000 - $100,000</option
-                            >
-                            <option value="100-250k" class="bg-obsidian"
-                                >$100,000 - $250,000</option
-                            >
-                            <option value="250-500k" class="bg-obsidian"
-                                >$250,000 - $500,000</option
-                            >
-                            <option value="500k+" class="bg-obsidian"
-                                >$500,000+</option
-                            >
-                        </select>
-                    </div>
-
-                    <div>
-                        <label
-                            for="project"
-                            class="block text-sm font-medium text-white mb-2"
-                        >
-                            Tell us about your project
-                        </label>
-                        <textarea
-                            id="project"
-                            name="project"
-                            rows={5}
-                            required
-                            class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-white/30 focus:outline-none focus:border-cyber-lime transition-colors resize-none"
-                            placeholder="Describe your project, goals, and timeline..."
-                        ></textarea>
-                    </div>
-
-                    <div>
-                        <label
-                            class="block text-sm font-medium text-white mb-3"
-                        >
-                            Services you're interested in
-                        </label>
-                        <div class="grid grid-cols-2 gap-3">
-                            {
-                                [
-                                    "Product Development",
-                                    "AI Integration",
-                                    "Cloud & DevOps",
-                                    "Mobile Apps",
-                                ].map((service) => (
-                                    <label class="flex items-center gap-3 p-3 rounded-lg border border-white/10 hover:border-white/20 transition-colors cursor-pointer">
-                                        <input
-                                            type="checkbox"
-                                            name="services"
-                                            value={service}
-                                            class="w-4 h-4 rounded border-white/30 text-cyber-lime focus:ring-cyber-lime focus:ring-offset-0 bg-transparent"
-                                        />
-                                        <span class="text-sm text-white/80">
-                                            {service}
-                                        </span>
-                                    </label>
-                                ))
-                            }
-                        </div>
-                    </div>
-
-                    <button type="submit" class="w-full btn-brutal text-lg">
-                        Send Message
-                    </button>
-
-                    <p class="text-center text-sm text-white/40">
-                        We typically respond within 24 hours.
-                    </p>
-                </form>
+                <ContactForm client:load />
             </div>
         </div>
     </section>
@@ -269,9 +135,7 @@ const faqs = [
                     <h3 class="font-display font-semibold text-white mb-2">
                         Schedule a Call
                     </h3>
-                    <a href="#" class="text-electric-indigo hover:underline">
-                        Book a 30-min intro call
-                    </a>
+                    <BookingButton client:visible />
                 </div>
 
                 <div

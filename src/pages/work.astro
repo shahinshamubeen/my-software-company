@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
+import WorkGrid from "../components/WorkGrid";
 import { caseStudies } from "../data/caseStudies";
 
 // All categories
@@ -25,106 +26,19 @@ const categories = ["All", ...new Set(caseStudies.map((s) => s.category))];
                 >
                     Featured Work
                 </h1>
-                <p class="max-w-2xl mx-auto text-white/60">
+                <p class="max-w-2xl mx-auto text-white/70">
                     Real results for ambitious companies. Explore how we've
                     helped businesses transform their operations and scale their
                     impact.
                 </p>
             </div>
 
-            {/* Filter Tabs */}
-            <div class="flex flex-wrap justify-center gap-2 mb-12">
-                {
-                    categories.map((category, index) => (
-                        <button
-                            class={`px-4 py-2 rounded-lg font-mono text-sm transition-all duration-200 border ${
-                                index === 0
-                                    ? "bg-cyber-lime text-obsidian border-cyber-lime"
-                                    : "border-white/20 text-white/60 hover:border-white/40 hover:text-white"
-                            }`}
-                            data-category={category}
-                        >
-                            {category}
-                        </button>
-                    ))
-                }
-            </div>
-
-            {/* Projects Grid */}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {
-                    caseStudies.map((study) => (
-                        <a
-                            href={`/work/${study.id}`}
-                            class="group relative overflow-hidden rounded-2xl bg-carbon border border-glass-border hover:border-white/20 transition-all duration-500"
-                            transition:name={`project-hero-${study.id}`}
-                        >
-                            {/* Image Placeholder */}
-                            <div class="aspect-[4/3] relative overflow-hidden">
-                                <div
-                                    class="absolute inset-0"
-                                    style={`background: linear-gradient(135deg, ${study.color}20, ${study.color}05)`}
-                                />
-                                <div class="absolute inset-0 grid-lines opacity-50" />
-
-                                {/* Hover Overlay */}
-                                <div class="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                    <span class="px-4 py-2 glass-card text-sm font-medium text-white">
-                                        View Case Study
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Content */}
-                            <div class="p-6">
-                                <span
-                                    class="text-xs font-mono uppercase tracking-wider"
-                                    style={`color: ${study.color}`}
-                                >
-                                    {study.category}
-                                </span>
-                                <h3
-                                    class="mt-2 text-xl font-display font-semibold text-white group-hover:text-cyber-lime transition-colors"
-                                    transition:name={`project-title-${study.id}`}
-                                >
-                                    {study.title}
-                                </h3>
-                                <p class="mt-2 text-sm text-white/60 line-clamp-2">
-                                    {study.description}
-                                </p>
-
-                                {/* Stats Badge */}
-                                <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                                    <span
-                                        class="text-2xl font-bold font-mono"
-                                        style={`color: ${study.color}`}
-                                    >
-                                        {study.stats.value}
-                                    </span>
-                                    <span class="text-xs text-white/50 uppercase">
-                                        {study.stats.metric}
-                                    </span>
-                                </div>
-
-                                {/* Tags */}
-                                <div class="mt-4 flex flex-wrap gap-2">
-                                    {study.tags.map((tag) => (
-                                        <span class="px-2 py-1 text-xs font-mono text-white/40 bg-white/5 rounded">
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Accent Border */}
-                            <div
-                                class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                                style={`background: ${study.color}`}
-                            />
-                        </a>
-                    ))
-                }
-            </div>
+            {/* Filterable Work Grid */}
+            <WorkGrid 
+                client:load 
+                caseStudies={caseStudies} 
+                categories={categories} 
+            />
         </div>
     </section>
 
