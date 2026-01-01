@@ -1,178 +1,169 @@
 ---
 // Services data
 const services = [
-    {
-        id: "product-development",
-        title: "Product Development",
-        description:
-            "End-to-end development from concept to launch, building scalable products that users love.",
-        icon: "rocket",
-        features: [
-            "MVP Development",
-            "Full-Stack Engineering",
-            "API Design",
-            "System Architecture",
-        ],
-        color: "#00FF9D",
-    },
-    {
-        id: "ai-integration",
-        title: "AI Integration",
-        description:
-            "Leverage cutting-edge AI to automate workflows, enhance user experiences, and unlock insights.",
-        icon: "brain",
-        features: [
-            "LLM Integration",
-            "Custom Models",
-            "Data Pipelines",
-            "Vector Databases",
-        ],
-        color: "#6366F1",
-    },
-    {
-        id: "cloud-infrastructure",
-        title: "Cloud & DevOps",
-        description:
-            "Design and implement cloud infrastructure that scales automatically and costs less.",
-        icon: "cloud",
-        features: [
-            "AWS/GCP/Azure",
-            "Kubernetes",
-            "CI/CD Pipelines",
-            "Monitoring",
-        ],
-        color: "#BF00FF",
-    },
-    {
-        id: "mobile-apps",
-        title: "Mobile Apps",
-        description:
-            "Native and cross-platform mobile applications with stunning UI and smooth performance.",
-        icon: "phone",
-        features: ["React Native", "Flutter", "iOS Native", "Android Native"],
-        color: "#FF9900",
-    },
+  {
+    id: "product-development",
+    title: "Product Development",
+    description:
+      "End-to-end development from concept to launch, building scalable products that users love.",
+    icon: "rocket",
+    features: [
+      "MVP Development",
+      "Full-Stack Engineering",
+      "API Design",
+      "System Architecture",
+    ],
+    color: "#00FF9D",
+  },
+  {
+    id: "ai-integration",
+    title: "AI Integration",
+    description:
+      "Leverage cutting-edge AI to automate workflows, enhance user experiences, and unlock insights.",
+    icon: "brain",
+    features: [
+      "LLM Integration",
+      "Custom Models",
+      "Data Pipelines",
+      "Vector Databases",
+    ],
+    color: "#6366F1",
+  },
+  {
+    id: "cloud-infrastructure",
+    title: "Cloud & DevOps",
+    description:
+      "Design and implement cloud infrastructure that scales automatically and costs less.",
+    icon: "cloud",
+    features: ["AWS/GCP/Azure", "Kubernetes", "CI/CD Pipelines", "Monitoring"],
+    color: "#BF00FF",
+  },
+  {
+    id: "mobile-apps",
+    title: "Mobile Apps",
+    description:
+      "Native and cross-platform mobile applications with stunning UI and smooth performance.",
+    icon: "phone",
+    features: ["React Native", "Flutter", "iOS Native", "Android Native"],
+    color: "#FF9900",
+  },
 ];
 
 // Icon SVG paths
 const iconPaths: Record<string, string> = {
-    rocket: "M5 16l-1.42 1.42a1 1 0 0 0-.29.82l.5 3a1 1 0 0 0 .7.7l3 .5a1 1 0 0 0 .82-.3L10 20m-5-4l8.5-8.5m-6.36 4.36l2.83 2.83M18.364 5.636a9 9 0 0 1-12.728 12.728M21 3l-5 5m5-5v5m0-5h-5",
-    brain: "M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.54m4.5-.5a2.5 2.5 0 0 1 4.26 1.54 2.5 2.5 0 0 1 1.3 4.24 3 3 0 0 1-.34 5.58 2.5 2.5 0 0 1-2.96 3.08A2.5 2.5 0 0 1 12 19.5v-15",
-    cloud: "M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z",
-    phone: "M16 2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-4 18a1 1 0 1 1 0-2 1 1 0 0 1 0 2z",
+  rocket:
+    "M5 16l-1.42 1.42a1 1 0 0 0-.29.82l.5 3a1 1 0 0 0 .7.7l3 .5a1 1 0 0 0 .82-.3L10 20m-5-4l8.5-8.5m-6.36 4.36l2.83 2.83M18.364 5.636a9 9 0 0 1-12.728 12.728M21 3l-5 5m5-5v5m0-5h-5",
+  brain:
+    "M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.54m4.5-.5a2.5 2.5 0 0 1 4.26 1.54 2.5 2.5 0 0 1 1.3 4.24 3 3 0 0 1-.34 5.58 2.5 2.5 0 0 1-2.96 3.08A2.5 2.5 0 0 1 12 19.5v-15",
+  cloud: "M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z",
+  phone:
+    "M16 2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-4 18a1 1 0 1 1 0-2 1 1 0 0 1 0 2z",
 };
 ---
 
 <section
-    class="py-24 relative bg-gradient-to-b from-obsidian via-carbon to-obsidian"
+  class="py-24 relative bg-gradient-to-b from-obsidian via-carbon to-obsidian"
 >
-    <div class="section-container">
-        {/* Section Header */}
-        <div class="text-center mb-16">
-            <span
-                class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-electric-purple border border-electric-purple/30 rounded-full"
-            >
-                What We Do
-            </span>
-            <h2 class="text-display-md font-display font-bold text-white mb-4">
-                Our Services
-            </h2>
-            <p class="max-w-2xl mx-auto text-white/70">
-                From initial concept to production scale, we provide
-                comprehensive engineering services to transform your vision into
-                reality.
-            </p>
-        </div>
-
-        {/* Services Grid - Bento Layout */}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {
-                services.map((service, index) => (
-                    <div
-                        class="group relative p-8 rounded-2xl glass-card hover:bg-white/[0.03] transition-all duration-500 border border-glass-border hover:border-white/20"
-                        style={`--service-color: ${service.color}`}
-                    >
-                        {/* Glow Effect on Hover */}
-                        <div
-                            class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                            style={`background: radial-gradient(circle at top left, ${service.color}10, transparent 50%)`}
-                        />
-
-                        {/* Icon */}
-                        <div
-                            class="relative w-14 h-14 rounded-xl flex items-center justify-center mb-6 border-2"
-                            style={`border-color: ${service.color}; background: ${service.color}10`}
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-7 h-7"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke={service.color}
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <path d={iconPaths[service.icon]} />
-                            </svg>
-                        </div>
-
-                        {/* Title */}
-                        <h3 class="relative text-2xl font-display font-semibold text-white mb-3 group-hover:text-cyber-lime transition-colors">
-                            {service.title}
-                        </h3>
-
-                        {/* Description */}
-                        <p class="relative text-white/70 mb-6">
-                            {service.description}
-                        </p>
-
-                        {/* Features */}
-                        <div class="relative grid grid-cols-2 gap-2">
-                            {service.features.map((feature) => (
-                                <div class="flex items-center gap-2">
-                                    <span
-                                        class="w-1.5 h-1.5 rounded-full"
-                                        style={`background: ${service.color}`}
-                                    />
-                                    <span class="text-sm text-white/50">
-                                        {feature}
-                                    </span>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Learn More Link */}
-                        <a
-                            href={`/services#${service.id}`}
-                            class="relative mt-6 inline-flex items-center gap-2 text-sm font-medium transition-colors group/link"
-                            style={`color: ${service.color}`}
-                        >
-                            <span>Learn more</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="w-4 h-4 transition-transform group-hover/link:translate-x-1"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <line x1="5" y1="12" x2="19" y2="12" />
-                                <polyline points="12 5 19 12 12 19" />
-                            </svg>
-                        </a>
-                    </div>
-                ))
-            }
-        </div>
-
-        {/* CTA */}
-        <div class="mt-16 text-center">
-            <a href="/contact" class="btn-brutal text-lg">
-                Start Your Project
-            </a>
-        </div>
+  <div class="section-container">
+    {/* Section Header */}
+    <div class="text-center mb-16">
+      <span
+        class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-electric-purple border border-electric-purple/30 rounded-full"
+      >
+        What We Do
+      </span>
+      <h2 class="text-display-md font-display font-bold text-white mb-4">
+        Our Services
+      </h2>
+      <p class="max-w-2xl mx-auto text-white/70">
+        From initial concept to production scale, we provide comprehensive
+        engineering services to transform your vision into reality.
+      </p>
     </div>
+
+    {/* Services Grid - Bento Layout */}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {
+        services.map((service, index) => (
+          <div
+            class="group relative p-8 rounded-2xl glass-card hover:bg-white/[0.03] transition-all duration-500 border border-glass-border hover:border-white/20"
+            style={`--service-color: ${service.color}`}
+          >
+            {/* Glow Effect on Hover */}
+            <div
+              class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+              style={`background: radial-gradient(circle at top left, ${service.color}10, transparent 50%)`}
+            />
+
+            {/* Icon */}
+            <div
+              class="relative w-14 h-14 rounded-xl flex items-center justify-center mb-6 border-2"
+              style={`border-color: ${service.color}; background: ${service.color}10`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-7 h-7"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={service.color}
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d={iconPaths[service.icon]} />
+              </svg>
+            </div>
+
+            {/* Title */}
+            <h3 class="relative text-2xl font-display font-semibold text-white mb-3 group-hover:text-cyber-lime transition-colors">
+              {service.title}
+            </h3>
+
+            {/* Description */}
+            <p class="relative text-white/70 mb-6">{service.description}</p>
+
+            {/* Features */}
+            <div class="relative grid grid-cols-2 gap-2">
+              {service.features.map((feature) => (
+                <div class="flex items-center gap-2">
+                  <span
+                    class="w-1.5 h-1.5 rounded-full"
+                    style={`background: ${service.color}`}
+                  />
+                  <span class="text-sm text-white/50">{feature}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Learn More Link */}
+            <a
+              href={`/services#${service.id}`}
+              class="relative mt-6 inline-flex items-center gap-2 text-sm font-medium transition-colors group/link"
+              style={`color: ${service.color}`}
+            >
+              <span>Learn more</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4 transition-transform group-hover/link:translate-x-1"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        ))
+      }
+    </div>
+
+    {/* CTA */}
+    <div class="mt-16 text-center">
+      <a href="/contact" class="btn-brutal text-lg"> Start Your Project </a>
+    </div>
+  </div>
 </section>

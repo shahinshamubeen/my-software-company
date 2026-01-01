@@ -74,7 +74,7 @@ export const caseStudies: CaseStudy[] = [
       },
     ],
     testimonial: {
-      quote: 'Apex Labs transformed our ML infrastructure from a liability into a competitive advantage. Our data scientists now ship models 10x faster.',
+      quote: 'WYDGT transformed our ML infrastructure from a liability into a competitive advantage. Our data scientists now ship models 10x faster.',
       author: 'Dr. Sarah Chen',
       role: 'VP of AI',
       company: 'Nexus Technologies',

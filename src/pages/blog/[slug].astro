@@ -6,10 +6,10 @@ import { blogPosts, getPost, getRelatedPosts } from "../../data/blogPosts";
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 
 export const getStaticPaths = (async () => {
-    return blogPosts.map((post) => ({
-        params: { slug: post.id },
-        props: { post },
-    }));
+  return blogPosts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
@@ -17,9 +17,9 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { post } = Astro.props as Props;
 
 const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Blog", href: "/blog" },
-    { label: post.title },
+  { label: "Home", href: "/" },
+  { label: "Blog", href: "/blog" },
+  { label: post.title },
 ];
 
 // Get related posts
@@ -27,304 +27,367 @@ const relatedPosts = getRelatedPosts(post.id, post.category, 3);
 
 // Format date
 function formatDate(dateString: string) {
-    return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    });
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 }
 
 // Simple markdown-like content parsing
 function parseContent(content: string) {
-    return content
-        .trim()
-        .split('\n\n')
-        .map(block => {
-            block = block.trim();
-            
-            // Headers
-            if (block.startsWith('### ')) {
-                return `<h3 class="text-xl font-display font-bold text-white mt-8 mb-4">${block.slice(4)}</h3>`;
+  return content
+    .trim()
+    .split("\n\n")
+    .map((block) => {
+      block = block.trim();
+
+      // Headers
+      if (block.startsWith("### ")) {
+        return `<h3 class="text-xl font-display font-bold text-white mt-8 mb-4">${block.slice(4)}</h3>`;
+      }
+      if (block.startsWith("## ")) {
+        return `<h2 class="text-2xl font-display font-bold text-white mt-10 mb-4">${block.slice(3)}</h2>`;
+      }
+      if (block.startsWith("# ")) {
+        return `<h1 class="text-3xl font-display font-bold text-white mt-12 mb-6">${block.slice(2)}</h1>`;
+      }
+
+      // Blockquotes
+      if (block.startsWith("> ")) {
+        return `<blockquote class="border-l-4 border-cyber-lime/50 pl-6 py-2 my-6 text-lg text-white/80 italic">${block.slice(2)}</blockquote>`;
+      }
+
+      // Code blocks
+      if (block.startsWith("```")) {
+        const lines = block.split("\n");
+        const lang = lines[0].slice(3);
+        const code = lines.slice(1, -1).join("\n");
+        return `<pre class="my-6 p-4 bg-carbon rounded-xl border border-glass-border overflow-x-auto"><code class="text-sm font-mono text-white/80">${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`;
+      }
+
+      // Lists
+      if (block.startsWith("- ")) {
+        const items = block
+          .split("\n")
+          .map((item) => {
+            if (item.startsWith("- ")) {
+              const text = item
+                .slice(2)
+                .replace(
+                  /\*\*(.*?)\*\*/g,
+                  '<strong class="text-white">$1</strong>'
+                );
+              return `<li class="flex items-start gap-3 text-white/70"><span class="text-cyber-lime mt-1.5">•</span><span>${text}</span></li>`;
             }
-            if (block.startsWith('## ')) {
-                return `<h2 class="text-2xl font-display font-bold text-white mt-10 mb-4">${block.slice(3)}</h2>`;
+            return "";
+          })
+          .join("");
+        return `<ul class="my-6 space-y-2">${items}</ul>`;
+      }
+
+      // Numbered lists
+      if (/^\d+\. /.test(block)) {
+        const items = block
+          .split("\n")
+          .map((item, idx) => {
+            const match = item.match(/^\d+\. (.*)/);
+            if (match) {
+              const text = match[1].replace(
+                /\*\*(.*?)\*\*/g,
+                '<strong class="text-white">$1</strong>'
+              );
+              return `<li class="flex items-start gap-3 text-white/70"><span class="text-electric-indigo font-mono text-sm mt-0.5">${idx + 1}.</span><span>${text}</span></li>`;
             }
-            if (block.startsWith('# ')) {
-                return `<h1 class="text-3xl font-display font-bold text-white mt-12 mb-6">${block.slice(2)}</h1>`;
-            }
-            
-            // Blockquotes
-            if (block.startsWith('> ')) {
-                return `<blockquote class="border-l-4 border-cyber-lime/50 pl-6 py-2 my-6 text-lg text-white/80 italic">${block.slice(2)}</blockquote>`;
-            }
-            
-            // Code blocks
-            if (block.startsWith('```')) {
-                const lines = block.split('\n');
-                const lang = lines[0].slice(3);
-                const code = lines.slice(1, -1).join('\n');
-                return `<pre class="my-6 p-4 bg-carbon rounded-xl border border-glass-border overflow-x-auto"><code class="text-sm font-mono text-white/80">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>`;
-            }
-            
-            // Lists
-            if (block.startsWith('- ')) {
-                const items = block.split('\n').map(item => {
-                    if (item.startsWith('- ')) {
-                        const text = item.slice(2).replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>');
-                        return `<li class="flex items-start gap-3 text-white/70"><span class="text-cyber-lime mt-1.5">•</span><span>${text}</span></li>`;
-                    }
-                    return '';
-                }).join('');
-                return `<ul class="my-6 space-y-2">${items}</ul>`;
-            }
-            
-            // Numbered lists
-            if (/^\d+\. /.test(block)) {
-                const items = block.split('\n').map((item, idx) => {
-                    const match = item.match(/^\d+\. (.*)/);
-                    if (match) {
-                        const text = match[1].replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>');
-                        return `<li class="flex items-start gap-3 text-white/70"><span class="text-electric-indigo font-mono text-sm mt-0.5">${idx + 1}.</span><span>${text}</span></li>`;
-                    }
-                    return '';
-                }).join('');
-                return `<ol class="my-6 space-y-2">${items}</ol>`;
-            }
-            
-            // Tables
-            if (block.includes('|')) {
-                const rows = block.split('\n').filter(row => row.trim());
-                const headerRow = rows[0];
-                const dataRows = rows.slice(2); // Skip header and separator
-                
-                const headers = headerRow.split('|').filter(cell => cell.trim()).map(cell => 
-                    `<th class="px-4 py-3 text-left text-sm font-semibold text-white">${cell.trim()}</th>`
-                ).join('');
-                
-                const body = dataRows.map(row => {
-                    const cells = row.split('|').filter(cell => cell.trim()).map(cell =>
-                        `<td class="px-4 py-3 text-sm text-white/70 border-t border-glass-border">${cell.trim()}</td>`
-                    ).join('');
-                    return `<tr>${cells}</tr>`;
-                }).join('');
-                
-                return `<div class="my-6 overflow-x-auto"><table class="w-full bg-carbon rounded-xl border border-glass-border"><thead class="bg-white/5"><tr>${headers}</tr></thead><tbody>${body}</tbody></table></div>`;
-            }
-            
-            // Paragraphs
-            if (block.length > 0) {
-                // Handle inline formatting
-                let formatted = block
-                    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
-                    .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 bg-white/10 rounded text-sm font-mono text-cyber-lime">$1</code>');
-                return `<p class="text-white/70 leading-relaxed my-4">${formatted}</p>`;
-            }
-            
-            return '';
-        })
-        .join('');
+            return "";
+          })
+          .join("");
+        return `<ol class="my-6 space-y-2">${items}</ol>`;
+      }
+
+      // Tables
+      if (block.includes("|")) {
+        const rows = block.split("\n").filter((row) => row.trim());
+        const headerRow = rows[0];
+        const dataRows = rows.slice(2); // Skip header and separator
+
+        const headers = headerRow
+          .split("|")
+          .filter((cell) => cell.trim())
+          .map(
+            (cell) =>
+              `<th class="px-4 py-3 text-left text-sm font-semibold text-white">${cell.trim()}</th>`
+          )
+          .join("");
+
+        const body = dataRows
+          .map((row) => {
+            const cells = row
+              .split("|")
+              .filter((cell) => cell.trim())
+              .map(
+                (cell) =>
+                  `<td class="px-4 py-3 text-sm text-white/70 border-t border-glass-border">${cell.trim()}</td>`
+              )
+              .join("");
+            return `<tr>${cells}</tr>`;
+          })
+          .join("");
+
+        return `<div class="my-6 overflow-x-auto"><table class="w-full bg-carbon rounded-xl border border-glass-border"><thead class="bg-white/5"><tr>${headers}</tr></thead><tbody>${body}</tbody></table></div>`;
+      }
+
+      // Paragraphs
+      if (block.length > 0) {
+        // Handle inline formatting
+        let formatted = block
+          .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+          .replace(
+            /`([^`]+)`/g,
+            '<code class="px-1.5 py-0.5 bg-white/10 rounded text-sm font-mono text-cyber-lime">$1</code>'
+          );
+        return `<p class="text-white/70 leading-relaxed my-4">${formatted}</p>`;
+      }
+
+      return "";
+    })
+    .join("");
 }
 ---
 
 <Layout title={post.title} description={post.excerpt}>
-    {/* Hero */}
-    <section class="pt-32 pb-12 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-30">
-            <div class="absolute top-20 left-1/3 w-96 h-96 bg-electric-indigo/20 rounded-full blur-3xl"></div>
+  {/* Hero */}
+  <section class="pt-32 pb-12 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30">
+      <div
+        class="absolute top-20 left-1/3 w-96 h-96 bg-electric-indigo/20 rounded-full blur-3xl"
+      >
+      </div>
+    </div>
+
+    <div class="section-container relative z-10">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <div class="max-w-3xl mx-auto">
+        {/* Category & Read Time */}
+        <div class="flex items-center gap-4 mb-6">
+          <a
+            href={`/blog?category=${encodeURIComponent(post.category)}`}
+            class="px-3 py-1 text-sm font-mono text-electric-indigo border border-electric-indigo/30 rounded-full hover:bg-electric-indigo/10 transition-colors"
+          >
+            {post.category}
+          </a>
+          <span class="text-white/40">·</span>
+          <span class="text-sm text-white/50">{post.readTime}</span>
+          {
+            post.featured && (
+              <>
+                <span class="text-white/40">·</span>
+                <span class="px-2 py-0.5 text-xs font-mono text-cyber-lime bg-cyber-lime/10 border border-cyber-lime/30 rounded-full">
+                  Featured
+                </span>
+              </>
+            )
+          }
         </div>
 
-        <div class="section-container relative z-10">
-            <Breadcrumb items={breadcrumbItems} />
-            
-            <div class="max-w-3xl mx-auto">
-                {/* Category & Read Time */}
-                <div class="flex items-center gap-4 mb-6">
-                    <a 
-                        href={`/blog?category=${encodeURIComponent(post.category)}`}
-                        class="px-3 py-1 text-sm font-mono text-electric-indigo border border-electric-indigo/30 rounded-full hover:bg-electric-indigo/10 transition-colors"
-                    >
-                        {post.category}
-                    </a>
-                    <span class="text-white/40">·</span>
-                    <span class="text-sm text-white/50">{post.readTime}</span>
-                    {post.featured && (
-                        <>
-                            <span class="text-white/40">·</span>
-                            <span class="px-2 py-0.5 text-xs font-mono text-cyber-lime bg-cyber-lime/10 border border-cyber-lime/30 rounded-full">
-                                Featured
-                            </span>
-                        </>
-                    )}
-                </div>
+        {/* Title */}
+        <h1 class="text-display-lg font-display font-bold text-white mb-6">
+          {post.title}
+        </h1>
 
-                {/* Title */}
-                <h1 class="text-display-lg font-display font-bold text-white mb-6">
-                    {post.title}
-                </h1>
+        {/* Excerpt */}
+        <p class="text-xl text-white/60 mb-8">
+          {post.excerpt}
+        </p>
 
-                {/* Excerpt */}
-                <p class="text-xl text-white/60 mb-8">
-                    {post.excerpt}
-                </p>
-
-                {/* Author & Date */}
-                <div class="flex items-center gap-4 pb-8 border-b border-glass-border">
-                    <div class="w-12 h-12 rounded-full bg-electric-indigo/20 flex items-center justify-center text-electric-indigo font-bold">
-                        {post.author.name.split(' ').map(n => n[0]).join('')}
-                    </div>
-                    <div>
-                        <div class="font-semibold text-white">{post.author.name}</div>
-                        <div class="text-sm text-white/50">{post.author.role} · {formatDate(post.publishedAt)}</div>
-                    </div>
-                </div>
+        {/* Author & Date */}
+        <div class="flex items-center gap-4 pb-8 border-b border-glass-border">
+          <div
+            class="w-12 h-12 rounded-full bg-electric-indigo/20 flex items-center justify-center text-electric-indigo font-bold"
+          >
+            {
+              post.author.name
+                .split(" ")
+                .map((n) => n[0])
+                .join("")
+            }
+          </div>
+          <div>
+            <div class="font-semibold text-white">{post.author.name}</div>
+            <div class="text-sm text-white/50">
+              {post.author.role} · {formatDate(post.publishedAt)}
             </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    {/* Article Content */}
-    <section class="py-12">
+  {/* Article Content */}
+  <section class="py-12">
+    <div class="section-container">
+      <article class="max-w-3xl mx-auto">
+        <div class="prose prose-invert" set:html={parseContent(post.content)} />
+      </article>
+    </div>
+  </section>
+
+  {/* Tags */}
+  <section class="py-8 border-t border-glass-border">
+    <div class="section-container">
+      <div class="max-w-3xl mx-auto">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="text-sm text-white/40">Tags:</span>
+          {
+            post.tags.map((tag) => (
+              <span class="px-3 py-1 text-sm text-white/60 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
+                {tag}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Share */}
+  <section class="py-8">
+    <div class="section-container">
+      <div
+        class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 p-6 rounded-xl glass-card border border-glass-border"
+      >
+        <span class="text-white/60">Enjoyed this article? Share it!</span>
+        <div class="flex items-center gap-3">
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://wydgt.dev/blog/${post.id}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+            aria-label="Share on Twitter"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+              ></path>
+            </svg>
+          </a>
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://wydgt.dev/blog/${post.id}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+            aria-label="Share on LinkedIn"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+              ></path>
+            </svg>
+          </a>
+          <button
+            onclick="navigator.clipboard.writeText(window.location.href); this.innerHTML = '<svg class=\'w-5 h-5 text-cyber-lime\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'currentColor\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M5 13l4 4L19 7\' /></svg>'"
+            class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors"
+            aria-label="Copy link"
+          >
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Related Posts */}
+  {
+    relatedPosts.length > 0 && (
+      <section class="py-16 border-t border-glass-border">
         <div class="section-container">
-            <article class="max-w-3xl mx-auto">
-                <div class="prose prose-invert" set:html={parseContent(post.content)} />
-            </article>
-        </div>
-    </section>
+          <div class="max-w-5xl mx-auto">
+            <h2 class="text-2xl font-display font-bold text-white mb-8">
+              Related Articles
+            </h2>
 
-    {/* Tags */}
-    <section class="py-8 border-t border-glass-border">
-        <div class="section-container">
-            <div class="max-w-3xl mx-auto">
-                <div class="flex flex-wrap items-center gap-3">
-                    <span class="text-sm text-white/40">Tags:</span>
-                    {post.tags.map((tag) => (
-                        <span class="px-3 py-1 text-sm text-white/60 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors">
-                            {tag}
-                        </span>
-                    ))}
-                </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedPosts.map((relatedPost) => (
+                <a
+                  href={`/blog/${relatedPost.id}`}
+                  class="group block rounded-xl overflow-hidden glass-card border border-glass-border hover:border-white/20 transition-all"
+                >
+                  {/* Image placeholder */}
+                  <div class="relative aspect-video overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10" />
+                    <div class="absolute inset-0 grid-lines opacity-20" />
+                  </div>
+
+                  <div class="p-4">
+                    <span class="text-xs text-electric-indigo font-mono uppercase tracking-wide">
+                      {relatedPost.category}
+                    </span>
+                    <h3 class="mt-2 font-display font-semibold text-white group-hover:text-cyber-lime transition-colors line-clamp-2">
+                      {relatedPost.title}
+                    </h3>
+                    <span class="text-xs text-white/40 mt-2 block">
+                      {relatedPost.readTime}
+                    </span>
+                  </div>
+                </a>
+              ))}
             </div>
+          </div>
         </div>
-    </section>
+      </section>
+    )
+  }
 
-    {/* Share */}
-    <section class="py-8">
-        <div class="section-container">
-            <div class="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 p-6 rounded-xl glass-card border border-glass-border">
-                <span class="text-white/60">Enjoyed this article? Share it!</span>
-                <div class="flex items-center gap-3">
-                    <a 
-                        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://apexlabs.dev/blog/${post.id}`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors"
-                        aria-label="Share on Twitter"
-                    >
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                        </svg>
-                    </a>
-                    <a 
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://apexlabs.dev/blog/${post.id}`)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors"
-                        aria-label="Share on LinkedIn"
-                    >
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-                        </svg>
-                    </a>
-                    <button 
-                        onclick="navigator.clipboard.writeText(window.location.href); this.innerHTML = '<svg class=\'w-5 h-5 text-cyber-lime\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'currentColor\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M5 13l4 4L19 7\' /></svg>'"
-                        class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-colors"
-                        aria-label="Copy link"
-                    >
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
+  {/* Newsletter CTA */}
+  <section class="py-24 bg-gradient-to-b from-obsidian via-carbon to-obsidian">
+    <div class="section-container">
+      <div class="max-w-2xl mx-auto text-center">
+        <h2 class="text-display-md font-display font-bold text-white mb-4">
+          Want More Insights?
+        </h2>
+        <p class="text-lg text-white/60 mb-8">
+          Subscribe to get our latest articles delivered to your inbox.
+        </p>
 
-    {/* Related Posts */}
-    {relatedPosts.length > 0 && (
-        <section class="py-16 border-t border-glass-border">
-            <div class="section-container">
-                <div class="max-w-5xl mx-auto">
-                    <h2 class="text-2xl font-display font-bold text-white mb-8">
-                        Related Articles
-                    </h2>
+        <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+          <input
+            type="email"
+            placeholder="Enter your email"
+            class="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-cyber-lime/50 focus:border-cyber-lime/50 transition-all"
+            required
+          />
+          <button
+            type="submit"
+            class="px-6 py-3 bg-cyber-lime text-obsidian font-semibold rounded-lg hover:bg-cyber-lime/90 transition-colors shrink-0"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {relatedPosts.map((relatedPost) => (
-                            <a 
-                                href={`/blog/${relatedPost.id}`}
-                                class="group block rounded-xl overflow-hidden glass-card border border-glass-border hover:border-white/20 transition-all"
-                            >
-                                {/* Image placeholder */}
-                                <div class="relative aspect-video overflow-hidden">
-                                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-white/10"></div>
-                                    <div class="absolute inset-0 grid-lines opacity-20"></div>
-                                </div>
-
-                                <div class="p-4">
-                                    <span class="text-xs text-electric-indigo font-mono uppercase tracking-wide">
-                                        {relatedPost.category}
-                                    </span>
-                                    <h3 class="mt-2 font-display font-semibold text-white group-hover:text-cyber-lime transition-colors line-clamp-2">
-                                        {relatedPost.title}
-                                    </h3>
-                                    <span class="text-xs text-white/40 mt-2 block">
-                                        {relatedPost.readTime}
-                                    </span>
-                                </div>
-                            </a>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
-    )}
-
-    {/* Newsletter CTA */}
-    <section class="py-24 bg-gradient-to-b from-obsidian via-carbon to-obsidian">
-        <div class="section-container">
-            <div class="max-w-2xl mx-auto text-center">
-                <h2 class="text-display-md font-display font-bold text-white mb-4">
-                    Want More Insights?
-                </h2>
-                <p class="text-lg text-white/60 mb-8">
-                    Subscribe to get our latest articles delivered to your inbox.
-                </p>
-
-                <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                    <input 
-                        type="email" 
-                        placeholder="Enter your email"
-                        class="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-cyber-lime/50 focus:border-cyber-lime/50 transition-all"
-                        required
-                    />
-                    <button 
-                        type="submit"
-                        class="px-6 py-3 bg-cyber-lime text-obsidian font-semibold rounded-lg hover:bg-cyber-lime/90 transition-colors shrink-0"
-                    >
-                        Subscribe
-                    </button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <Footer />
+  <Footer />
 </Layout>
 
 <style>
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 </style>

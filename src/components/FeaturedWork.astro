@@ -1,177 +1,177 @@
 ---
 // Featured case studies data
 const caseStudies = [
-    {
-        id: "nexus-ai",
-        title: "Nexus AI Platform",
-        category: "AI & Machine Learning",
-        description:
-            "Enterprise-grade AI orchestration platform serving 10M+ daily predictions",
-        image: "/work/nexus-ai.jpg",
-        stats: {
-            metric: "Latency Reduced",
-            value: "40%",
-        },
-        tags: ["Python", "TensorFlow", "AWS", "Kubernetes"],
-        color: "#00FF9D",
+  {
+    id: "nexus-ai",
+    title: "Nexus AI Platform",
+    category: "AI & Machine Learning",
+    description:
+      "Enterprise-grade AI orchestration platform serving 10M+ daily predictions",
+    image: "/work/nexus-ai.jpg",
+    stats: {
+      metric: "Latency Reduced",
+      value: "40%",
     },
-    {
-        id: "velocity-fintech",
-        title: "Velocity FinTech",
-        category: "Financial Services",
-        description:
-            "Real-time payment processing system handling $2B+ monthly transactions",
-        image: "/work/velocity.jpg",
-        stats: {
-            metric: "Transaction Speed",
-            value: "3x",
-        },
-        tags: ["Go", "PostgreSQL", "Redis", "gRPC"],
-        color: "#6366F1",
+    tags: ["Python", "TensorFlow", "AWS", "Kubernetes"],
+    color: "#00FF9D",
+  },
+  {
+    id: "velocity-fintech",
+    title: "Velocity FinTech",
+    category: "Financial Services",
+    description:
+      "Real-time payment processing system handling $2B+ monthly transactions",
+    image: "/work/velocity.jpg",
+    stats: {
+      metric: "Transaction Speed",
+      value: "3x",
     },
-    {
-        id: "healthbridge",
-        title: "HealthBridge",
-        category: "Healthcare",
-        description:
-            "HIPAA-compliant telemedicine platform connecting 50K+ patients monthly",
-        image: "/work/healthbridge.jpg",
-        stats: {
-            metric: "User Satisfaction",
-            value: "98%",
-        },
-        tags: ["React Native", "Node.js", "MongoDB", "WebRTC"],
-        color: "#BF00FF",
+    tags: ["Go", "PostgreSQL", "Redis", "gRPC"],
+    color: "#6366F1",
+  },
+  {
+    id: "healthbridge",
+    title: "HealthBridge",
+    category: "Healthcare",
+    description:
+      "HIPAA-compliant telemedicine platform connecting 50K+ patients monthly",
+    image: "/work/healthbridge.jpg",
+    stats: {
+      metric: "User Satisfaction",
+      value: "98%",
     },
+    tags: ["React Native", "Node.js", "MongoDB", "WebRTC"],
+    color: "#BF00FF",
+  },
 ];
 ---
 
 <section class="py-24 relative">
-    <div class="section-container">
-        {/* Section Header */}
-        <div
-            class="flex flex-col md:flex-row md:items-end md:justify-between mb-12"
+  <div class="section-container">
+    {/* Section Header */}
+    <div
+      class="flex flex-col md:flex-row md:items-end md:justify-between mb-12"
+    >
+      <div>
+        <span
+          class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-electric-indigo border border-electric-indigo/30 rounded-full"
         >
-            <div>
-                <span
-                    class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-electric-indigo border border-electric-indigo/30 rounded-full"
-                >
-                    Case Studies
-                </span>
-                <h2 class="text-display-md font-display font-bold text-white">
-                    Featured Work
-                </h2>
-            </div>
-            <a
-                href="/work"
-                class="mt-4 md:mt-0 inline-flex items-center gap-2 text-white/70 hover:text-cyber-lime transition-colors group"
-            >
-                <span>View all projects</span>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-5 h-5 transition-transform group-hover:translate-x-1"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                >
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </a>
-        </div>
-
-        {/* Case Studies Grid */}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {
-                caseStudies.map((study, index) => (
-                    <a
-                        href={`/work/${study.id}`}
-                        class="group relative overflow-hidden rounded-2xl bg-carbon border border-glass-border hover:border-white/20 transition-all duration-500 focus-visible:ring-2 focus-visible:ring-cyber-lime focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian"
-                        style={`--accent-color: ${study.color}`}
-                        transition:name={`project-card-${study.id}`}
-                        aria-label={`View case study: ${study.title} - ${study.category}`}
-                    >
-                        {/* Image Placeholder */}
-                        <div class="aspect-[4/3] relative overflow-hidden">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-br from-carbon to-graphite"
-                                style={`background: linear-gradient(135deg, ${study.color}20, transparent)`}
-                            />
-
-                            {/* Placeholder Pattern */}
-                            <div class="absolute inset-0 grid-lines opacity-50" />
-
-                            {/* Hover Overlay */}
-                            <div class="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                                <span class="px-4 py-2 glass-card text-sm font-medium text-white">
-                                    View Case Study
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div class="p-6">
-                            {/* Category */}
-                            <span
-                                class="text-xs font-mono uppercase tracking-wider"
-                                style={`color: ${study.color}`}
-                            >
-                                {study.category}
-                            </span>
-
-                            {/* Title */}
-                            <h3 class="mt-2 text-xl font-display font-semibold text-white group-hover:text-cyber-lime transition-colors">
-                                {study.title}
-                            </h3>
-
-                            {/* Description */}
-                            <p class="mt-2 text-sm text-white/70 line-clamp-2">
-                                {study.description}
-                            </p>
-
-                            {/* Stats Badge */}
-                            <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                                <span
-                                    class="text-2xl font-bold font-mono"
-                                    style={`color: ${study.color}`}
-                                >
-                                    {study.stats.value}
-                                </span>
-                                <span class="text-xs text-white/70 uppercase">
-                                    {study.stats.metric}
-                                </span>
-                            </div>
-
-                            {/* Tags */}
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                {study.tags.map((tag) => (
-                                    <span class="px-2 py-1 text-xs font-mono text-white/40 bg-white/5 rounded">
-                                        {tag}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-
-                        {/* Accent Border on Hover */}
-                        <div
-                            class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                            style={`background: ${study.color}`}
-                        />
-                    </a>
-                ))
-            }
-        </div>
+          Case Studies
+        </span>
+        <h2 class="text-display-md font-display font-bold text-white">
+          Featured Work
+        </h2>
+      </div>
+      <a
+        href="/work"
+        class="mt-4 md:mt-0 inline-flex items-center gap-2 text-white/70 hover:text-cyber-lime transition-colors group"
+      >
+        <span>View all projects</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5 transition-transform group-hover:translate-x-1"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </a>
     </div>
+
+    {/* Case Studies Grid */}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {
+        caseStudies.map((study, index) => (
+          <a
+            href={`/work/${study.id}`}
+            class="group relative overflow-hidden rounded-2xl bg-carbon border border-glass-border hover:border-white/20 transition-all duration-500 focus-visible:ring-2 focus-visible:ring-cyber-lime focus-visible:ring-offset-2 focus-visible:ring-offset-obsidian"
+            style={`--accent-color: ${study.color}`}
+            transition:name={`project-card-${study.id}`}
+            aria-label={`View case study: ${study.title} - ${study.category}`}
+          >
+            {/* Image Placeholder */}
+            <div class="aspect-[4/3] relative overflow-hidden">
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-carbon to-graphite"
+                style={`background: linear-gradient(135deg, ${study.color}20, transparent)`}
+              />
+
+              {/* Placeholder Pattern */}
+              <div class="absolute inset-0 grid-lines opacity-50" />
+
+              {/* Hover Overlay */}
+              <div class="absolute inset-0 bg-obsidian/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span class="px-4 py-2 glass-card text-sm font-medium text-white">
+                  View Case Study
+                </span>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div class="p-6">
+              {/* Category */}
+              <span
+                class="text-xs font-mono uppercase tracking-wider"
+                style={`color: ${study.color}`}
+              >
+                {study.category}
+              </span>
+
+              {/* Title */}
+              <h3 class="mt-2 text-xl font-display font-semibold text-white group-hover:text-cyber-lime transition-colors">
+                {study.title}
+              </h3>
+
+              {/* Description */}
+              <p class="mt-2 text-sm text-white/70 line-clamp-2">
+                {study.description}
+              </p>
+
+              {/* Stats Badge */}
+              <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                <span
+                  class="text-2xl font-bold font-mono"
+                  style={`color: ${study.color}`}
+                >
+                  {study.stats.value}
+                </span>
+                <span class="text-xs text-white/70 uppercase">
+                  {study.stats.metric}
+                </span>
+              </div>
+
+              {/* Tags */}
+              <div class="mt-4 flex flex-wrap gap-2">
+                {study.tags.map((tag) => (
+                  <span class="px-2 py-1 text-xs font-mono text-white/40 bg-white/5 rounded">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Accent Border on Hover */}
+            <div
+              class="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity"
+              style={`background: ${study.color}`}
+            />
+          </a>
+        ))
+      }
+    </div>
+  </div>
 </section>
 
 <style>
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 </style>

@@ -9,47 +9,40 @@ const categories = ["All", ...new Set(caseStudies.map((s) => s.category))];
 ---
 
 <Layout
-    title="Work"
-    description="Explore our portfolio of successful projects across AI, FinTech, Healthcare, and more."
+  title="Work"
+  description="Explore our portfolio of successful projects across AI, FinTech, Healthcare, and more."
 >
-    <section class="pt-32 pb-16">
-        <div class="section-container">
-            {/* Header */}
-            <div class="text-center mb-16">
-                <span
-                    class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-cyber-lime border border-cyber-lime/30 rounded-full"
-                >
-                    Our Portfolio
-                </span>
-                <h1
-                    class="text-display-lg font-display font-bold text-white mb-4"
-                >
-                    Featured Work
-                </h1>
-                <p class="max-w-2xl mx-auto text-white/70">
-                    Real results for ambitious companies. Explore how we've
-                    helped businesses transform their operations and scale their
-                    impact.
-                </p>
-            </div>
+  <section class="pt-32 pb-16">
+    <div class="section-container">
+      {/* Header */}
+      <div class="text-center mb-16">
+        <span
+          class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-cyber-lime border border-cyber-lime/30 rounded-full"
+        >
+          Our Portfolio
+        </span>
+        <h1 class="text-display-lg font-display font-bold text-white mb-4">
+          Featured Work
+        </h1>
+        <p class="max-w-2xl mx-auto text-white/70">
+          Real results for ambitious companies. Explore how we've helped
+          businesses transform their operations and scale their impact.
+        </p>
+      </div>
 
-            {/* Filterable Work Grid */}
-            <WorkGrid 
-                client:load 
-                caseStudies={caseStudies} 
-                categories={categories} 
-            />
-        </div>
-    </section>
+      {/* Filterable Work Grid */}
+      <WorkGrid client:load caseStudies={caseStudies} categories={categories} />
+    </div>
+  </section>
 
-    <Footer />
+  <Footer />
 </Layout>
 
 <style>
-    .line-clamp-2 {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 </style>

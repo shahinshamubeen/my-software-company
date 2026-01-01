@@ -4,114 +4,109 @@ import KineticHeadline from "./KineticHeadline";
 ---
 
 <section
-    class="relative min-h-screen flex items-center justify-center overflow-hidden"
+  class="relative min-h-screen flex items-center justify-center overflow-hidden"
 >
-    <!-- Background Gradient -->
+  <!-- Background Gradient -->
+  <div
+    class="absolute inset-0 bg-gradient-radial from-carbon via-obsidian to-obsidian"
+    aria-hidden="true"
+  >
+  </div>
+
+  <!-- Grid Lines Overlay -->
+  <div class="absolute inset-0 grid-lines opacity-20" aria-hidden="true"></div>
+
+  <!-- Three.js Canvas (Lazy-loaded Island) -->
+  <div class="absolute inset-0 z-0">
+    <HeroCanvas client:visible />
+  </div>
+
+  <!-- Hero Content -->
+  <div class="relative z-10 section-container text-center pointer-events-none">
+    <!-- Eyebrow Tag -->
     <div
-        class="absolute inset-0 bg-gradient-radial from-carbon via-obsidian to-obsidian"
-        aria-hidden="true"
+      class="inline-flex items-center gap-2 px-4 py-2 mb-6 glass-card text-sm font-mono text-cyber-lime"
+    >
+      <span class="w-2 h-2 bg-cyber-lime rounded-full animate-pulse"></span>
+      <span>SOFTWARE DEVELOPMENT AGENCY</span>
+    </div>
+
+    <!-- Main Headline with Kinetic Typography -->
+    <KineticHeadline client:idle />
+
+    <!-- Subheadline -->
+    <p
+      class="max-w-2xl mx-auto mt-6 text-lg sm:text-xl text-white/70 leading-relaxed"
+    >
+      We transform ambitious ideas into
+      <span class="text-cyber-lime">market-leading digital products</span>. From
+      concept to scale, we engineer solutions that define industries.
+    </p>
+
+    <!-- CTA Buttons -->
+    <div
+      class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 pointer-events-auto"
+    >
+      <a href="/work" class="btn-brutal text-lg group">
+        <span class="flex items-center gap-2">
+          View Our Work
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5 transition-transform group-hover:translate-x-1"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </a>
+      <a href="/contact" class="btn-outline text-lg"> Start a Project </a>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div
+    class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60"
+  >
+    <span class="text-xs uppercase tracking-widest">Scroll</span>
+    <div
+      class="w-px h-8 bg-gradient-to-b from-white/60 to-transparent animate-pulse"
     >
     </div>
-
-    <!-- Grid Lines Overlay -->
-    <div class="absolute inset-0 grid-lines opacity-20" aria-hidden="true">
-    </div>
-
-    <!-- Three.js Canvas (Lazy-loaded Island) -->
-    <div class="absolute inset-0 z-0">
-        <HeroCanvas client:visible />
-    </div>
-
-    <!-- Hero Content -->
-    <div
-        class="relative z-10 section-container text-center pointer-events-none"
-    >
-        <!-- Eyebrow Tag -->
-        <div
-            class="inline-flex items-center gap-2 px-4 py-2 mb-6 glass-card text-sm font-mono text-cyber-lime"
-        >
-            <span class="w-2 h-2 bg-cyber-lime rounded-full animate-pulse"
-            ></span>
-            <span>SOFTWARE DEVELOPMENT AGENCY</span>
-        </div>
-
-        <!-- Main Headline with Kinetic Typography -->
-        <KineticHeadline client:idle />
-
-        <!-- Subheadline -->
-        <p
-            class="max-w-2xl mx-auto mt-6 text-lg sm:text-xl text-white/70 leading-relaxed"
-        >
-            We transform ambitious ideas into
-            <span class="text-cyber-lime">market-leading digital products</span
-            >. From concept to scale, we engineer solutions that define
-            industries.
-        </p>
-
-        <!-- CTA Buttons -->
-        <div
-            class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 pointer-events-auto"
-        >
-            <a href="/work" class="btn-brutal text-lg group">
-                <span class="flex items-center gap-2">
-                    View Our Work
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="w-5 h-5 transition-transform group-hover:translate-x-1"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                    </svg>
-                </span>
-            </a>
-            <a href="/contact" class="btn-outline text-lg"> Start a Project </a>
-        </div>
-    </div>
-
-    <!-- Scroll Indicator -->
-    <div
-        class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60"
-    >
-        <span class="text-xs uppercase tracking-widest">Scroll</span>
-        <div
-            class="w-px h-8 bg-gradient-to-b from-white/60 to-transparent animate-pulse"
-        >
-        </div>
-    </div>
+  </div>
 </section>
 
 <style>
-    .bg-gradient-radial {
-        background: radial-gradient(
-            ellipse at center,
-            var(--color-carbon) 0%,
-            var(--color-obsidian) 70%
-        );
-    }
+  .bg-gradient-radial {
+    background: radial-gradient(
+      ellipse at center,
+      var(--color-carbon) 0%,
+      var(--color-obsidian) 70%
+    );
+  }
 
-    .stat-item {
-        position: relative;
-    }
+  .stat-item {
+    position: relative;
+  }
 
-    .stat-item::after {
-        content: "";
-        position: absolute;
-        bottom: -8px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 2px;
-        background: currentColor;
-        transition: width 0.3s ease;
-    }
+  .stat-item::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease;
+  }
 
-    .stat-item:hover::after {
-        width: 100%;
-    }
+  .stat-item:hover::after {
+    width: 100%;
+  }
 </style>

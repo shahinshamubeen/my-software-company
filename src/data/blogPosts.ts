@@ -20,9 +20,10 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    id: 'future-of-ai-agents-2025',
-    title: 'The Future of AI Agents: What to Expect in 2025',
-    excerpt: 'AI agents are evolving from simple chatbots to autonomous systems capable of complex reasoning and action. Here\'s what\'s coming next.',
+    id: "future-of-ai-agents-2025",
+    title: "The Future of AI Agents: What to Expect in 2025",
+    excerpt:
+      "AI agents are evolving from simple chatbots to autonomous systems capable of complex reasoning and action. Here's what's coming next.",
     content: `
 # The Future of AI Agents: What to Expect in 2025
 
@@ -59,26 +60,27 @@ Organizations that embrace agentic AI early will gain significant competitive ad
 - **Enhanced customer experiences** via intelligent, proactive support
 - **Data-driven decision making** at unprecedented speed and scale
 
-## Our Approach at Apex Labs
+## Our Approach at WYDGT
 
 We're not just observers of this revolution—we're active participants. Our AI engineering team is building custom agent architectures for clients across industries, from autonomous code review systems to intelligent document processing pipelines.
 
 The future isn't just about having AI—it's about having AI that can act intelligently on your behalf.
     `,
-    category: 'AI & Technology',
+    category: "AI & Technology",
     author: {
-      name: 'Marcus Chen',
-      role: 'Head of AI Research',
+      name: "Marcus Chen",
+      role: "Head of AI Research",
     },
-    publishedAt: '2024-12-28',
-    readTime: '8 min read',
-    tags: ['AI', 'Machine Learning', 'Future Tech', 'Agents'],
+    publishedAt: "2024-12-28",
+    readTime: "8 min read",
+    tags: ["AI", "Machine Learning", "Future Tech", "Agents"],
     featured: true,
   },
   {
-    id: 'building-scalable-saas-architecture',
-    title: 'Building Scalable SaaS Architecture: Lessons from 50+ Projects',
-    excerpt: 'After building dozens of SaaS platforms, we\'ve learned what works—and what doesn\'t. Here\'s our comprehensive guide to scalable architecture.',
+    id: "building-scalable-saas-architecture",
+    title: "Building Scalable SaaS Architecture: Lessons from 50+ Projects",
+    excerpt:
+      "After building dozens of SaaS platforms, we've learned what works—and what doesn't. Here's our comprehensive guide to scalable architecture.",
     content: `
 # Building Scalable SaaS Architecture: Lessons from 50+ Projects
 
@@ -133,20 +135,21 @@ You can't scale what you can't see. Our stack:
 
 Scalability isn't about using the latest tech—it's about making intentional architectural decisions that match your growth trajectory.
     `,
-    category: 'Engineering',
+    category: "Engineering",
     author: {
-      name: 'Sarah Mitchell',
-      role: 'Principal Architect',
+      name: "Sarah Mitchell",
+      role: "Principal Architect",
     },
-    publishedAt: '2024-12-20',
-    readTime: '12 min read',
-    tags: ['Architecture', 'SaaS', 'Scalability', 'DevOps'],
+    publishedAt: "2024-12-20",
+    readTime: "12 min read",
+    tags: ["Architecture", "SaaS", "Scalability", "DevOps"],
     featured: true,
   },
   {
-    id: 'design-systems-that-scale',
-    title: 'Design Systems That Actually Scale: A Practical Guide',
-    excerpt: 'Most design systems fail. Here\'s how we build ones that last—complete with real examples and common pitfalls to avoid.',
+    id: "design-systems-that-scale",
+    title: "Design Systems That Actually Scale: A Practical Guide",
+    excerpt:
+      "Most design systems fail. Here's how we build ones that last—complete with real examples and common pitfalls to avoid.",
     content: `
 # Design Systems That Actually Scale
 
@@ -200,20 +203,21 @@ For a recent fintech client, our design system delivered:
 
 The key insight: design systems are products, not projects. They need continuous investment and dedicated ownership to thrive.
     `,
-    category: 'Design',
+    category: "Design",
     author: {
-      name: 'Alex Rivera',
-      role: 'Design Director',
+      name: "Alex Rivera",
+      role: "Design Director",
     },
-    publishedAt: '2024-12-15',
-    readTime: '10 min read',
-    tags: ['Design Systems', 'UI/UX', 'Figma', 'Components'],
+    publishedAt: "2024-12-15",
+    readTime: "10 min read",
+    tags: ["Design Systems", "UI/UX", "Figma", "Components"],
     featured: false,
   },
   {
-    id: 'typescript-best-practices-2024',
-    title: 'TypeScript Best Practices for Large-Scale Applications',
-    excerpt: 'TypeScript at scale requires discipline. Learn the patterns and practices we use to keep codebases maintainable as they grow.',
+    id: "typescript-best-practices-2024",
+    title: "TypeScript Best Practices for Large-Scale Applications",
+    excerpt:
+      "TypeScript at scale requires discipline. Learn the patterns and practices we use to keep codebases maintainable as they grow.",
     content: `
 # TypeScript Best Practices for Large-Scale Applications
 
@@ -291,20 +295,21 @@ function assertNever(x: never): never {
 
 Great TypeScript code reads like well-documented JavaScript. The types tell the story.
     `,
-    category: 'Engineering',
+    category: "Engineering",
     author: {
-      name: 'Jordan Lee',
-      role: 'Senior Engineer',
+      name: "Jordan Lee",
+      role: "Senior Engineer",
     },
-    publishedAt: '2024-12-10',
-    readTime: '9 min read',
-    tags: ['TypeScript', 'JavaScript', 'Best Practices', 'Code Quality'],
+    publishedAt: "2024-12-10",
+    readTime: "9 min read",
+    tags: ["TypeScript", "JavaScript", "Best Practices", "Code Quality"],
     featured: false,
   },
   {
-    id: 'startup-tech-stack-2025',
-    title: 'The Optimal Startup Tech Stack for 2025',
-    excerpt: 'Choosing the right tech stack can make or break your startup. Here\'s our opinionated guide based on hundreds of projects.',
+    id: "startup-tech-stack-2025",
+    title: "The Optimal Startup Tech Stack for 2025",
+    excerpt:
+      "Choosing the right tech stack can make or break your startup. Here's our opinionated guide based on hundreds of projects.",
     content: `
 # The Optimal Startup Tech Stack for 2025
 
@@ -360,20 +365,21 @@ The best tech stack is:
 
 Save your innovation budget for your product, not your infrastructure.
     `,
-    category: 'Startups',
+    category: "Startups",
     author: {
-      name: 'Marcus Chen',
-      role: 'Head of AI Research',
+      name: "Marcus Chen",
+      role: "Head of AI Research",
     },
-    publishedAt: '2024-12-05',
-    readTime: '7 min read',
-    tags: ['Startups', 'Tech Stack', 'Next.js', 'Infrastructure'],
+    publishedAt: "2024-12-05",
+    readTime: "7 min read",
+    tags: ["Startups", "Tech Stack", "Next.js", "Infrastructure"],
     featured: false,
   },
   {
-    id: 'ux-patterns-fintech',
-    title: 'UX Patterns for Fintech: Building Trust Through Design',
-    excerpt: 'Fintech products handle sensitive data and real money. Here\'s how we design interfaces that build confidence and reduce anxiety.',
+    id: "ux-patterns-fintech",
+    title: "UX Patterns for Fintech: Building Trust Through Design",
+    excerpt:
+      "Fintech products handle sensitive data and real money. Here's how we design interfaces that build confidence and reduce anxiety.",
     content: `
 # UX Patterns for Fintech: Building Trust Through Design
 
@@ -437,37 +443,45 @@ For a recent banking client, our UX redesign delivered:
 
 Great fintech UX isn't about looking modern—it's about making users feel safe and in control.
     `,
-    category: 'Design',
+    category: "Design",
     author: {
-      name: 'Alex Rivera',
-      role: 'Design Director',
+      name: "Alex Rivera",
+      role: "Design Director",
     },
-    publishedAt: '2024-11-28',
-    readTime: '11 min read',
-    tags: ['Fintech', 'UX Design', 'Trust', 'Accessibility'],
+    publishedAt: "2024-11-28",
+    readTime: "11 min read",
+    tags: ["Fintech", "UX Design", "Trust", "Accessibility"],
     featured: false,
   },
 ];
 
-export const categories = [...new Set(blogPosts.map(post => post.category))];
+export const categories = [...new Set(blogPosts.map((post) => post.category))];
 
 export function getPostsByCategory(category: string): BlogPost[] {
-  return blogPosts.filter(post => post.category === category);
+  return blogPosts.filter((post) => post.category === category);
 }
 
 export function getFeaturedPosts(): BlogPost[] {
-  return blogPosts.filter(post => post.featured);
+  return blogPosts.filter((post) => post.featured);
 }
 
 export function getPost(id: string): BlogPost | undefined {
-  return blogPosts.find(post => post.id === id);
+  return blogPosts.find((post) => post.id === id);
 }
 
-export function getRelatedPosts(currentId: string, category: string, limit: number = 3): BlogPost[] {
+export function getRelatedPosts(
+  currentId: string,
+  category: string,
+  limit: number = 3
+): BlogPost[] {
   return blogPosts
-    .filter(post => post.id !== currentId)
-    .filter(post => post.category === category || post.tags.some(tag => 
-      blogPosts.find(p => p.id === currentId)?.tags.includes(tag)
-    ))
+    .filter((post) => post.id !== currentId)
+    .filter(
+      (post) =>
+        post.category === category ||
+        post.tags.some((tag) =>
+          blogPosts.find((p) => p.id === currentId)?.tags.includes(tag)
+        )
+    )
     .slice(0, limit);
 }

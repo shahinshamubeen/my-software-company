@@ -5,115 +5,120 @@ import Navigation from "../components/Navigation.astro";
 import ExitIntent from "../components/ExitIntent";
 
 export interface Props {
-    title: string;
-    description?: string;
-    image?: string;
+  title: string;
+  description?: string;
+  image?: string;
 }
 
 const {
-    title,
-    description = "Apex Labs - We engineer reality. A cutting-edge software development agency building the future through innovative technology solutions.",
-    image = "/og-image.png",
+  title,
+  description = "WYDGT - Where Your Digital Goals Transform. A cutting-edge software development agency building the future through innovative technology solutions.",
+  image = "/og-image.png",
 } = Astro.props;
 
 const canonicalURL = Astro.site
-    ? new URL(Astro.url.pathname, Astro.site)
-    : Astro.url;
+  ? new URL(Astro.url.pathname, Astro.site)
+  : Astro.url;
 ---
 
 <!doctype html>
 <html lang="en" class="dark">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-        <!-- SEO Meta Tags -->
-        <title>{title} | Apex Labs</title>
-        <meta name="description" content={description} />
-        <link rel="canonical" href={canonicalURL} />
+    <!-- SEO Meta Tags -->
+    <title>{title} | WYDGT</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={canonicalURL} />
-        <meta property="og:title" content={`${title} | Apex Labs`} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={image} />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={`${title} | WYDGT`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content={canonicalURL} />
-        <meta property="twitter:title" content={`${title} | Apex Labs`} />
-        <meta property="twitter:description" content={description} />
-        <meta property="twitter:image" content={image} />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={`${title} | WYDGT`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={image} />
 
-        <!-- Theme Color -->
-        <meta name="theme-color" content="#050505" />
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#050505" />
 
-        <!-- Preconnect and DNS Prefetch for Google Fonts -->
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        
-        <!-- Preload critical fonts for faster LCP -->
-        <link 
-            rel="preload" 
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" 
-            as="style"
-        />
-        <link 
-            rel="stylesheet" 
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-            media="print"
-            onload="this.media='all'"
-        />
-        <noscript>
-            <link 
-                rel="stylesheet" 
-                href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
-            />
-        </noscript>
+    <!-- Preconnect and DNS Prefetch for Google Fonts -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-        <!-- Generator -->
-        <meta name="generator" content={Astro.generator} />
+    <!-- Preload critical fonts for faster LCP -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      as="style"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      />
+    </noscript>
 
-        <!-- View Transitions -->
-        <ClientRouter />
-    </head>
-    <body class="bg-obsidian text-white min-h-screen overflow-x-hidden">
-        <!-- Skip Link for Accessibility -->
-        <a
-            href="#main-content"
-            class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyber-lime focus:text-obsidian focus:font-semibold focus:rounded-lg focus:outline-none"
-        >
-            Skip to main content
-        </a>
+    <!-- Generator -->
+    <meta name="generator" content={Astro.generator} />
 
-        <!-- Main Content -->
-        <main id="main-content" transition:animate="fade" class="relative" role="main">
-            <slot />
-        </main>
+    <!-- View Transitions -->
+    <ClientRouter />
+  </head>
+  <body class="bg-obsidian text-white min-h-screen overflow-x-hidden">
+    <!-- Skip Link for Accessibility -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyber-lime focus:text-obsidian focus:font-semibold focus:rounded-lg focus:outline-none"
+    >
+      Skip to main content
+    </a>
 
-        <!-- Persistent Navigation -->
-        <Navigation transition:persist aria-label="Main navigation" />
+    <!-- Main Content -->
+    <main
+      id="main-content"
+      transition:animate="fade"
+      class="relative"
+      role="main"
+    >
+      <slot />
+    </main>
 
-        <!-- Exit Intent Newsletter Popup -->
-        <ExitIntent client:idle delay={10000} />
+    <!-- Persistent Navigation -->
+    <Navigation transition:persist aria-label="Main navigation" />
 
-        <!-- Background Grid Effect -->
-        <div
-            class="fixed inset-0 pointer-events-none z-0 dot-matrix opacity-30"
-            aria-hidden="true"
-        >
-        </div>
-    </body>
+    <!-- Exit Intent Newsletter Popup -->
+    <ExitIntent client:idle delay={10000} />
+
+    <!-- Background Grid Effect -->
+    <div
+      class="fixed inset-0 pointer-events-none z-0 dot-matrix opacity-30"
+      aria-hidden="true"
+    >
+    </div>
+  </body>
 </html>
 
 <style>
-    /* Ensure content is above the background grid */
-    main {
-        position: relative;
-        z-index: 1;
-    }
+  /* Ensure content is above the background grid */
+  main {
+    position: relative;
+    z-index: 1;
+  }
 </style>

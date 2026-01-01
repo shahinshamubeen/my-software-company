@@ -6,10 +6,10 @@ import { jobs, getJob } from "../../data/jobs";
 import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 
 export const getStaticPaths = (async () => {
-    return jobs.map((job) => ({
-        params: { slug: job.id },
-        props: { job },
-    }));
+  return jobs.map((job) => ({
+    params: { slug: job.id },
+    props: { job },
+  }));
 }) satisfies GetStaticPaths;
 
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
@@ -17,267 +17,364 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 const { job } = Astro.props as Props;
 
 const breadcrumbItems = [
-    { label: "Home", href: "/" },
-    { label: "Careers", href: "/careers" },
-    { label: job.title },
+  { label: "Home", href: "/" },
+  { label: "Careers", href: "/careers" },
+  { label: job.title },
 ];
 
 // Format date
-const postedDate = new Date(job.posted).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+const postedDate = new Date(job.posted).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
 });
 
 // Related jobs in same department
-const relatedJobs = jobs.filter(j => j.department === job.department && j.id !== job.id).slice(0, 2);
+const relatedJobs = jobs
+  .filter((j) => j.department === job.department && j.id !== job.id)
+  .slice(0, 2);
 ---
 
 <Layout title={`${job.title} - Careers`} description={job.description}>
-    {/* Hero */}
-    <section class="pt-32 pb-16 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-20">
-            <div class="absolute top-20 right-1/4 w-96 h-96 bg-cyber-lime/20 rounded-full blur-3xl"></div>
+  {/* Hero */}
+  <section class="pt-32 pb-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+      <div
+        class="absolute top-20 right-1/4 w-96 h-96 bg-cyber-lime/20 rounded-full blur-3xl"
+      >
+      </div>
+    </div>
+
+    <div class="section-container relative z-10">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <div class="max-w-4xl">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span
+            class="px-3 py-1 text-xs font-mono uppercase tracking-widest text-electric-indigo border border-electric-indigo/30 rounded-full"
+          >
+            {job.department}
+          </span>
+          <span
+            class="px-3 py-1 text-xs font-mono bg-white/5 text-white/60 rounded-full"
+          >
+            {job.remote}
+          </span>
+          <span
+            class="px-3 py-1 text-xs font-mono bg-white/5 text-white/60 rounded-full"
+          >
+            {job.type}
+          </span>
         </div>
 
-        <div class="section-container relative z-10">
-            <Breadcrumb items={breadcrumbItems} />
-            
-            <div class="max-w-4xl">
-                <div class="flex flex-wrap items-center gap-3 mb-4">
-                    <span class="px-3 py-1 text-xs font-mono uppercase tracking-widest text-electric-indigo border border-electric-indigo/30 rounded-full">
-                        {job.department}
-                    </span>
-                    <span class="px-3 py-1 text-xs font-mono bg-white/5 text-white/60 rounded-full">
-                        {job.remote}
-                    </span>
-                    <span class="px-3 py-1 text-xs font-mono bg-white/5 text-white/60 rounded-full">
-                        {job.type}
-                    </span>
-                </div>
+        <h1 class="text-display-lg font-display font-bold text-white mb-6">
+          {job.title}
+        </h1>
 
-                <h1 class="text-display-lg font-display font-bold text-white mb-6">
-                    {job.title}
-                </h1>
+        <div class="flex flex-wrap items-center gap-6 text-white/60 mb-8">
+          <span class="flex items-center gap-2">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              ></path>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            {job.location}
+          </span>
+          <span class="flex items-center gap-2">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              ></path>
+            </svg>
+            {job.experience}
+          </span>
+          <span class="flex items-center gap-2 text-cyber-lime font-mono">
+            <svg
+              class="w-5 h-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+            {job.salary}
+          </span>
+        </div>
 
-                <div class="flex flex-wrap items-center gap-6 text-white/60 mb-8">
-                    <span class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        {job.location}
-                    </span>
-                    <span class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                        </svg>
-                        {job.experience}
-                    </span>
-                    <span class="flex items-center gap-2 text-cyber-lime font-mono">
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        {job.salary}
-                    </span>
-                </div>
+        <p class="text-lg text-white/60 mb-8">
+          Posted {postedDate}
+        </p>
 
-                <p class="text-lg text-white/60 mb-8">
-                    Posted {postedDate}
-                </p>
+        <a
+          href={`mailto:careers@wydgt.dev?subject=Application: ${job.title}`}
+          class="btn-brutal inline-flex items-center gap-2"
+        >
+          Apply for This Role
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
 
-                <a 
-                    href={`mailto:careers@apexlabs.dev?subject=Application: ${job.title}`}
-                    class="btn-brutal inline-flex items-center gap-2"
-                >
-                    Apply for This Role
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+  {/* Job Details */}
+  <section class="py-16">
+    <div class="section-container">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        {/* Main Content */}
+        <div class="lg:col-span-2 space-y-12">
+          {/* About the Role */}
+          <div>
+            <h2 class="text-2xl font-display font-bold text-white mb-4">
+              About the Role
+            </h2>
+            <p class="text-white/70 leading-relaxed">
+              {job.description}
+            </p>
+          </div>
+
+          {/* Responsibilities */}
+          <div>
+            <h2 class="text-2xl font-display font-bold text-white mb-4">
+              What You'll Do
+            </h2>
+            <ul class="space-y-3">
+              {
+                job.responsibilities.map((item) => (
+                  <li class="flex items-start gap-3 text-white/70">
+                    <svg
+                      class="w-5 h-5 mt-0.5 text-cyber-lime shrink-0"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                      />
                     </svg>
-                </a>
-            </div>
-        </div>
-    </section>
+                    {item}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
 
-    {/* Job Details */}
-    <section class="py-16">
-        <div class="section-container">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-                {/* Main Content */}
-                <div class="lg:col-span-2 space-y-12">
-                    {/* About the Role */}
-                    <div>
-                        <h2 class="text-2xl font-display font-bold text-white mb-4">
-                            About the Role
-                        </h2>
-                        <p class="text-white/70 leading-relaxed">
-                            {job.description}
-                        </p>
-                    </div>
+          {/* Requirements */}
+          <div>
+            <h2 class="text-2xl font-display font-bold text-white mb-4">
+              What You'll Bring
+            </h2>
+            <ul class="space-y-3">
+              {
+                job.requirements.map((item) => (
+                  <li class="flex items-start gap-3 text-white/70">
+                    <svg
+                      class="w-5 h-5 mt-0.5 text-electric-indigo shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                    {item}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
 
-                    {/* Responsibilities */}
-                    <div>
-                        <h2 class="text-2xl font-display font-bold text-white mb-4">
-                            What You'll Do
-                        </h2>
-                        <ul class="space-y-3">
-                            {job.responsibilities.map((item) => (
-                                <li class="flex items-start gap-3 text-white/70">
-                                    <svg class="w-5 h-5 mt-0.5 text-cyber-lime shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                    </svg>
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Requirements */}
-                    <div>
-                        <h2 class="text-2xl font-display font-bold text-white mb-4">
-                            What You'll Bring
-                        </h2>
-                        <ul class="space-y-3">
-                            {job.requirements.map((item) => (
-                                <li class="flex items-start gap-3 text-white/70">
-                                    <svg class="w-5 h-5 mt-0.5 text-electric-indigo shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-
-                    {/* Nice to Have */}
-                    {job.niceToHave.length > 0 && (
-                        <div>
-                            <h2 class="text-2xl font-display font-bold text-white mb-4">
-                                Nice to Have
-                            </h2>
-                            <ul class="space-y-3">
-                                {job.niceToHave.map((item) => (
-                                    <li class="flex items-start gap-3 text-white/70">
-                                        <svg class="w-5 h-5 mt-0.5 text-electric-purple shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                                        </svg>
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-                </div>
-
-                {/* Sidebar */}
-                <div class="space-y-8">
-                    {/* Apply Card */}
-                    <div class="p-6 rounded-xl glass-card border border-glass-border sticky top-8">
-                        <h3 class="font-display font-semibold text-white mb-4">
-                            Interested in this role?
-                        </h3>
-                        <p class="text-sm text-white/60 mb-6">
-                            Send us your resume and a brief note about why you'd be great for this position.
-                        </p>
-                        <a 
-                            href={`mailto:careers@apexlabs.dev?subject=Application: ${job.title}`}
-                            class="block w-full py-3 px-6 bg-cyber-lime text-obsidian font-semibold rounded-lg text-center hover:bg-cyber-lime/90 transition-colors"
-                        >
-                            Apply Now
-                        </a>
-                        <p class="text-xs text-white/40 text-center mt-4">
-                            We typically respond within 48 hours
-                        </p>
-                    </div>
-
-                    {/* Quick Facts */}
-                    <div class="p-6 rounded-xl glass-card border border-glass-border">
-                        <h3 class="font-display font-semibold text-white mb-4">
-                            Quick Facts
-                        </h3>
-                        <dl class="space-y-4">
-                            <div class="flex justify-between">
-                                <dt class="text-white/60">Department</dt>
-                                <dd class="text-white font-medium">{job.department}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="text-white/60">Location</dt>
-                                <dd class="text-white font-medium">{job.location}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="text-white/60">Work Type</dt>
-                                <dd class="text-white font-medium">{job.remote}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="text-white/60">Employment</dt>
-                                <dd class="text-white font-medium">{job.type}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="text-white/60">Experience</dt>
-                                <dd class="text-white font-medium">{job.experience}</dd>
-                            </div>
-                            <div class="flex justify-between border-t border-glass-border pt-4">
-                                <dt class="text-white/60">Salary</dt>
-                                <dd class="text-cyber-lime font-mono font-medium">{job.salary}</dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {/* Related Positions */}
-    {relatedJobs.length > 0 && (
-        <section class="py-16 border-t border-glass-border">
-            <div class="section-container">
-                <h2 class="text-2xl font-display font-bold text-white mb-8">
-                    Other Positions in {job.department}
+          {/* Nice to Have */}
+          {
+            job.niceToHave.length > 0 && (
+              <div>
+                <h2 class="text-2xl font-display font-bold text-white mb-4">
+                  Nice to Have
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {relatedJobs.map((relatedJob) => (
-                        <a 
-                            href={`/careers/${relatedJob.id}`}
-                            class="p-6 rounded-xl glass-card border border-glass-border hover:border-cyber-lime/30 transition-all group"
-                        >
-                            <h3 class="text-xl font-display font-semibold text-white group-hover:text-cyber-lime transition-colors mb-2">
-                                {relatedJob.title}
-                            </h3>
-                            <div class="flex flex-wrap items-center gap-3 text-sm text-white/60">
-                                <span>{relatedJob.location}</span>
-                                <span class="px-2 py-0.5 bg-white/5 rounded-full text-xs">
-                                    {relatedJob.remote}
-                                </span>
-                                <span class="text-cyber-lime font-mono">
-                                    {relatedJob.salary}
-                                </span>
-                            </div>
-                        </a>
-                    ))}
-                </div>
-            </div>
-        </section>
-    )}
-
-    {/* CTA */}
-    <section class="py-24 bg-gradient-to-b from-obsidian via-carbon to-obsidian">
-        <div class="section-container">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-display-md font-display font-bold text-white mb-6">
-                    Ready to Apply?
-                </h2>
-                <p class="text-xl text-white/60 mb-8">
-                    Join our team and help build the future of software development.
-                </p>
-                <a 
-                    href={`mailto:careers@apexlabs.dev?subject=Application: ${job.title}`}
-                    class="btn-brutal text-lg"
-                >
-                    Apply for {job.title}
-                </a>
-            </div>
+                <ul class="space-y-3">
+                  {job.niceToHave.map((item) => (
+                    <li class="flex items-start gap-3 text-white/70">
+                      <svg
+                        class="w-5 h-5 mt-0.5 text-electric-purple shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                        />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
         </div>
-    </section>
 
-    <Footer />
+        {/* Sidebar */}
+        <div class="space-y-8">
+          {/* Apply Card */}
+          <div
+            class="p-6 rounded-xl glass-card border border-glass-border sticky top-8"
+          >
+            <h3 class="font-display font-semibold text-white mb-4">
+              Interested in this role?
+            </h3>
+            <p class="text-sm text-white/60 mb-6">
+              Send us your resume and a brief note about why you'd be great for
+              this position.
+            </p>
+            <a
+              href={`mailto:careers@wydgt.dev?subject=Application: ${job.title}`}
+              class="block w-full py-3 px-6 bg-cyber-lime text-obsidian font-semibold rounded-lg text-center hover:bg-cyber-lime/90 transition-colors"
+            >
+              Apply Now
+            </a>
+            <p class="text-xs text-white/40 text-center mt-4">
+              We typically respond within 48 hours
+            </p>
+          </div>
+
+          {/* Quick Facts */}
+          <div class="p-6 rounded-xl glass-card border border-glass-border">
+            <h3 class="font-display font-semibold text-white mb-4">
+              Quick Facts
+            </h3>
+            <dl class="space-y-4">
+              <div class="flex justify-between">
+                <dt class="text-white/60">Department</dt>
+                <dd class="text-white font-medium">{job.department}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-white/60">Location</dt>
+                <dd class="text-white font-medium">{job.location}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-white/60">Work Type</dt>
+                <dd class="text-white font-medium">{job.remote}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-white/60">Employment</dt>
+                <dd class="text-white font-medium">{job.type}</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-white/60">Experience</dt>
+                <dd class="text-white font-medium">{job.experience}</dd>
+              </div>
+              <div
+                class="flex justify-between border-t border-glass-border pt-4"
+              >
+                <dt class="text-white/60">Salary</dt>
+                <dd class="text-cyber-lime font-mono font-medium">
+                  {job.salary}
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* Related Positions */}
+  {
+    relatedJobs.length > 0 && (
+      <section class="py-16 border-t border-glass-border">
+        <div class="section-container">
+          <h2 class="text-2xl font-display font-bold text-white mb-8">
+            Other Positions in {job.department}
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {relatedJobs.map((relatedJob) => (
+              <a
+                href={`/careers/${relatedJob.id}`}
+                class="p-6 rounded-xl glass-card border border-glass-border hover:border-cyber-lime/30 transition-all group"
+              >
+                <h3 class="text-xl font-display font-semibold text-white group-hover:text-cyber-lime transition-colors mb-2">
+                  {relatedJob.title}
+                </h3>
+                <div class="flex flex-wrap items-center gap-3 text-sm text-white/60">
+                  <span>{relatedJob.location}</span>
+                  <span class="px-2 py-0.5 bg-white/5 rounded-full text-xs">
+                    {relatedJob.remote}
+                  </span>
+                  <span class="text-cyber-lime font-mono">
+                    {relatedJob.salary}
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  {/* CTA */}
+  <section class="py-24 bg-gradient-to-b from-obsidian via-carbon to-obsidian">
+    <div class="section-container">
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-display-md font-display font-bold text-white mb-6">
+          Ready to Apply?
+        </h2>
+        <p class="text-xl text-white/60 mb-8">
+          Join our team and help build the future of software development.
+        </p>
+        <a
+          href={`mailto:careers@wydgt.dev?subject=Application: ${job.title}`}
+          class="btn-brutal text-lg"
+        >
+          Apply for {job.title}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
 </Layout>

@@ -1,6 +1,6 @@
-import { useState, useMemo } from 'react';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import type { CaseStudy } from '../data/caseStudies';
+import { useState, useMemo } from "react";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
+import type { CaseStudy } from "../data/caseStudies";
 
 interface WorkGridProps {
   caseStudies: CaseStudy[];
@@ -8,19 +8,24 @@ interface WorkGridProps {
 }
 
 export default function WorkGrid({ caseStudies, categories }: WorkGridProps) {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [sortBy, setSortBy] = useState<'default' | 'name' | 'category'>('default');
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [sortBy, setSortBy] = useState<"default" | "name" | "category">(
+    "default"
+  );
 
   // Filter and sort case studies
   const filteredStudies = useMemo(() => {
-    let studies = activeCategory === 'All'
-      ? caseStudies
-      : caseStudies.filter(s => s.category === activeCategory);
+    let studies =
+      activeCategory === "All"
+        ? caseStudies
+        : caseStudies.filter((s) => s.category === activeCategory);
 
-    if (sortBy === 'name') {
+    if (sortBy === "name") {
       studies = [...studies].sort((a, b) => a.title.localeCompare(b.title));
-    } else if (sortBy === 'category') {
-      studies = [...studies].sort((a, b) => a.category.localeCompare(b.category));
+    } else if (sortBy === "category") {
+      studies = [...studies].sort((a, b) =>
+        a.category.localeCompare(b.category)
+      );
     }
 
     return studies;
@@ -29,7 +34,7 @@ export default function WorkGrid({ caseStudies, categories }: WorkGridProps) {
   // Count projects per category
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { All: caseStudies.length };
-    caseStudies.forEach(study => {
+    caseStudies.forEach((study) => {
       counts[study.category] = (counts[study.category] || 0) + 1;
     });
     return counts;
@@ -40,7 +45,11 @@ export default function WorkGrid({ caseStudies, categories }: WorkGridProps) {
       {/* Filter Controls */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
         {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-2" role="tablist" aria-label="Filter projects by category">
+        <div
+          className="flex flex-wrap justify-center gap-2"
+          role="tablist"
+          aria-label="Filter projects by category"
+        >
           {categories.map((category) => (
             <button
               key={category}
@@ -48,23 +57,27 @@ export default function WorkGrid({ caseStudies, categories }: WorkGridProps) {
               className={`
                 px-4 py-2 rounded-lg font-mono text-sm transition-all duration-200 border
                 flex items-center gap-2
-                ${activeCategory === category
-                  ? 'bg-cyber-lime text-obsidian border-cyber-lime'
-                  : 'border-white/20 text-white/70 hover:border-white/40 hover:text-white'
+                ${
+                  activeCategory === category
+                    ? "bg-cyber-lime text-obsidian border-cyber-lime"
+                    : "border-white/20 text-white/70 hover:border-white/40 hover:text-white"
                 }
               `}
               role="tab"
-              aria-selected={activeCategory === category}
+              aria-selected={activeCategory === category ? "true" : "false"}
               aria-controls="projects-grid"
             >
               {category}
-              <span className={`
+              <span
+                className={`
                 text-xs px-1.5 py-0.5 rounded-full
-                ${activeCategory === category
-                  ? 'bg-obsidian/20 text-obsidian'
-                  : 'bg-white/10 text-white/50'
+                ${
+                  activeCategory === category
+                    ? "bg-obsidian/20 text-obsidian"
+                    : "bg-white/10 text-white/50"
                 }
-              `}>
+              `}
+              >
                 {categoryCounts[category] || 0}
               </span>
             </button>
@@ -73,25 +86,40 @@ export default function WorkGrid({ caseStudies, categories }: WorkGridProps) {
 
         {/* Sort Dropdown */}
         <div className="flex items-center gap-2">
-          <label htmlFor="sort-select" className="text-sm text-white/50">Sort:</label>
+          <label htmlFor="sort-select" className="text-sm text-white/50">
+            Sort:
+          </label>
           <select
             id="sort-select"
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
             className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-sm text-white focus:outline-none focus:border-cyber-lime"
           >
-            <option value="default" className="bg-obsidian">Default</option>
-            <option value="name" className="bg-obsidian">Name A-Z</option>
-            <option value="category" className="bg-obsidian">Category</option>
+            <option value="default" className="bg-obsidian">
+              Default
+            </option>
+            <option value="name" className="bg-obsidian">
+              Name A-Z
+            </option>
+            <option value="category" className="bg-obsidian">
+              Category
+            </option>
           </select>
         </div>
       </div>
 
       {/* Results Summary */}
       <div className="mb-6 text-sm text-white/50">
-        Showing <span className="text-cyber-lime font-mono">{filteredStudies.length}</span> project{filteredStudies.length !== 1 ? 's' : ''}
-        {activeCategory !== 'All' && (
-          <> in <span className="text-white/70">{activeCategory}</span></>
+        Showing{" "}
+        <span className="text-cyber-lime font-mono">
+          {filteredStudies.length}
+        </span>{" "}
+        project{filteredStudies.length !== 1 ? "s" : ""}
+        {activeCategory !== "All" && (
+          <>
+            {" "}
+            in <span className="text-white/70">{activeCategory}</span>
+          </>
         )}
       </div>
 
@@ -123,7 +151,9 @@ export default function WorkGrid({ caseStudies, categories }: WorkGridProps) {
                 <div className="aspect-[4/3] relative overflow-hidden">
                   <div
                     className="absolute inset-0"
-                    style={{ background: `linear-gradient(135deg, ${study.color}20, ${study.color}05)` }}
+                    style={{
+                      background: `linear-gradient(135deg, ${study.color}20, ${study.color}05)`,
+                    }}
                   />
                   <div className="absolute inset-0 grid-lines opacity-50" />
 
@@ -209,7 +239,7 @@ export default function WorkGrid({ caseStudies, categories }: WorkGridProps) {
           </div>
           <p className="text-white/50">No projects found in this category.</p>
           <button
-            onClick={() => setActiveCategory('All')}
+            onClick={() => setActiveCategory("All")}
             className="mt-4 text-cyber-lime hover:underline"
           >
             View all projects
