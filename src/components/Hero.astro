@@ -25,18 +25,22 @@ import KineticHeadline from "./KineticHeadline";
   <div class="relative z-10 section-container text-center pointer-events-none">
     <!-- Eyebrow Tag -->
     <div
-      class="inline-flex items-center gap-2 px-4 py-2 mb-6 glass-card text-sm font-mono text-cyber-lime"
+      id="hero-eyebrow"
+      class="inline-flex items-center gap-2 px-4 py-2 mb-6 glass-card text-sm font-mono text-cyber-lime opacity-0 translate-y-8 pointer-events-auto"
     >
       <span class="w-2 h-2 bg-cyber-lime rounded-full animate-pulse"></span>
       <span>SOFTWARE DEVELOPMENT AGENCY</span>
     </div>
 
     <!-- Main Headline with Kinetic Typography -->
-    <KineticHeadline client:idle />
+    <div class="pointer-events-auto">
+      <KineticHeadline client:idle />
+    </div>
 
     <!-- Subheadline -->
     <p
-      class="max-w-2xl mx-auto mt-6 text-lg sm:text-xl text-white/70 leading-relaxed"
+      id="hero-subheadline"
+      class="max-w-2xl mx-auto mt-6 text-lg sm:text-xl text-white/70 leading-relaxed opacity-0 translate-y-8 pointer-events-auto"
     >
       We transform ambitious ideas into
       <span class="text-cyber-lime">market-leading digital products</span>. From
@@ -45,7 +49,8 @@ import KineticHeadline from "./KineticHeadline";
 
     <!-- CTA Buttons -->
     <div
-      class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 pointer-events-auto"
+      id="hero-ctas"
+      class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 pointer-events-auto opacity-0 translate-y-8"
     >
       <a href="/work" class="btn-brutal text-lg group">
         <span class="flex items-center gap-2">
@@ -71,7 +76,8 @@ import KineticHeadline from "./KineticHeadline";
 
   <!-- Scroll Indicator -->
   <div
-    class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60"
+    id="hero-scroll"
+    class="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/60 pointer-events-auto opacity-0 translate-y-4"
   >
     <span class="text-xs uppercase tracking-widest">Scroll</span>
     <div
@@ -110,3 +116,43 @@ import KineticHeadline from "./KineticHeadline";
     width: 100%;
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const eyebrow = document.getElementById("hero-eyebrow");
+    const subheadline = document.getElementById("hero-subheadline");
+    const ctas = document.getElementById("hero-ctas");
+    const scroll = document.getElementById("hero-scroll");
+
+    if (prefersReducedMotion) {
+      if (eyebrow) { eyebrow.classList.remove("opacity-0", "translate-y-8"); }
+      if (subheadline) { subheadline.classList.remove("opacity-0", "translate-y-8"); }
+      if (ctas) { ctas.classList.remove("opacity-0", "translate-y-8"); }
+      if (scroll) { scroll.classList.remove("opacity-0", "translate-y-4"); }
+      return;
+    }
+
+    const animateElements = () => {
+      // Small delays relative to the headline animation which starts immediately upon canvas-ready
+      if (eyebrow) gsap.to(eyebrow, { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0 });
+      if (subheadline) gsap.to(subheadline, { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.3 });
+      if (ctas) gsap.to(ctas, { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 0.5 });
+      if (scroll) gsap.to(scroll, { opacity: 1, y: 0, duration: 1, ease: "power3.out", delay: 1.2 });
+    };
+
+    let animationStarted = false;
+    const onCanvasReady = () => {
+      if (animationStarted) return;
+      animationStarted = true;
+      animateElements();
+    };
+
+    window.addEventListener("canvas-ready", onCanvasReady);
+    
+    // Fallback if event is missed or doesn't fire
+    setTimeout(onCanvasReady, 1500);
+  });
+</script>

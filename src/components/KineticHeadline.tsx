@@ -18,65 +18,90 @@ export default function KineticHeadline() {
     // Check for reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion) {
+      if (line1Ref.current) line1Ref.current.style.opacity = '1';
+      if (line2Ref.current) line2Ref.current.style.opacity = '1';
+      return;
+    }
     
-    const ctx = gsap.context(() => {
-      // Initial entrance animation
-      gsap.fromTo(
-        line1Ref.current,
-        { 
-          opacity: 0, 
-          y: 50,
-          fontWeight: 300,
-        },
-        { 
-          opacity: 1, 
-          y: 0,
-          fontWeight: 300,
-          duration: 1,
-          ease: 'power3.out',
-        }
-      );
-      
-      gsap.fromTo(
-        line2Ref.current,
-        { 
-          opacity: 0, 
-          y: 50,
-          fontWeight: 300,
-        },
-        { 
-          opacity: 1, 
-          y: 0,
-          fontWeight: 300,
-          duration: 1,
-          delay: 0.2,
-          ease: 'power3.out',
-        }
-      );
-      
-      // Scroll-linked font weight animation
-      ScrollTrigger.create({
-        trigger: headlineRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-        onUpdate: (self) => {
-          const progress = self.progress;
-          // Interpolate font weight from 300 to 900
-          const weight = Math.round(300 + progress * 600);
-          
-          if (line1Ref.current) {
-            line1Ref.current.style.fontWeight = String(weight);
+    let ctx = gsap.context(() => {});
+
+    const startAnimation = () => {
+      ctx.add(() => {
+        // Initial entrance animation
+        gsap.fromTo(
+          line1Ref.current,
+          { 
+            opacity: 0, 
+            y: 50,
+            fontWeight: 300,
+          },
+          { 
+            opacity: 1, 
+            y: 0,
+            fontWeight: 300,
+            duration: 1,
+            ease: 'power3.out',
           }
-          if (line2Ref.current) {
-            line2Ref.current.style.fontWeight = String(weight);
+        );
+        
+        gsap.fromTo(
+          line2Ref.current,
+          { 
+            opacity: 0, 
+            y: 50,
+            fontWeight: 300,
+          },
+          { 
+            opacity: 1, 
+            y: 0,
+            fontWeight: 300,
+            duration: 1,
+            delay: 0.1, // slightly reduced delay for tighter timing
+            ease: 'power3.out',
           }
-        },
-      });
-    }, headlineRef);
+        );
+        
+        // Scroll-linked font weight animation
+        ScrollTrigger.create({
+          trigger: headlineRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            // Interpolate font weight from 300 to 900
+            const weight = Math.round(300 + progress * 600);
+            
+            if (line1Ref.current) {
+              line1Ref.current.style.fontWeight = String(weight);
+            }
+            if (line2Ref.current) {
+              line2Ref.current.style.fontWeight = String(weight);
+            }
+          },
+        });
+      }, headlineRef);
+    };
+
+    let animationStarted = false;
+
+    const onCanvasReady = () => {
+      if (animationStarted) return;
+      animationStarted = true;
+      startAnimation();
+    };
+
+    window.addEventListener('canvas-ready', onCanvasReady);
     
-    return () => ctx.revert();
+    // Fallback: If canvas takes too long or fails, start animation anyway
+    const fallbackTimeout = setTimeout(onCanvasReady, 1500);
+
+    return () => {
+      window.removeEventListener('canvas-ready', onCanvasReady);
+      clearTimeout(fallbackTimeout);
+      ctx.revert();
+    };
   }, []);
   
   return (
@@ -84,14 +109,14 @@ export default function KineticHeadline() {
       <h1 className="text-display-xl font-display tracking-tight">
         <span
           ref={line1Ref}
-          className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/80"
+          className="block text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-white/80 opacity-0 transform translate-y-12"
           style={{ fontWeight: 300 }}
         >
           WE ENGINEER
         </span>
         <span
           ref={line2Ref}
-          className="block text-transparent bg-clip-text bg-gradient-to-r from-cyber-lime via-electric-indigo to-electric-purple"
+          className="block text-transparent bg-clip-text bg-gradient-to-r from-cyber-lime via-electric-indigo to-electric-purple opacity-0 transform translate-y-12"
           style={{ fontWeight: 300 }}
         >
           REALITY

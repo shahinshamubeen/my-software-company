@@ -339,64 +339,22 @@ function AnimatedSparkles({ isReady }: { isReady: boolean }) {
 // LOADING SKELETON
 // ============================================================================
 function LoadingSkeleton() {
-  return (
-    <div className="absolute inset-0 flex items-center justify-center">
-      {/* Animated gradient orb placeholder */}
-      <div className="relative">
-        {/* Pulsing outer ring */}
-        <div
-          className="absolute inset-0 -m-8 rounded-full border border-cyber-lime/20 animate-ping"
-          style={{ animationDuration: "2s" }}
-        />
-        <div
-          className="absolute inset-0 -m-16 rounded-full border border-electric-indigo/10 animate-ping"
-          style={{ animationDuration: "3s", animationDelay: "0.5s" }}
-        />
+  return null; // The user absolutely does not want any loading indicator text here
+}
 
-        {/* Main orb */}
-        <div
-          className="w-32 h-32 rounded-full animate-pulse"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(0,255,157,0.3) 0%, rgba(99,102,241,0.2) 50%, transparent 70%)",
-          }}
-        />
+function CanvasReadyNotifier() {
+  const [frameCount, setFrameCount] = useState(0);
 
-        {/* Floating dots */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8">
-          <div
-            className="w-2 h-2 rounded-full bg-cyber-lime/50 animate-bounce"
-            style={{ animationDelay: "0s" }}
-          />
-        </div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-8">
-          <div
-            className="w-2 h-2 rounded-full bg-electric-indigo/50 animate-bounce"
-            style={{ animationDelay: "0.2s" }}
-          />
-        </div>
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8">
-          <div
-            className="w-2 h-2 rounded-full bg-electric-purple/50 animate-bounce"
-            style={{ animationDelay: "0.4s" }}
-          />
-        </div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-8">
-          <div
-            className="w-2 h-2 rounded-full bg-cyber-lime/50 animate-bounce"
-            style={{ animationDelay: "0.6s" }}
-          />
-        </div>
-      </div>
+  useFrame(() => {
+    if (frameCount < 8) {
+      setFrameCount((c) => c + 1);
+    } else if (frameCount === 8) {
+      window.dispatchEvent(new Event('canvas-ready'));
+      setFrameCount(9);
+    }
+  });
 
-      {/* Loading text */}
-      <div className="absolute bottom-1/4 left-1/2 -translate-x-1/2">
-        <span className="text-xs font-mono text-white/40 tracking-widest uppercase">
-          Loading Experience
-        </span>
-      </div>
-    </div>
-  );
+  return null;
 }
 
 // ============================================================================
@@ -472,11 +430,11 @@ export default function HeroCanvas() {
         }}
         style={{ background: "transparent" }}
         onCreated={() => {
-          // Small delay to ensure smooth transition
-          setTimeout(() => setIsLoaded(true), 100);
+          setIsLoaded(true);
         }}
       >
         <Suspense fallback={null}>
+          <CanvasReadyNotifier />
           <Scene />
         </Suspense>
       </Canvas>
