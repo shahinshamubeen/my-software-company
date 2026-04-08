@@ -8,6 +8,9 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 
+// Reusable vector for vertex manipulation to avoid GC pauses
+const tempVertex = new THREE.Vector3();
+
 // ============================================================================
 // MORPHING SPHERE - The hero centerpiece with birth animation
 // ============================================================================
@@ -31,13 +34,15 @@ function MorphingSphere({ isReady }: { isReady: boolean }) {
   useFrame((state, delta) => {
     if (!meshRef.current) return;
 
+    // Clamp delta to prevent massive jumps when tab becomes active
+    const safeDelta = Math.min(delta, 0.1);
     const time = state.clock.elapsedTime;
 
     // Smooth scale animation (very gradual emergence)
     currentScale.current = THREE.MathUtils.lerp(
       currentScale.current,
       targetScale.current,
-      delta * 0.4 // Much slower for smoother feel
+      safeDelta * 1.5 // Adjusted speed after delta clamp
     );
 
     // Gradually reduce the "chaos" distortion as it forms
@@ -45,7 +50,7 @@ function MorphingSphere({ isReady }: { isReady: boolean }) {
     currentDistortion.current = THREE.MathUtils.lerp(
       currentDistortion.current,
       targetDistortion,
-      delta * 0.5 // Slower distortion settling
+      safeDelta * 2
     );
 
     meshRef.current.scale.setScalar(currentScale.current);
@@ -57,26 +62,25 @@ function MorphingSphere({ isReady }: { isReady: boolean }) {
     // Morph the geometry with animated intensity
     const geometry = meshRef.current.geometry as THREE.IcosahedronGeometry;
     const positionAttribute = geometry.getAttribute("position");
-    const vertex = new THREE.Vector3();
 
     // Blend between chaotic and calm based on animation progress
     const morphIntensity = 0.3 * (1 + (1 - currentScale.current) * 2);
 
     for (let i = 0; i < positionAttribute.count; i++) {
-      vertex.fromBufferAttribute(positionAttribute, i);
-      vertex.normalize();
+      tempVertex.fromBufferAttribute(positionAttribute, i);
+      tempVertex.normalize();
 
       // Noise-based displacement with animated intensity
       const noise =
-        Math.sin(vertex.x * 3 + time * 0.8) *
-        Math.sin(vertex.y * 3 + time * 0.6) *
-        Math.sin(vertex.z * 3 + time * 0.7);
+        Math.sin(tempVertex.x * 3 + time * 0.8) *
+        Math.sin(tempVertex.y * 3 + time * 0.6) *
+        Math.sin(tempVertex.z * 3 + time * 0.7);
 
       const displacement =
         2 + noise * morphIntensity + Math.sin(time * 0.5 + i * 0.01) * 0.1;
 
-      vertex.multiplyScalar(displacement);
-      positionAttribute.setXYZ(i, vertex.x, vertex.y, vertex.z);
+      tempVertex.multiplyScalar(displacement);
+      positionAttribute.setXYZ(i, tempVertex.x, tempVertex.y, tempVertex.z);
     }
 
     positionAttribute.needsUpdate = true;
@@ -86,7 +90,7 @@ function MorphingSphere({ isReady }: { isReady: boolean }) {
   return (
     <Float speed={1} rotationIntensity={0.2} floatIntensity={0.3}>
       <mesh ref={meshRef} scale={0}>
-        <icosahedronGeometry args={[2, 64]} />
+        <icosahedronGeometry args={[2, 32]} />
         <MeshTransmissionMaterial
           ref={materialRef}
           backside
@@ -184,13 +188,14 @@ function FloatingParticles({
   useFrame((state, delta) => {
     if (!pointsRef.current) return;
 
+    const safeDelta = Math.min(delta, 0.1);
     const time = state.clock.elapsedTime;
 
     // Progress the expansion when ready (very gradual)
     if (isReady && expansionProgress.current < 1) {
       expansionProgress.current = Math.min(
         1,
-        expansionProgress.current + delta * 0.25
+        expansionProgress.current + safeDelta * 0.25
       ); // Much slower expansion
     }
 
@@ -202,7 +207,7 @@ function FloatingParticles({
     currentSize.current = THREE.MathUtils.lerp(
       currentSize.current,
       targetSize,
-      delta * 0.8
+      safeDelta * 0.8
     );
 
     // Animate opacity - start at 0 and fade in
@@ -210,7 +215,7 @@ function FloatingParticles({
     currentOpacity.current = THREE.MathUtils.lerp(
       currentOpacity.current,
       targetOpacity,
-      delta * 0.6
+      safeDelta * 0.6
     );
 
     if (materialRef.current) {
@@ -264,12 +269,12 @@ function FloatingParticles({
     smoothedMouse.current.x = THREE.MathUtils.lerp(
       smoothedMouse.current.x,
       pointer.x,
-      delta * 3
+      safeDelta * 3
     );
     smoothedMouse.current.y = THREE.MathUtils.lerp(
       smoothedMouse.current.y,
       pointer.y,
-      delta * 3
+      safeDelta * 3
     );
 
     // Gentle rotation with smoothed mouse influence

@@ -10,6 +10,21 @@ export default defineConfig({
     ],
     vite: {
         plugins: [tailwindcss()],
+        build: {
+            chunkSizeWarningLimit: 750,
+            rollupOptions: {
+                output: {
+                    manualChunks(id) {
+                        if (id.includes('node_modules/three/')) {
+                            return 'three';
+                        }
+                        if (id.includes('node_modules/@react-three/')) {
+                            return 'react-three';
+                        }
+                    },
+                },
+            },
+        },
     },
     // Enable View Transitions for seamless page navigation
     prefetch: true,
