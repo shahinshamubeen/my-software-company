@@ -1,245 +1,185 @@
-import { useState, useMemo } from 'react';
-import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import { technologies, categoryLabels, categoryColors, type Technology } from '../data/technologies';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
-// Category filter pill
-function CategoryPill({
-  category,
-  isActive,
-  onClick,
-}: {
-  category: Technology['category'] | 'all';
-  isActive: boolean;
-  onClick: () => void;
-}) {
-  const label = category === 'all' ? 'All' : categoryLabels[category];
-  const color = category === 'all' ? '#FFFFFF' : categoryColors[category];
-  
-  return (
-    <motion.button
-      onClick={onClick}
-      className={`
-        px-4 py-2 rounded-lg font-mono text-sm font-medium
-        transition-colors duration-200 border-2
-        ${isActive 
-          ? 'border-current text-obsidian' 
-          : 'border-white/20 text-white/60 hover:border-white/40 hover:text-white'
-        }
-      `}
-      style={{
-        backgroundColor: isActive ? color : 'transparent',
-        borderColor: isActive ? color : undefined,
-      }}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-    >
-      {label}
-    </motion.button>
-  );
-}
+const techStack = [
+  {
+    id: 'frontend',
+    title: 'Lightning-Fast Interfaces',
+    tags: ['Speed', 'SEO-Optimized', 'Engaging'],
+    features: [
+      'Instant-loading websites',
+      'Ranks higher on Google Search',
+      'Fluid, app-like user experiences'
+    ],
+    icon: '/icons/react.svg',
+    accent: 'bg-cyber-lime',
+    textAccent: 'text-cyber-lime',
+    borderHover: 'group-hover:border-cyber-lime/50',
+    shadowHover: 'group-hover:shadow-[0_0_30px_rgba(0,255,157,0.15)]',
+  },
+  {
+    id: 'backend',
+    title: 'Bulletproof Infrastructure',
+    tags: ['Secure', 'Reliable', 'Scalable'],
+    features: [
+      'Never crashes under heavy traffic',
+      'Bank-grade secure data protection',
+      'Grows effortlessly with your business'
+    ],
+    icon: '/icons/go.svg',
+    accent: 'bg-electric-indigo',
+    textAccent: 'text-electric-indigo',
+    borderHover: 'group-hover:border-electric-indigo/50',
+    shadowHover: 'group-hover:shadow-[0_0_30px_rgba(99,102,241,0.15)]',
+  },
+  {
+    id: 'ai',
+    title: 'Intelligent Automation',
+    tags: ['AI-Driven', 'Efficient', '24/7'],
+    features: [
+      'Automate repetitive daily tasks',
+      'Smart, autonomous customer service',
+      'Drastically lower operational costs'
+    ],
+    icon: '/icons/python.svg',
+    accent: 'bg-electric-purple',
+    textAccent: 'text-electric-purple',
+    borderHover: 'group-hover:border-electric-purple/50',
+    shadowHover: 'group-hover:shadow-[0_0_30px_rgba(191,0,255,0.15)]',
+  }
+];
 
-// Individual technology card
-function TechCard({
-  tech,
-  isHighlighted,
-  isRelated,
-  isDimmed,
-  onHover,
-  onLeave,
-  onClick,
-}: {
-  tech: Technology;
-  isHighlighted: boolean;
-  isRelated: boolean;
-  isDimmed: boolean;
-  onHover: () => void;
-  onLeave: () => void;
-  onClick: () => void;
-}) {
-  return (
-    <motion.button
-      layout
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ 
-        opacity: isDimmed ? 0.3 : 1, 
-        scale: 1,
-      }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ 
-        layout: { duration: 0.4, ease: [0.4, 0, 0.2, 1] },
-        opacity: { duration: 0.2 },
-      }}
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-      onClick={onClick}
-      className={`
-        group relative p-4 rounded-xl
-        transition-all duration-300
-        ${isHighlighted || isRelated 
-          ? 'glass-card' 
-          : 'bg-white/5 border border-white/10'
-        }
-      `}
-      style={{
-        boxShadow: isHighlighted 
-          ? `0 0 30px ${tech.color}40` 
-          : isRelated 
-            ? `0 0 15px ${tech.color}20`
-            : 'none',
-      }}
-      whileHover={{ y: -4 }}
-    >
-      {/* Glow Effect */}
-      {(isHighlighted || isRelated) && (
-        <motion.div
-          className="absolute inset-0 rounded-xl pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          style={{
-            background: `radial-gradient(circle at center, ${tech.color}10, transparent)`,
-          }}
-        />
-      )}
-      
-      {/* Logo */}
-      <div 
-        className="w-14 h-14 mx-auto mb-3 rounded-xl flex items-center justify-center p-2 border transition-all duration-300"
-        style={{ 
-          borderColor: isHighlighted ? tech.color : 'rgba(255,255,255,0.1)',
-          backgroundColor: isHighlighted ? `${tech.color}15` : 'rgba(255,255,255,0.05)',
-        }}
-      >
-        <img 
-          src={tech.icon} 
-          alt={tech.name}
-          className="w-full h-full object-contain"
-          style={{
-            filter: tech.id === 'nextjs' || tech.id === 'vercel' ? 'invert(1)' : 'none',
-          }}
-          loading="lazy"
-        />
-      </div>
-      
-      {/* Name */}
-      <div className="text-center">
-        <span className="text-sm font-medium text-white/90 group-hover:text-white transition-colors">
-          {tech.name}
-        </span>
-      </div>
-      
-      {/* Category Tag */}
-      <div 
-        className="mt-2 text-xs font-mono uppercase tracking-wider text-center"
-        style={{ color: categoryColors[tech.category] }}
-      >
-        {categoryLabels[tech.category]}
-      </div>
-      
-      {/* Connection Lines (for related items) */}
-      {isRelated && (
-        <motion.div
-          className="absolute -top-1 left-1/2 w-px h-2"
-          style={{ backgroundColor: tech.color }}
-          initial={{ scaleY: 0 }}
-          animate={{ scaleY: 1 }}
-        />
-      )}
-    </motion.button>
-  );
-}
-
-// Main component
 export default function TechStack() {
-  const [selectedCategory, setSelectedCategory] = useState<Technology['category'] | 'all'>('all');
-  const [hoveredTech, setHoveredTech] = useState<string | null>(null);
-  
-  // Filter technologies by category
-  const filteredTech = useMemo(() => {
-    if (selectedCategory === 'all') return technologies;
-    return technologies.filter(t => t.category === selectedCategory);
-  }, [selectedCategory]);
-  
-  // Get related technologies for hovered item
-  const relatedIds = useMemo(() => {
-    if (!hoveredTech) return new Set<string>();
-    const hovered = technologies.find(t => t.id === hoveredTech);
-    return new Set(hovered?.related ?? []);
-  }, [hoveredTech]);
-  
-  const categories: (Technology['category'] | 'all')[] = [
-    'all',
-    'frontend',
-    'backend',
-    'cloud',
-    'ai',
-    'mobile',
-    'database',
-  ];
-  
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+
   return (
-    <section className="py-24 relative">
-      <div className="section-container">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <span className="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-cyber-lime border border-cyber-lime/30 rounded-full">
-            Our Arsenal
-          </span>
-          <h2 className="text-display-md font-display font-bold text-white mb-4">
-            Technology Stack
-          </h2>
-          <p className="max-w-2xl mx-auto text-white/60">
-            Click a technology to explore its ecosystem and see how we combine 
-            tools to build scalable, modern solutions.
-          </p>
-        </div>
+    <section className="py-24 md:py-40 relative bg-obsidian overflow-hidden">
+      {/* Background Ambience */}
+      <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-30 mix-blend-screen">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-electric-indigo/10 rounded-full blur-[128px]"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyber-lime/10 rounded-full blur-[128px]"></div>
+      </div>
+
+      <div className="section-container relative z-10">
         
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {categories.map((category) => (
-            <CategoryPill
-              key={category}
-              category={category}
-              isActive={selectedCategory === category}
-              onClick={() => setSelectedCategory(category)}
-            />
-          ))}
-        </div>
-        
-        {/* Technology Grid */}
-        <LayoutGroup>
+        {/* Header Section */}
+        <div className="text-center mb-20 relative z-20">
           <motion.div 
-            layout
-            className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md"
           >
-            <AnimatePresence mode="popLayout">
-              {filteredTech.map((tech) => (
-                <TechCard
-                  key={tech.id}
-                  tech={tech}
-                  isHighlighted={hoveredTech === tech.id}
-                  isRelated={relatedIds.has(tech.id)}
-                  isDimmed={hoveredTech !== null && hoveredTech !== tech.id && !relatedIds.has(tech.id)}
-                  onHover={() => setHoveredTech(tech.id)}
-                  onLeave={() => setHoveredTech(null)}
-                  onClick={() => setHoveredTech(hoveredTech === tech.id ? null : tech.id)}
-                />
-              ))}
-            </AnimatePresence>
+            <span className="w-2 h-2 rounded-full bg-electric-purple animate-pulse"></span>
+            <span className="text-sm font-mono text-white/80 tracking-wide uppercase">Engineering Foundation</span>
           </motion.div>
-        </LayoutGroup>
-        
-        {/* Legend */}
-        <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm">
-          {Object.entries(categoryLabels).map(([key, label]) => (
-            <div key={key} className="flex items-center gap-2">
-              <span 
-                className="w-3 h-3 rounded-full"
-                style={{ backgroundColor: categoryColors[key as Technology['category']] }}
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-display-md md:text-display-lg font-display font-bold text-white mb-6"
+          >
+            Our Technology Stack
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="max-w-2xl mx-auto text-lg text-white/60 leading-relaxed"
+          >
+            We don't rely on dated tech. We use modern engineering to guarantee your products are lightning-fast, perfectly secure, and capable of scaling infinitely.
+          </motion.p>
+        </div>
+
+        {/* =========================================
+            BENTO GRID LAYOUT
+            ========================================= */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+          {techStack.map((tech, index) => (
+            <motion.div
+              key={tech.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.15 }}
+              onMouseEnter={() => setHoveredCard(tech.id)}
+              onMouseLeave={() => setHoveredCard(null)}
+              className={`
+                group relative w-full flex flex-col justify-between rounded-2xl bg-black/40 backdrop-blur-xl 
+                border border-white/10 p-8 md:p-10 transition-all duration-500 overflow-hidden
+                ${tech.borderHover} ${tech.shadowHover}
+              `}
+            >
+              {/* Card internal gradient glow on hover */}
+              <div 
+                className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 ${tech.accent}`}
+                style={{ mixBlendMode: 'screen', filter: 'blur(40px)' }}
               />
-              <span className="text-white/50">{label}</span>
-            </div>
+
+              <div className="relative z-10 flex flex-col h-full">
+                {/* Header Row */}
+                <div className="flex items-center justify-between mb-8">
+                  <div className="w-14 h-14 relative flex items-center justify-center">
+                    <div className="absolute inset-0 bg-white/5 rounded-xl blur-md group-hover:bg-white/10 transition-colors"></div>
+                    <div className={`relative w-full h-full p-2.5 bg-white/5 border border-white/10 rounded-xl group-hover:border-white/20 transition-all flex items-center justify-center`}>
+                      <img 
+                        src={tech.icon} 
+                        alt={tech.title} 
+                        className="w-full h-full object-contain filter drop-shadow-md opacity-80 group-hover:opacity-100 transition-all"
+                        style={{ filter: tech.id === 'ai' ? 'invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.3))' : 'none' }}
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Decorative dot indicator */}
+                  <div className="w-2 h-2 rounded-full bg-white/20 group-hover:bg-white/80 transition-colors duration-300"></div>
+                </div>
+
+                {/* Content */}
+                <div className="mt-auto">
+                  <h3 className="text-xl font-display font-semibold text-white mb-5 group-hover:text-white transition-colors duration-300">
+                    {tech.title}
+                  </h3>
+                  
+                  {/* Tech Tags */}
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {tech.tags.map(tag => (
+                      <span 
+                        key={tag} 
+                        className="px-2.5 py-1 text-xs font-mono tracking-wide rounded border transition-colors duration-300 bg-white/5 border-white/10 text-white/70 group-hover:border-white/20 group-hover:text-white/90 group-hover:shadow-sm"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Visual Checklist */}
+                  <ul className="space-y-3">
+                    {tech.features.map(feature => (
+                      <li key={feature} className="flex items-start gap-3 text-sm text-white/60 group-hover:text-white/80 transition-colors duration-300">
+                        <svg 
+                          className={`w-5 h-5 flex-shrink-0 ${tech.textAccent} opacity-80 mt-0.5 drop-shadow-md`} 
+                          fill="none" 
+                          viewBox="0 0 24 24" 
+                          stroke="currentColor"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className="leading-snug">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              
+              {/* Bottom accent line on hover */}
+              <div className={`absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-700 ease-out ${tech.accent}`}></div>
+            </motion.div>
           ))}
         </div>
+
       </div>
     </section>
   );

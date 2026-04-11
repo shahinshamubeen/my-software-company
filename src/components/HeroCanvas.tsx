@@ -21,8 +21,8 @@ function MorphingSphere({ isReady }: { isReady: boolean }) {
 
   // Animation state
   const animationProgress = useRef(0);
-  const targetScale = useRef(0);
-  const currentScale = useRef(0);
+  const targetScale = useRef(0.001);
+  const currentScale = useRef(0.001);
   const currentDistortion = useRef(2); // Start with high distortion
 
   useEffect(() => {
@@ -89,7 +89,7 @@ function MorphingSphere({ isReady }: { isReady: boolean }) {
 
   return (
     <Float speed={1} rotationIntensity={0.2} floatIntensity={0.3}>
-      <mesh ref={meshRef} scale={0}>
+      <mesh ref={meshRef} scale={0.001}>
         <icosahedronGeometry args={[2, 32]} />
         <MeshTransmissionMaterial
           ref={materialRef}

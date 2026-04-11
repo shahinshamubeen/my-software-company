@@ -16,7 +16,7 @@ interface FormErrors {
   project?: string;
 }
 
-type FormStatus = "idle" | "submitting" | "success" | "error";
+type FormStatus =  "idle" | "submitting" | "success" | "error";
 
 const services = [
   "Product Development",
