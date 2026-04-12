@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "cms:proxy": "pnpm dlx decap-server"
   },
   "dependencies": {
     "@astrojs/react": "^5.0.3",

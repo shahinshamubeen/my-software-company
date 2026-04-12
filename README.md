@@ -1,43 +1,46 @@
-# Astro Starter Kit: Minimal
+# MY Software Company (Astro)
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+Marketing site built with Astro, React islands, and Tailwind.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Commands
 
-## 🚀 Project Structure
+- `pnpm install` - install dependencies
+- `pnpm dev` - run local dev server
+- `pnpm build` - build production output
+- `pnpm preview` - preview the built site
+- `pnpm cms:proxy` - run the Decap local backend proxy
 
-Inside of your Astro project, you'll see the following folders and files:
+## Decap CMS Setup
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+This project is wired to Decap CMS at `/admin` and Astro content collections.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### 1) Configure Decap backend
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Edit [public/admin/config.yml](public/admin/config.yml) and set:
 
-Any static assets, like images, can be placed in the `public/` directory.
+- `backend.repo` to your GitHub repo (`owner/name`)
+- `backend.branch` to your default branch
 
-## 🧞 Commands
+### 2) Local authoring workflow
 
-All commands are run from the root of the project, from a terminal:
+Run both commands in separate terminals:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+- `pnpm dev`
+- `pnpm cms:proxy`
 
-## 👀 Want to learn more?
+Then open `http://localhost:4321/admin`.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### 3) Content sources managed by CMS
+
+- [src/content-data/blog.json](src/content-data/blog.json)
+- [src/content-data/case-studies.json](src/content-data/case-studies.json)
+- [src/content-data/jobs.json](src/content-data/jobs.json)
+
+These are validated and loaded through Astro collections in [src/content.config.ts](src/content.config.ts).
+
+## Authentication Notes
+
+- Netlify deployments can use Git Gateway + Netlify Identity.
+- Other hosts require an external OAuth flow compatible with Decap.
+
+Reference: https://docs.astro.build/en/guides/cms/decap-cms/
