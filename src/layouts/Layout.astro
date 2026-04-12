@@ -32,6 +32,7 @@ const canonicalURL = Astro.site
     <title>{title} | WYDGT</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -85,7 +86,7 @@ const canonicalURL = Astro.site
     <!-- Skip Link for Accessibility -->
     <a
       href="#main-content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-cyber-lime focus:text-obsidian focus:font-semibold focus:rounded-lg focus:outline-none"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:px-4 focus:py-2 focus:bg-cyber-lime focus:text-obsidian focus:font-semibold focus:rounded-lg focus:outline-none"
     >
       Skip to main content
     </a>
