@@ -32,11 +32,11 @@ Then open `http://localhost:4321/admin`.
 
 ### 3) Content sources managed by CMS
 
-- [src/content-data/blog.json](src/content-data/blog.json)
-- [src/content-data/case-studies.json](src/content-data/case-studies.json)
-- [src/content-data/jobs.json](src/content-data/jobs.json)
+- [src/content/blog](src/content/blog) (one markdown file per post)
+- [src/content/work](src/content/work) (one JSON file per case study)
+- [src/content/jobs](src/content/jobs) (one JSON file per role)
 
-These are validated and loaded through Astro collections in [src/content.config.ts](src/content.config.ts).
+These entries are validated and loaded through Astro collections in [src/content.config.ts](src/content.config.ts).
 
 ## Authentication Notes
 

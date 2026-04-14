@@ -1,15 +1,16 @@
 import { defineCollection } from "astro:content";
-import { file } from "astro/loaders";
+import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
 const blogPosts = defineCollection({
-  loader: file("src/content-data/blog.json", {
-    parser: (text) => JSON.parse(text).posts,
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/blog",
   }),
   schema: z.object({
+    id: z.string(),
     title: z.string(),
     excerpt: z.string(),
-    content: z.string(),
     category: z.string(),
     author: z.object({
       name: z.string(),
@@ -25,10 +26,12 @@ const blogPosts = defineCollection({
 });
 
 const caseStudies = defineCollection({
-  loader: file("src/content-data/case-studies.json", {
-    parser: (text) => JSON.parse(text).caseStudies,
+  loader: glob({
+    pattern: "**/*.json",
+    base: "./src/content/work",
   }),
   schema: z.object({
+    id: z.string(),
     order: z.number().int().positive().optional(),
     title: z.string(),
     category: z.string(),
@@ -69,10 +72,12 @@ const caseStudies = defineCollection({
 });
 
 const jobs = defineCollection({
-  loader: file("src/content-data/jobs.json", {
-    parser: (text) => JSON.parse(text).jobs,
+  loader: glob({
+    pattern: "**/*.json",
+    base: "./src/content/jobs",
   }),
   schema: z.object({
+    id: z.string(),
     order: z.number().int().positive().optional(),
     title: z.string(),
     department: z.string(),
@@ -82,9 +87,9 @@ const jobs = defineCollection({
     experience: z.string(),
     salary: z.string(),
     description: z.string(),
-    responsibilities: z.array(z.string()),
-    requirements: z.array(z.string()),
-    niceToHave: z.array(z.string()),
+    responsibilities: z.array(z.string()).default([]),
+    requirements: z.array(z.string()).default([]),
+    niceToHave: z.array(z.string()).default([]),
     posted: z.string(),
   }),
 });

@@ -21,7 +21,10 @@ export interface BlogPost {
 const blogEntries = await getCollection("blogPosts");
 
 export const blogPosts: BlogPost[] = blogEntries
-  .map(({ id, data }) => ({ id, ...data }))
+  .map(({ data, body }) => ({
+    ...data,
+    content: body.trim(),
+  }))
   .sort(
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),

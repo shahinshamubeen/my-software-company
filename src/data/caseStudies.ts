@@ -35,11 +35,12 @@ export interface CaseStudy {
 }
 
 const caseStudyEntries = await getCollection("caseStudies");
+const caseStudyData = caseStudyEntries.map(({ data }) => data);
 
-export const caseStudies: CaseStudy[] = caseStudyEntries
+export const caseStudies: CaseStudy[] = caseStudyData
   .sort((a, b) => {
-    const orderA = a.data.order ?? Number.MAX_SAFE_INTEGER;
-    const orderB = b.data.order ?? Number.MAX_SAFE_INTEGER;
+    const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+    const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
 
     if (orderA !== orderB) {
       return orderA - orderB;
@@ -47,9 +48,8 @@ export const caseStudies: CaseStudy[] = caseStudyEntries
 
     return a.id.localeCompare(b.id);
   })
-  .map(({ id, data }) => {
-    const { order: _order, ...rest } = data;
-    return { id, ...rest };
+  .map(({ order: _order, ...rest }) => {
+    return rest;
   });
 
 export function getCaseStudy(id: string): CaseStudy | undefined {

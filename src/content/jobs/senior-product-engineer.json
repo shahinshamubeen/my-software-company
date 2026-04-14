@@ -1,0 +1,30 @@
+{
+  "id": "senior-product-engineer",
+  "order": 1,
+  "title": "Senior Product Engineer",
+  "department": "Engineering",
+  "location": "Remote",
+  "type": "Full-time",
+  "remote": "Remote",
+  "experience": "5+ years",
+  "salary": "$145K - $185K",
+  "description": "Build and ship end-to-end product features with strong ownership across frontend, backend, and delivery.",
+  "responsibilities": [
+    "Own product features from discovery to production",
+    "Implement robust APIs and user-facing experiences",
+    "Work closely with design and product to refine scope",
+    "Improve reliability and observability of core services"
+  ],
+  "requirements": [
+    "Strong TypeScript and React experience",
+    "Experience with Node.js services in production",
+    "Comfortable with SQL and data modeling",
+    "Strong communication and product thinking"
+  ],
+  "niceToHave": [
+    "Experience with Astro or Next.js",
+    "Experience mentoring engineers",
+    "Experience with feature flags and experimentation"
+  ],
+  "posted": "2026-04-01"
+}

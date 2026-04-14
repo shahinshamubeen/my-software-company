@@ -30,23 +30,28 @@ export interface Value {
 }
 
 const jobEntries = await getCollection("jobs");
+const jobData = jobEntries.map(({ data }) => data);
 
-export const jobs: Job[] = jobEntries
+export const jobs: Job[] = jobData
   .sort((a, b) => {
-    const orderA = a.data.order ?? Number.MAX_SAFE_INTEGER;
-    const orderB = b.data.order ?? Number.MAX_SAFE_INTEGER;
+    const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+    const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
 
     if (orderA !== orderB) {
       return orderA - orderB;
     }
 
-    return (
-      new Date(b.data.posted).getTime() - new Date(a.data.posted).getTime()
-    );
+    const byPosted =
+      new Date(b.posted).getTime() - new Date(a.posted).getTime();
+
+    if (byPosted !== 0) {
+      return byPosted;
+    }
+
+    return a.id.localeCompare(b.id);
   })
-  .map(({ id, data }) => {
-    const { order: _order, ...rest } = data;
-    return { id, ...rest };
+  .map(({ order: _order, ...rest }) => {
+    return rest;
   });
 
 export const benefits: Benefit[] = [

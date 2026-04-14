@@ -1,0 +1,53 @@
+{
+  "id": "ops-pilot",
+  "order": 3,
+  "title": "Ops Pilot",
+  "category": "AI & Operations",
+  "description": "Internal copiloted operations workspace for support and fulfillment teams.",
+  "longDescription": "We implemented an AI-assisted operations console that reduced repetitive manual triage and improved first-response speed.",
+  "image": "/uploads/ops-pilot.jpg",
+  "stats": {
+    "metric": "First Response Time",
+    "value": "-53%"
+  },
+  "results": [
+    {
+      "label": "First Response Time",
+      "value": "-53%"
+    },
+    {
+      "label": "Manual Triage",
+      "value": "-46%"
+    },
+    {
+      "label": "SLA Compliance",
+      "value": "+19%"
+    }
+  ],
+  "tags": ["LLM", "Queues", "Observability"],
+  "color": "#F5A524",
+  "challenge": "Operations agents were context switching across tools and spending too much time on repetitive issue triage.",
+  "solution": "We built a single workspace with AI-generated draft actions, confidence indicators, and guardrails for escalation.",
+  "slides": [
+    {
+      "title": "Discovery",
+      "description": "Captured high-volume task patterns and escalation causes.",
+      "mockupState": "wireframe"
+    },
+    {
+      "title": "Interaction Model",
+      "description": "Designed assisted actions with explicit approval checkpoints.",
+      "mockupState": "design"
+    },
+    {
+      "title": "Delivery",
+      "description": "Implemented tool orchestration and safety telemetry.",
+      "mockupState": "code"
+    },
+    {
+      "title": "Adoption",
+      "description": "Rolled out playbooks and measured utilization by team.",
+      "mockupState": "live"
+    }
+  ]
+}
