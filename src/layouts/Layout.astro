@@ -84,13 +84,16 @@ const canonicalURL = Astro.site
     <ClientRouter />
 
     <script is:inline>
-      const identityHash = window.location.hash || "";
+      const identityHashParams = new URLSearchParams(
+        window.location.hash.replace(/^#/, ""),
+      );
       const hasIdentityToken = [
         "invite_token",
         "confirmation_token",
         "recovery_token",
         "access_token",
-      ].some((token) => identityHash.includes(token));
+        "email_change_token",
+      ].some((token) => identityHashParams.has(token));
 
       if (hasIdentityToken && !window.netlifyIdentity) {
         const script = document.createElement("script");
@@ -104,7 +107,6 @@ const canonicalURL = Astro.site
           });
 
           window.netlifyIdentity.init();
-          window.netlifyIdentity.open("signup");
         };
         document.head.appendChild(script);
       }

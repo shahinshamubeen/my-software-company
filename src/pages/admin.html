@@ -7,24 +7,15 @@
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
     <title>Content Manager</title>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  </head>
-  <body>
-    <div id="netlify-identity-container"></div>
-    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
     <script>
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("login", () => {
           window.location.href = "/admin/";
         });
-
-        window.netlifyIdentity.on("init", (user) => {
-          if (!user) {
-            window.netlifyIdentity.show();
-          }
-        });
-
-        window.netlifyIdentity.init();
       }
     </script>
+  </head>
+  <body>
+    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
   </body>
 </html>
