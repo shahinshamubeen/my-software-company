@@ -104,6 +104,7 @@ const canonicalURL = Astro.site
           });
 
           window.netlifyIdentity.init();
+          window.netlifyIdentity.open("signup");
         };
         document.head.appendChild(script);
       }
