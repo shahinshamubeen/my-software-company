@@ -30,25 +30,8 @@
         document.body.appendChild(script);
       }
 
-      if (window.netlifyIdentity && hasIdentityToken) {
-        window.netlifyIdentity.on("login", () => {
-          window.history.replaceState(null, document.title, "/admin/");
-          loadDecapCms();
-        });
-
-        window.netlifyIdentity.on("init", (user) => {
-          if (user) {
-            window.history.replaceState(null, document.title, "/admin/");
-            loadDecapCms();
-            return;
-          }
-
-          if (identityHashParams.has("invite_token")) {
-            window.netlifyIdentity.open("signup");
-          }
-        });
-
-        window.netlifyIdentity.init();
+      if (hasIdentityToken) {
+        window.location.replace(`/admin/callback/${window.location.hash}`);
       } else {
         loadDecapCms();
       }

@@ -96,7 +96,7 @@ const canonicalURL = Astro.site
       ].some((token) => identityHashParams.has(token));
 
       if (hasIdentityToken) {
-        window.location.replace(`/admin/${window.location.hash}`);
+        window.location.replace(`/admin/callback/${window.location.hash}`);
       }
     </script>
   </head>
