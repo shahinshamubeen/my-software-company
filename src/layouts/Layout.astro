@@ -95,20 +95,8 @@ const canonicalURL = Astro.site
         "email_change_token",
       ].some((token) => identityHashParams.has(token));
 
-      if (hasIdentityToken && !window.netlifyIdentity) {
-        const script = document.createElement("script");
-        script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
-        script.async = true;
-        script.onload = () => {
-          if (!window.netlifyIdentity) return;
-
-          window.netlifyIdentity.on("login", () => {
-            window.location.href = "/admin/";
-          });
-
-          window.netlifyIdentity.init();
-        };
-        document.head.appendChild(script);
+      if (hasIdentityToken) {
+        window.location.replace(`/admin/${window.location.hash}`);
       }
     </script>
   </head>

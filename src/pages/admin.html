@@ -7,15 +7,51 @@
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
     <title>Content Manager</title>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("login", () => {
-          window.location.href = "/admin/";
-        });
-      }
-    </script>
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    <script>
+      const identityHashParams = new URLSearchParams(
+        window.location.hash.replace(/^#/, ""),
+      );
+      const hasIdentityToken = [
+        "invite_token",
+        "confirmation_token",
+        "recovery_token",
+        "access_token",
+        "email_change_token",
+      ].some((token) => identityHashParams.has(token));
+
+      function loadDecapCms() {
+        if (document.querySelector("script[data-decap-cms]")) return;
+
+        const script = document.createElement("script");
+        script.src = "https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js";
+        script.setAttribute("data-decap-cms", "true");
+        document.body.appendChild(script);
+      }
+
+      if (window.netlifyIdentity && hasIdentityToken) {
+        window.netlifyIdentity.on("login", () => {
+          window.history.replaceState(null, document.title, "/admin/");
+          loadDecapCms();
+        });
+
+        window.netlifyIdentity.on("init", (user) => {
+          if (user) {
+            window.history.replaceState(null, document.title, "/admin/");
+            loadDecapCms();
+            return;
+          }
+
+          if (identityHashParams.has("invite_token")) {
+            window.netlifyIdentity.open("signup");
+          }
+        });
+
+        window.netlifyIdentity.init();
+      } else {
+        loadDecapCms();
+      }
+    </script>
   </body>
 </html>
