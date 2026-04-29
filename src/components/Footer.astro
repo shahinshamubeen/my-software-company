@@ -1,6 +1,7 @@
 ---
 // Footer component
 const currentYear = new Date().getFullYear();
+const hasCookiebot = Boolean(import.meta.env.PUBLIC_COOKIEBOT_CBID?.trim());
 
 const footerLinks = {
   company: [
@@ -176,6 +177,20 @@ const socialLinks = [
         <a href="/terms" class="hover:text-white transition-colors">
           Terms of Service
         </a>
+        <a href="/cookies" class="hover:text-white transition-colors">
+          Cookie Policy
+        </a>
+        {
+          hasCookiebot && (
+            <button
+              type="button"
+              onclick="window.Cookiebot && window.Cookiebot.renew()"
+              class="hover:text-white transition-colors"
+            >
+              Cookie Settings
+            </button>
+          )
+        }
       </div>
     </div>
   </div>

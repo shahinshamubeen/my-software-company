@@ -1,0 +1,206 @@
+---
+const cookiebotCbid = import.meta.env.PUBLIC_COOKIEBOT_CBID?.trim() ?? "";
+const gaMeasurementId =
+  import.meta.env.PUBLIC_GA_MEASUREMENT_ID?.trim() ?? "";
+const metaPixelId = import.meta.env.PUBLIC_META_PIXEL_ID?.trim() ?? "";
+
+const hasCookiebot = cookiebotCbid.length > 0;
+const hasGa4 = hasCookiebot && gaMeasurementId.length > 0;
+const hasMetaPixel = hasCookiebot && metaPixelId.length > 0;
+---
+
+{
+  hasCookiebot && (
+    <script
+      id="Cookiebot"
+      src="https://consent.cookiebot.com/uc.js"
+      data-cbid={cookiebotCbid}
+      type="text/javascript"
+      async
+    ></script>
+  )
+}
+
+{
+  hasGa4 && (
+    <script is:inline data-cookieconsent="ignore">
+      window.dataLayer = window.dataLayer || [];
+      window.gtag =
+        window.gtag ||
+        function gtag() {
+          window.dataLayer.push(arguments);
+        };
+
+      window.gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "denied",
+        functionality_storage: "denied",
+        personalization_storage: "denied",
+        security_storage: "granted",
+        wait_for_update: 500,
+      });
+    </script>
+  )
+}
+
+{
+  hasGa4 && (
+    <script
+      type="text/plain"
+      data-cookieconsent="statistics"
+      async
+      src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+    ></script>
+  )
+}
+
+{
+  hasGa4 && (
+    <script
+      is:inline
+      type="text/plain"
+      data-cookieconsent="statistics"
+      define:vars={{ gaMeasurementId }}
+    >
+      window.gtag("js", new Date());
+      window.gtag("config", gaMeasurementId, {
+        send_page_view: false,
+      });
+    </script>
+  )
+}
+
+{
+  hasMetaPixel && (
+    <script
+      is:inline
+      type="text/plain"
+      data-cookieconsent="marketing"
+      define:vars={{ metaPixelId }}
+    >
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = true;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = true;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
+      );
+
+      window.fbq("init", metaPixelId);
+    </script>
+  )
+}
+
+{
+  (hasGa4 || hasMetaPixel) && (
+    <script
+      is:inline
+      data-cookieconsent="ignore"
+      define:vars={{ hasGa4, hasMetaPixel }}
+    >
+      (() => {
+        const lastTrackedPath = {
+          ga: null,
+          meta: null,
+        };
+
+        const currentPath = () =>
+          `${window.location.pathname}${window.location.search}`;
+
+        const currentPageParams = () => ({
+          page_title: document.title,
+          page_location: window.location.href,
+          page_path: `${window.location.pathname}${window.location.search}`,
+        });
+
+        const trackPageView = () => {
+          const path = currentPath();
+
+          if (hasGa4 && typeof window.gtag === "function" && lastTrackedPath.ga !== path) {
+            window.gtag("event", "page_view", currentPageParams());
+            lastTrackedPath.ga = path;
+          }
+
+          if (
+            hasMetaPixel &&
+            typeof window.fbq === "function" &&
+            lastTrackedPath.meta !== path
+          ) {
+            window.fbq("track", "PageView");
+            lastTrackedPath.meta = path;
+          }
+        };
+
+        const queuePageView = () => {
+          window.requestAnimationFrame(() => {
+            window.setTimeout(trackPageView, 0);
+          });
+        };
+
+        const trackEvent = ({ name, params = {}, metaEvent, metaParams = {} }) => {
+          if (!name) return;
+
+          if (hasGa4 && typeof window.gtag === "function") {
+            window.gtag("event", name, params);
+          }
+
+          if (hasMetaPixel && metaEvent && typeof window.fbq === "function") {
+            window.fbq("track", metaEvent, metaParams);
+          }
+        };
+
+        window.wydgtTrack = trackEvent;
+
+        document.addEventListener("astro:page-load", queuePageView);
+        document.addEventListener("DOMContentLoaded", queuePageView, {
+          once: true,
+        });
+        window.addEventListener("CookiebotOnAccept", queuePageView);
+        window.addEventListener("CookiebotOnTagsExecuted", queuePageView);
+
+        document.addEventListener("click", (event) => {
+          const target =
+            event.target instanceof Element
+              ? event.target.closest("[data-analytics-event]")
+              : null;
+
+          if (!target) return;
+
+          const name = target.getAttribute("data-analytics-event");
+          if (!name) return;
+
+          const params = {};
+          const label = target.getAttribute("data-analytics-label");
+          const provider = target.getAttribute("data-analytics-provider");
+
+          if (label) params.label = label;
+          if (provider) params.provider = provider;
+
+          trackEvent({
+            name,
+            params,
+            metaEvent: target.getAttribute("data-meta-event") ?? undefined,
+          });
+        });
+      })();
+    </script>
+  )
+}

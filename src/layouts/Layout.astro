@@ -3,6 +3,7 @@ import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import Navigation from "../components/Navigation.astro";
 import ExitIntent from "../components/ExitIntent";
+import ConsentAndAnalytics from "../components/ConsentAndAnalytics.astro";
 
 export interface Props {
   title: string;
@@ -24,6 +25,7 @@ const canonicalURL = Astro.site
 <!doctype html>
 <html lang="en" class="dark">
   <head>
+    <ConsentAndAnalytics />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

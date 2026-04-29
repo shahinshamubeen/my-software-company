@@ -5,6 +5,7 @@
 
 <button
   id="open-booking-modal"
+  data-analytics-event="schedule_call_open"
   class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-electric-indigo/20 border border-electric-indigo/30 text-electric-indigo hover:bg-electric-indigo hover:text-white transition-all duration-300"
 >
   <svg
@@ -108,6 +109,8 @@
           href="https://calendly.com"
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="schedule_call_provider_click"
+          data-analytics-provider="calendly"
           class="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white hover:border-cyber-lime/50 hover:bg-cyber-lime/5 transition-all"
         >
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -131,6 +134,8 @@
           href="https://cal.com"
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="schedule_call_provider_click"
+          data-analytics-provider="cal-com"
           class="flex items-center justify-center gap-3 w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white hover:border-electric-indigo/50 hover:bg-electric-indigo/5 transition-all"
         >
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
