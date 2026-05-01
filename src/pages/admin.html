@@ -20,10 +20,27 @@
       ].some((token) => identityHashParams.has(token));
 
       if (window.netlifyIdentity) {
+        const reloadCleanAdmin = () => {
+          if (
+            window.location.pathname === "/admin/" &&
+            !window.location.search &&
+            !window.location.hash
+          ) {
+            window.location.reload();
+            return;
+          }
+
+          window.location.replace("/admin/");
+        };
+
         window.netlifyIdentity.on("login", () => {
           if (hasIdentityToken) {
             window.location.replace("/admin/");
           }
+        });
+
+        window.netlifyIdentity.on("logout", () => {
+          window.setTimeout(reloadCleanAdmin, 0);
         });
       }
     </script>

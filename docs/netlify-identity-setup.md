@@ -9,6 +9,7 @@ Netlify now recommends `@netlify/identity` for new custom app auth, but Decap's 
 - `src/pages/admin.html` loads the Netlify Identity widget and Decap CMS.
 - `src/layouts/Layout.astro` detects Identity email tokens on public pages and redirects them to `/admin/` with the hash preserved.
 - There is no separate registration page and no `/admin/callback/` route.
+- Logout is handled in `src/pages/admin.html`: when Netlify Identity emits `logout`, the page reloads a clean `/admin/` URL so Decap starts from a logged-out state.
 - Do not call `netlifyIdentity.init()` or force `netlifyIdentity.open("signup")` manually. The hosted widget handles `invite_token`, `confirmation_token`, `recovery_token`, and `email_change_token` when the hash is present.
 
 ## Netlify dashboard setup
@@ -48,6 +49,7 @@ If your Netlify plan allows custom Identity email templates, point links directl
 5. The Identity widget should show registration fields for the invite.
 6. After the user sets a password, `/admin/` should load Decap CMS.
 7. Returning editors should go directly to `/admin/` and use email + password login.
+8. After logout, the browser should return to a clean `/admin/` URL and show the logged-out CMS login state.
 
 ## Troubleshooting
 
