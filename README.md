@@ -154,10 +154,13 @@ This project is wired to Decap CMS at `/admin` and Astro content collections.
 
 ### 1) Configure Decap backend
 
-Edit [public/admin/config.yml](public/admin/config.yml) and set:
+The CMS uses Netlify Identity + Git Gateway:
 
-- `backend.repo` to your GitHub repo (`owner/name`)
-- `backend.branch` to your default branch
+- `backend.name` should stay `git-gateway`
+- `backend.branch` should match the Netlify-connected branch, currently `master`
+- Do not add a `backend.repo` field for Git Gateway
+
+For the full login, invite, and registration flow, see [docs/netlify-identity-setup.md](docs/netlify-identity-setup.md).
 
 ### 2) Local authoring workflow
 

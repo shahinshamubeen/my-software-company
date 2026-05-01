@@ -7,8 +7,6 @@
     <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
     <title>Content Manager</title>
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  </head>
-  <body>
     <script>
       const identityHashParams = new URLSearchParams(
         window.location.hash.replace(/^#/, ""),
@@ -21,20 +19,16 @@
         "email_change_token",
       ].some((token) => identityHashParams.has(token));
 
-      function loadDecapCms() {
-        if (document.querySelector("script[data-decap-cms]")) return;
-
-        const script = document.createElement("script");
-        script.src = "https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js";
-        script.setAttribute("data-decap-cms", "true");
-        document.body.appendChild(script);
-      }
-
-      if (hasIdentityToken) {
-        window.location.replace(`/admin/callback/${window.location.hash}`);
-      } else {
-        loadDecapCms();
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("login", () => {
+          if (hasIdentityToken) {
+            window.location.replace("/admin/");
+          }
+        });
       }
     </script>
+  </head>
+  <body>
+    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
   </body>
 </html>
