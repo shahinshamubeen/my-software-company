@@ -152,6 +152,13 @@ Note: the current contact and newsletter forms are still demo flows, so no lead 
 
 This project is wired to Decap CMS at `/admin` and Astro content collections.
 
+The reusable Decap shell lives in `public/admin/`:
+
+- `index.html` - static CMS entrypoint
+- `admin-auth.js` - Netlify Identity login/logout cleanup
+- `identity-token-redirect.js` - public-page invite/reset token forwarding
+- `config.yml` - project-specific Decap backend and collections
+
 ### 1) Configure Decap backend
 
 The CMS uses Netlify Identity + Git Gateway:
@@ -161,6 +168,7 @@ The CMS uses Netlify Identity + Git Gateway:
 - Do not add a `backend.repo` field for Git Gateway
 
 For the full login, invite, and registration flow, see [docs/netlify-identity-setup.md](docs/netlify-identity-setup.md).
+For reuse in other projects, see [docs/decap-reusable-setup.md](docs/decap-reusable-setup.md).
 
 ### 2) Local authoring workflow
 

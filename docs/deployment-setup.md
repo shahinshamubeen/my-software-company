@@ -82,10 +82,11 @@ Notes:
 
 The site is wired for Decap CMS at `/admin`.
 
-1. Update `public/admin/config.yml` with the correct GitHub repository and branch.
-2. Confirm the hosting provider supports the chosen authentication flow.
-3. For local authoring, run `pnpm dev` and `pnpm cms:proxy` together, then open `/admin`.
-4. Verify the CMS can edit these content collections:
+1. Keep the reusable admin shell in `public/admin/index.html`, `public/admin/admin-auth.js`, and `public/admin/identity-token-redirect.js`.
+2. Update the project-specific collections and branch in `public/admin/config.yml`.
+3. Confirm the hosting provider supports the chosen authentication flow.
+4. For local authoring, run `pnpm dev` and `pnpm cms:proxy` together, then open `/admin`.
+5. Verify the CMS can edit these content collections:
    - `src/content/blog`
    - `src/content/work`
    - `src/content/jobs`
