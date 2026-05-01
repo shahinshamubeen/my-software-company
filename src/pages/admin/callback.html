@@ -61,7 +61,13 @@
     <main>
       <h1>Complete Registration</h1>
       <p id="status">Opening the secure registration form...</p>
-      <button id="continue-button" type="button">Continue</button>
+      <button
+        id="continue-button"
+        type="button"
+        data-netlify-identity-button
+      >
+        Continue
+      </button>
     </main>
 
     <script>
@@ -88,11 +94,6 @@
           return;
         }
 
-        if (identityHashParams.has("invite_token")) {
-          window.netlifyIdentity.open("signup");
-          return;
-        }
-
         window.netlifyIdentity.open();
       }
 
@@ -100,10 +101,19 @@
         goToAdmin();
       } else if (window.netlifyIdentity) {
         window.netlifyIdentity.on("login", goToAdmin);
+        window.netlifyIdentity.on("open", () => {
+          status.textContent = "Finish registration in the secure form.";
+        });
+        window.netlifyIdentity.on("error", () => {
+          status.textContent = "The registration form could not open. Try refreshing this page.";
+        });
         window.netlifyIdentity.on("close", () => {
           if (window.netlifyIdentity.currentUser()) {
             goToAdmin();
+            return;
           }
+
+          status.textContent = "Click Continue to reopen the registration form.";
         });
         window.netlifyIdentity.on("init", (user) => {
           if (user) {
@@ -111,9 +121,9 @@
             return;
           }
 
-          openIdentityFlow();
+          window.setTimeout(openIdentityFlow, 100);
         });
-        window.netlifyIdentity.init();
+        window.setTimeout(openIdentityFlow, 1200);
       } else {
         status.textContent = "The registration form could not load. Refresh the page and try again.";
       }
