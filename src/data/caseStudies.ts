@@ -1,3 +1,5 @@
+import { getCollection } from "astro:content";
+
 // Case studies data shared across pages
 export interface CaseStudy {
   id: string;
@@ -22,7 +24,7 @@ export interface CaseStudy {
   slides: {
     title: string;
     description: string;
-    mockupState: 'wireframe' | 'design' | 'code' | 'live';
+    mockupState: "wireframe" | "design" | "code" | "live";
   }[];
   testimonial?: {
     quote: string;
@@ -32,272 +34,23 @@ export interface CaseStudy {
   };
 }
 
-export const caseStudies: CaseStudy[] = [
-  {
-    id: 'nexus-ai',
-    title: 'Nexus AI Platform',
-    category: 'AI & Machine Learning',
-    description: 'Enterprise-grade AI orchestration platform serving 10M+ daily predictions',
-    longDescription: 'Nexus needed to unify their fragmented ML infrastructure into a single, scalable platform capable of handling millions of predictions per day while maintaining sub-100ms latency.',
-    image: '/work/nexus-ai.jpg',
-    stats: { metric: 'Latency Reduced', value: '40%' },
-    results: [
-      { label: 'Daily Predictions', value: '10M+', change: '+400%' },
-      { label: 'Latency', value: '45ms', change: '-40%' },
-      { label: 'Cost Reduction', value: '60%', change: '-60%' },
-      { label: 'Model Accuracy', value: '99.2%', change: '+12%' },
-    ],
-    tags: ['Python', 'TensorFlow', 'AWS', 'Kubernetes'],
-    color: '#00FF9D',
-    challenge: 'Nexus was running 15 different ML models across fragmented infrastructure, leading to inconsistent results, high latency, and spiraling cloud costs. Their data science team spent 70% of their time on DevOps instead of model development.',
-    solution: 'We built a unified AI orchestration platform with automated model versioning, A/B testing, and intelligent load balancing. The system auto-scales based on prediction demand and includes a self-service portal for data scientists.',
-    slides: [
-      {
-        title: 'Discovery & Architecture',
-        description: 'We audited 15 existing ML pipelines and designed a unified architecture using Kubernetes for orchestration and TensorFlow Serving for inference.',
-        mockupState: 'wireframe',
-      },
-      {
-        title: 'Platform Design',
-        description: 'Created an intuitive dashboard for data scientists to deploy, monitor, and A/B test models without DevOps involvement.',
-        mockupState: 'design',
-      },
-      {
-        title: 'Core Development',
-        description: 'Built the inference engine with auto-scaling, model versioning, and intelligent routing. Implemented feature stores for real-time feature computation.',
-        mockupState: 'code',
-      },
-      {
-        title: 'Production & Scale',
-        description: 'Deployed to production handling 10M+ daily predictions with 99.99% uptime. Achieved 45ms p99 latency across all model types.',
-        mockupState: 'live',
-      },
-    ],
-    testimonial: {
-      quote: 'WYDGT transformed our ML infrastructure from a liability into a competitive advantage. Our data scientists now ship models 10x faster.',
-      author: 'Dr. Sarah Chen',
-      role: 'VP of AI',
-      company: 'Nexus Technologies',
-    },
-  },
-  {
-    id: 'velocity-fintech',
-    title: 'Velocity FinTech',
-    category: 'Financial Services',
-    description: 'Real-time payment processing system handling $2B+ monthly transactions',
-    longDescription: 'Velocity needed to replace their legacy payment system with a modern, real-time platform capable of processing billions in monthly volume while meeting strict regulatory requirements.',
-    image: '/work/velocity.jpg',
-    stats: { metric: 'Transaction Speed', value: '3x' },
-    results: [
-      { label: 'Monthly Volume', value: '$2B+', change: '+300%' },
-      { label: 'Processing Time', value: '120ms', change: '-67%' },
-      { label: 'Uptime', value: '99.999%', change: '+0.01%' },
-      { label: 'Fraud Detection', value: '99.7%', change: '+25%' },
-    ],
-    tags: ['Go', 'PostgreSQL', 'Redis', 'gRPC'],
-    color: '#6366F1',
-    challenge: 'Velocity\'s legacy COBOL-based system couldn\'t handle peak loads, with transaction failures climbing to 5% during high-traffic periods. Regulatory audits were becoming increasingly difficult.',
-    solution: 'We designed a distributed, event-sourced payment engine in Go with real-time fraud detection. The system includes comprehensive audit logging and automated compliance reporting.',
-    slides: [
-      {
-        title: 'System Analysis',
-        description: 'Mapped the entire legacy system, identified bottlenecks, and designed a migration path that ensured zero downtime during the transition.',
-        mockupState: 'wireframe',
-      },
-      {
-        title: 'Interface Design',
-        description: 'Designed real-time dashboards for operations teams showing transaction flows, fraud alerts, and compliance status.',
-        mockupState: 'design',
-      },
-      {
-        title: 'Engine Development',
-        description: 'Built the payment engine using Go for performance, PostgreSQL for ACID compliance, and Redis for sub-millisecond caching.',
-        mockupState: 'code',
-      },
-      {
-        title: 'Launch & Validation',
-        description: 'Successfully migrated 100% of traffic with zero data loss. System now handles 3x previous peak loads with 99.999% uptime.',
-        mockupState: 'live',
-      },
-    ],
-    testimonial: {
-      quote: 'The new system handles Black Friday traffic like any other day. We haven\'t had a single transaction failure in 6 months.',
-      author: 'Michael Torres',
-      role: 'CTO',
-      company: 'Velocity Payments',
-    },
-  },
-  {
-    id: 'healthbridge',
-    title: 'HealthBridge',
-    category: 'Healthcare',
-    description: 'HIPAA-compliant telemedicine platform connecting 50K+ patients monthly',
-    longDescription: 'HealthBridge needed a secure, scalable telemedicine platform that could handle video consultations, e-prescriptions, and EHR integration while maintaining strict HIPAA compliance.',
-    image: '/work/healthbridge.jpg',
-    stats: { metric: 'User Satisfaction', value: '98%' },
-    results: [
-      { label: 'Monthly Patients', value: '50K+', change: '+500%' },
-      { label: 'Avg Wait Time', value: '2 min', change: '-85%' },
-      { label: 'Satisfaction', value: '98%', change: '+23%' },
-      { label: 'Provider Adoption', value: '94%', change: '+40%' },
-    ],
-    tags: ['React Native', 'Node.js', 'MongoDB', 'WebRTC'],
-    color: '#BF00FF',
-    challenge: 'HealthBridge was losing patients to competitors with better digital experiences. Their existing portal was web-only, slow, and required multiple apps for different functions.',
-    solution: 'We built a unified mobile-first platform with seamless video calls, in-app prescriptions, and deep EHR integration. The app works offline and syncs when connectivity returns.',
-    slides: [
-      {
-        title: 'User Research',
-        description: 'Conducted interviews with 50+ patients and 20 providers to understand pain points and design a unified care journey.',
-        mockupState: 'wireframe',
-      },
-      {
-        title: 'Experience Design',
-        description: 'Created a calming, accessible interface that works for all ages while meeting ADA and HIPAA requirements.',
-        mockupState: 'design',
-      },
-      {
-        title: 'Platform Build',
-        description: 'Developed cross-platform mobile apps with React Native, WebRTC for video, and end-to-end encryption for all data.',
-        mockupState: 'code',
-      },
-      {
-        title: 'National Rollout',
-        description: 'Launched across 500+ clinics with 94% provider adoption. Patient wait times dropped from 15 minutes to under 2.',
-        mockupState: 'live',
-      },
-    ],
-    testimonial: {
-      quote: 'Our patients love the new app. We\'ve seen a 40% increase in appointment completion rates since launch.',
-      author: 'Dr. Emily Watson',
-      role: 'Chief Medical Officer',
-      company: 'HealthBridge Medical',
-    },
-  },
-  {
-    id: 'quantum-commerce',
-    title: 'Quantum Commerce',
-    category: 'E-Commerce',
-    description: 'Headless commerce platform powering 500+ global storefronts',
-    longDescription: 'Quantum needed to modernize their monolithic e-commerce platform into a headless architecture that could power diverse storefronts globally.',
-    image: '/work/quantum.jpg',
-    stats: { metric: 'Conversion Rate', value: '+65%' },
-    results: [
-      { label: 'Storefronts', value: '500+', change: '+400%' },
-      { label: 'Page Speed', value: '0.8s', change: '-70%' },
-      { label: 'Conversion', value: '+65%', change: '+65%' },
-      { label: 'Revenue/Visit', value: '+42%', change: '+42%' },
-    ],
-    tags: ['Next.js', 'GraphQL', 'Stripe', 'Contentful'],
-    color: '#FF9900',
-    challenge: 'Quantum\'s monolithic platform couldn\'t support their expansion into new markets. Each new storefront required months of custom development and created maintenance nightmares.',
-    solution: 'We architected a headless commerce platform with a unified GraphQL API, allowing teams to spin up new storefronts in days with any frontend technology.',
-    slides: [
-      {
-        title: 'Platform Strategy',
-        description: 'Defined the headless architecture, API contracts, and migration strategy for 500+ existing storefronts.',
-        mockupState: 'wireframe',
-      },
-      {
-        title: 'Design System',
-        description: 'Created a flexible design system with 50+ components that could be customized per brand while maintaining consistency.',
-        mockupState: 'design',
-      },
-      {
-        title: 'API Development',
-        description: 'Built the GraphQL commerce API with real-time inventory, dynamic pricing, and multi-currency support.',
-        mockupState: 'code',
-      },
-      {
-        title: 'Global Rollout',
-        description: 'Migrated all storefronts to the new platform. New market launches now take days instead of months.',
-        mockupState: 'live',
-      },
-    ],
-  },
-  {
-    id: 'aether-blockchain',
-    title: 'Aether Protocol',
-    category: 'Blockchain',
-    description: 'Layer 2 scaling solution processing 100K+ TPS',
-    longDescription: 'Aether needed a Layer 2 solution that could dramatically reduce gas costs while maintaining the security guarantees of Ethereum mainnet.',
-    image: '/work/aether.jpg',
-    stats: { metric: 'Gas Savings', value: '95%' },
-    results: [
-      { label: 'Throughput', value: '100K TPS', change: '+10000%' },
-      { label: 'Gas Cost', value: '-95%', change: '-95%' },
-      { label: 'Finality', value: '2 sec', change: '-98%' },
-      { label: 'TVL', value: '$500M+', change: 'New' },
-    ],
-    tags: ['Rust', 'Solidity', 'ZK-Proofs', 'Ethereum'],
-    color: '#E10098',
-    challenge: 'Ethereum mainnet gas costs were making Aether\'s DeFi protocol unusable for most users. Transactions that should cost cents were costing $50+.',
-    solution: 'We built a ZK-rollup Layer 2 with validity proofs, enabling near-instant transactions at 95% lower cost while inheriting Ethereum\'s security.',
-    slides: [
-      {
-        title: 'Protocol Design',
-        description: 'Designed the ZK-rollup architecture with optimal batch sizes and proof generation strategies.',
-        mockupState: 'wireframe',
-      },
-      {
-        title: 'Developer UX',
-        description: 'Created SDKs and documentation that made deploying to L2 as easy as deploying to mainnet.',
-        mockupState: 'design',
-      },
-      {
-        title: 'Core Protocol',
-        description: 'Implemented the prover in Rust, smart contracts in Solidity, and built the sequencer infrastructure.',
-        mockupState: 'code',
-      },
-      {
-        title: 'Mainnet Launch',
-        description: 'Launched to mainnet with $500M+ TVL migrated in the first month. Processing 100K+ TPS at peak.',
-        mockupState: 'live',
-      },
-    ],
-  },
-  {
-    id: 'nova-analytics',
-    title: 'Nova Analytics',
-    category: 'Data & Analytics',
-    description: 'Real-time business intelligence dashboard for Fortune 500',
-    longDescription: 'Nova needed to consolidate data from 20+ sources into a real-time analytics platform that could surface insights automatically.',
-    image: '/work/nova.jpg',
-    stats: { metric: 'Insights Generation', value: '10x' },
-    results: [
-      { label: 'Data Sources', value: '20+', change: 'Unified' },
-      { label: 'Query Time', value: '< 1s', change: '-98%' },
-      { label: 'Auto Insights', value: '10x', change: '+900%' },
-      { label: 'User Adoption', value: '89%', change: '+60%' },
-    ],
-    tags: ['Python', 'Apache Spark', 'Snowflake', 'React'],
-    color: '#00ADD8',
-    challenge: 'Nova\'s analysts spent 80% of their time gathering data from siloed systems. Reports took weeks to generate and were often outdated by the time they reached executives.',
-    solution: 'We built a unified data platform with real-time ingestion, automated anomaly detection, and natural language querying for non-technical users.',
-    slides: [
-      {
-        title: 'Data Audit',
-        description: 'Cataloged 20+ data sources, defined a unified schema, and designed real-time ingestion pipelines.',
-        mockupState: 'wireframe',
-      },
-      {
-        title: 'Dashboard Design',
-        description: 'Created role-based dashboards with drill-down capabilities and automated insight surfacing.',
-        mockupState: 'design',
-      },
-      {
-        title: 'Platform Build',
-        description: 'Built the data platform on Snowflake with Spark for processing and a React frontend for visualization.',
-        mockupState: 'code',
-      },
-      {
-        title: 'Enterprise Rollout',
-        description: 'Rolled out to 5,000+ users across 12 countries. Analysts now spend 80% of time on insights, not data gathering.',
-        mockupState: 'live',
-      },
-    ],
-  },
-];
+const caseStudyEntries = await getCollection("caseStudies");
+const caseStudyData = caseStudyEntries.map(({ data }) => data);
+
+export const caseStudies: CaseStudy[] = caseStudyData
+  .sort((a, b) => {
+    const orderA = a.order ?? Number.MAX_SAFE_INTEGER;
+    const orderB = b.order ?? Number.MAX_SAFE_INTEGER;
+
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+
+    return a.id.localeCompare(b.id);
+  })
+  .map(({ order: _order, ...rest }) => {
+    return rest;
+  });
 
 export function getCaseStudy(id: string): CaseStudy | undefined {
   return caseStudies.find((study) => study.id === id);

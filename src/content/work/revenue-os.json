@@ -1,0 +1,59 @@
+{
+  "id": "revenue-os",
+  "order": 1,
+  "title": "Revenue OS",
+  "category": "SaaS",
+  "description": "Unified deal operations platform for a B2B SaaS sales team.",
+  "longDescription": "We replaced disconnected CRM workflows with a unified operations layer that made forecasting accurate and onboarding fast.",
+  "image": "/uploads/revenue-os.jpg",
+  "stats": {
+    "metric": "Forecast Accuracy",
+    "value": "+31%"
+  },
+  "results": [
+    {
+      "label": "Forecast Accuracy",
+      "value": "+31%"
+    },
+    {
+      "label": "Time To Ramp",
+      "value": "-42%"
+    },
+    {
+      "label": "Pipeline Hygiene",
+      "value": "+2.4x"
+    }
+  ],
+  "tags": ["TypeScript", "PostgreSQL", "Automation"],
+  "color": "#00C389",
+  "challenge": "Sales and RevOps teams were working from inconsistent records, making forecasts noisy and handoffs slow.",
+  "solution": "We implemented a workflow engine with guardrails for stage changes, automatic enrichment, and deal health scoring.",
+  "slides": [
+    {
+      "title": "Operational Baseline",
+      "description": "Mapped current sales workflow and identified the highest-friction handoffs.",
+      "mockupState": "wireframe"
+    },
+    {
+      "title": "Workflow Design",
+      "description": "Designed state transitions and automation checkpoints by deal stage.",
+      "mockupState": "design"
+    },
+    {
+      "title": "Product Build",
+      "description": "Built the ops layer with strict validation, alerts, and analytics.",
+      "mockupState": "code"
+    },
+    {
+      "title": "Rollout",
+      "description": "Rolled out by team in waves with telemetry and feedback loops.",
+      "mockupState": "live"
+    }
+  ],
+  "testimonial": {
+    "quote": "Forecast calls changed from debate to decisions.",
+    "author": "Anya Morris",
+    "role": "VP Revenue Operations",
+    "company": "Northline"
+  }
+}

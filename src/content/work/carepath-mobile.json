@@ -1,0 +1,53 @@
+{
+  "id": "carepath-mobile",
+  "order": 2,
+  "title": "CarePath Mobile",
+  "category": "Healthcare",
+  "description": "Mobile patient journey experience for distributed care teams.",
+  "longDescription": "We rebuilt appointment prep, follow-up, and messaging into one mobile workflow that reduced support load and improved completion rates.",
+  "image": "/uploads/carepath-mobile.jpg",
+  "stats": {
+    "metric": "Appointment Completion",
+    "value": "+24%"
+  },
+  "results": [
+    {
+      "label": "Completion Rate",
+      "value": "+24%"
+    },
+    {
+      "label": "Support Tickets",
+      "value": "-37%"
+    },
+    {
+      "label": "Patient Satisfaction",
+      "value": "+18 pts"
+    }
+  ],
+  "tags": ["React Native", "Node.js", "FHIR"],
+  "color": "#2D7EF8",
+  "challenge": "Patients were missing key steps before and after visits, creating rework for care coordinators.",
+  "solution": "We introduced a guided timeline with reminders, secure messaging, and context-aware checklists.",
+  "slides": [
+    {
+      "title": "Research",
+      "description": "Interviewed patients and coordinators to map drop-off points.",
+      "mockupState": "wireframe"
+    },
+    {
+      "title": "Experience",
+      "description": "Designed a step-by-step care timeline and status model.",
+      "mockupState": "design"
+    },
+    {
+      "title": "Implementation",
+      "description": "Delivered secure workflows with audit trails and role-based views.",
+      "mockupState": "code"
+    },
+    {
+      "title": "Outcome",
+      "description": "Scaled to multi-clinic rollout with operational dashboards.",
+      "mockupState": "live"
+    }
+  ]
+}

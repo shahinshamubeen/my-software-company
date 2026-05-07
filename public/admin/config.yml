@@ -1,0 +1,180 @@
+backend:
+  name: git-gateway
+  branch: master
+
+local_backend: true
+publish_mode: simple
+
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: blog
+    label: Blog
+    label_singular: Post
+    folder: src/content/blog
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{fields.id}}"
+    identifier_field: title
+    summary: "{{fields.title}}"
+    preview_path: "blog/{{fields.id}}"
+    fields:
+      - { label: Slug, name: id, widget: string, hint: "Used in /blog/<slug>" }
+      - { label: Title, name: title, widget: string }
+      - { label: Excerpt, name: excerpt, widget: text }
+      - { label: Category, name: category, widget: string }
+      - label: Author
+        name: author
+        widget: object
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Role, name: role, widget: string }
+          - { label: Avatar, name: avatar, widget: string, required: false }
+      -
+        label: Published Date
+        name: publishedAt
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: false
+        format: YYYY-MM-DD
+      - { label: Read Time, name: readTime, widget: string }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Hero Image Path, name: image, widget: string, required: false }
+      -
+        label: Tags
+        name: tags
+        widget: list
+        field: { label: Tag, name: tag, widget: string }
+      - { label: Body, name: body, widget: markdown }
+
+  - name: work
+    label: Case Studies
+    label_singular: Case Study
+    folder: src/content/work
+    create: true
+    extension: json
+    format: json
+    slug: "{{fields.id}}"
+    identifier_field: title
+    summary: "{{fields.title}}"
+    preview_path: "work/{{fields.id}}"
+    editor:
+      preview: false
+    fields:
+      - { label: Slug, name: id, widget: string, hint: "Used in /work/<slug>" }
+      - { label: Order, name: order, widget: number, value_type: int, min: 1 }
+      - { label: Title, name: title, widget: string }
+      - { label: Category, name: category, widget: string }
+      - { label: Description, name: description, widget: text }
+      - { label: Long Description, name: longDescription, widget: text }
+      - { label: Image Path, name: image, widget: string }
+      - label: Stats
+        name: stats
+        widget: object
+        fields:
+          - { label: Metric, name: metric, widget: string }
+          - { label: Value, name: value, widget: string }
+      -
+        label: Results
+        name: results
+        widget: list
+        fields:
+          - { label: Label, name: label, widget: string }
+          - { label: Value, name: value, widget: string }
+          - { label: Change, name: change, widget: string, required: false }
+      -
+        label: Tags
+        name: tags
+        widget: list
+        field: { label: Tag, name: tag, widget: string }
+      - { label: Accent Color, name: color, widget: string, hint: "Hex color e.g. #00FF9D" }
+      - { label: Challenge, name: challenge, widget: text }
+      - { label: Solution, name: solution, widget: text }
+      -
+        label: Slides
+        name: slides
+        widget: list
+        fields:
+          - { label: Title, name: title, widget: string }
+          - { label: Description, name: description, widget: text }
+          -
+            label: Mockup State
+            name: mockupState
+            widget: select
+            options: [wireframe, design, code, live]
+      -
+        label: Testimonial
+        name: testimonial
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: Quote, name: quote, widget: text }
+          - { label: Author, name: author, widget: string }
+          - { label: Role, name: role, widget: string }
+          - { label: Company, name: company, widget: string }
+
+  - name: careers
+    label: Careers
+    label_singular: Role
+    folder: src/content/jobs
+    create: true
+    extension: json
+    format: json
+    slug: "{{fields.id}}"
+    identifier_field: title
+    summary: "{{fields.title}}"
+    preview_path: "careers/{{fields.id}}"
+    editor:
+      preview: false
+    fields:
+      - { label: Slug, name: id, widget: string, hint: "Used in /careers/<slug>" }
+      - { label: Order, name: order, widget: number, value_type: int, min: 1 }
+      - { label: Title, name: title, widget: string }
+      - { label: Department, name: department, widget: string }
+      - { label: Location, name: location, widget: string }
+      -
+        label: Employment Type
+        name: type
+        widget: select
+        options: [Full-time, Part-time, Contract]
+      -
+        label: Work Mode
+        name: remote
+        widget: select
+        options: [Remote, Hybrid, On-site]
+      - { label: Experience, name: experience, widget: string }
+      - { label: Salary, name: salary, widget: string }
+      - { label: Description, name: description, widget: text }
+      -
+        label: Responsibilities
+        name: responsibilities
+        widget: list
+        required: true
+        default: []
+        min: 1
+        field: { label: Responsibility, name: responsibility, widget: string }
+      -
+        label: Requirements
+        name: requirements
+        widget: list
+        required: true
+        default: []
+        min: 1
+        field: { label: Requirement, name: requirement, widget: string }
+      -
+        label: Nice To Have
+        name: niceToHave
+        widget: list
+        required: true
+        default: []
+        field: { label: Item, name: item, widget: string }
+      -
+        label: Posted Date
+        name: posted
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: false
+        format: YYYY-MM-DD

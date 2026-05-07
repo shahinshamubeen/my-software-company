@@ -1,0 +1,30 @@
+{
+  "id": "product-designer",
+  "order": 3,
+  "title": "Product Designer",
+  "department": "Design",
+  "location": "Remote",
+  "type": "Full-time",
+  "remote": "Remote",
+  "experience": "4+ years",
+  "salary": "$120K - $160K",
+  "description": "Design clear, high-leverage user experiences for complex product workflows.",
+  "responsibilities": [
+    "Lead design for major product surfaces",
+    "Create flows, wireframes, and high-fidelity UI",
+    "Partner with engineering on component-level details",
+    "Contribute to system quality and accessibility"
+  ],
+  "requirements": [
+    "Strong portfolio demonstrating shipped product work",
+    "Proficiency with Figma and prototyping",
+    "Solid understanding of UX and interaction patterns",
+    "Ability to communicate rationale clearly"
+  ],
+  "niceToHave": [
+    "Experience designing for developer-facing products",
+    "Experience with design systems",
+    "Experience with analytics-informed iteration"
+  ],
+  "posted": "2026-03-15"
+}

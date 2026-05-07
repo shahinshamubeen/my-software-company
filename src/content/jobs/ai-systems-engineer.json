@@ -1,0 +1,30 @@
+{
+  "id": "ai-systems-engineer",
+  "order": 2,
+  "title": "AI Systems Engineer",
+  "department": "AI Engineering",
+  "location": "Remote",
+  "type": "Full-time",
+  "remote": "Remote",
+  "experience": "4+ years",
+  "salary": "$160K - $210K",
+  "description": "Design and ship reliable AI workflows with strong evaluation, safety, and runtime performance.",
+  "responsibilities": [
+    "Build LLM-backed features with measurable quality",
+    "Maintain evaluation pipelines and model telemetry",
+    "Implement retrieval and tool-calling orchestration",
+    "Collaborate with product teams on AI UX behavior"
+  ],
+  "requirements": [
+    "Production experience with Python or TypeScript",
+    "Experience with model evaluation and prompt iteration",
+    "Strong systems and debugging fundamentals",
+    "Experience operating services in cloud environments"
+  ],
+  "niceToHave": [
+    "Experience with vector databases",
+    "Experience with multi-agent architectures",
+    "Experience with privacy-sensitive AI workloads"
+  ],
+  "posted": "2026-03-22"
+}

@@ -1,0 +1,102 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Footer from "../components/Footer.astro";
+
+const cookiebotCbid = import.meta.env.PUBLIC_COOKIEBOT_CBID?.trim() ?? "";
+const hasCookiebot = cookiebotCbid.length > 0;
+---
+
+<Layout
+  title="Cookie Policy"
+  description="Learn how WYDGT uses cookies, analytics, and advertising technologies, and update your consent preferences."
+>
+  <section class="pt-32 pb-16">
+    <div class="section-container">
+      <div class="max-w-3xl mx-auto">
+        <span
+          class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-cyber-lime border border-cyber-lime/30 rounded-full"
+        >
+          Cookie Policy
+        </span>
+        <h1 class="text-display-lg font-display font-bold text-white mb-6">
+          Cookie and tracking preferences
+        </h1>
+        <p class="text-lg text-white/70 mb-6">
+          We use essential technologies to keep the site functioning, plus
+          optional analytics and marketing tools when you consent. You can
+          review or change your preferences at any time.
+        </p>
+
+        <div class="glass-card border border-glass-border rounded-2xl p-6 mb-10">
+          <h2 class="text-2xl font-display font-semibold text-white mb-4">
+            Categories we use
+          </h2>
+          <div class="space-y-4 text-white/70">
+            <p>
+              <strong class="text-white">Necessary:</strong> required for the
+              core site experience and security.
+            </p>
+            <p>
+              <strong class="text-white">Statistics:</strong> anonymous or
+              pseudonymous measurement tools such as Google Analytics 4, loaded
+              only after consent.
+            </p>
+            <p>
+              <strong class="text-white">Marketing:</strong> advertising and
+              remarketing technologies such as Meta Pixel, loaded only after
+              consent.
+            </p>
+          </div>
+
+          <div class="mt-6 flex flex-wrap gap-4">
+            {
+              hasCookiebot && (
+                <button
+                  type="button"
+                  onclick="window.Cookiebot && window.Cookiebot.renew()"
+                  class="btn-brutal"
+                >
+                  Open cookie settings
+                </button>
+              )
+            }
+            <a
+              href="/contact"
+              class="inline-flex items-center px-6 py-3 rounded-lg border border-white/10 text-white/80 hover:text-white hover:border-white/20 transition-all"
+            >
+              Privacy questions
+            </a>
+          </div>
+        </div>
+
+        <div class="glass-card border border-glass-border rounded-2xl p-6">
+          <h2 class="text-2xl font-display font-semibold text-white mb-4">
+            Cookie declaration
+          </h2>
+          <p class="text-white/70 mb-6">
+            The declaration below is generated from the current Cookiebot domain
+            scan and lists the technologies discovered on this site.
+          </p>
+
+          {
+            hasCookiebot ? (
+              <script
+                id="CookieDeclaration"
+                src={`https://consent.cookiebot.com/${cookiebotCbid}/cd.js`}
+                type="text/javascript"
+                async
+              ></script>
+            ) : (
+              <p class="text-white/60">
+                The live cookie declaration will appear here once the Cookiebot
+                domain group ID is configured and the domain scan completes.
+              </p>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
