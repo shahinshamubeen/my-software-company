@@ -1,169 +1,253 @@
 ---
-// Services data
-const services = [
-  {
-    id: "product-development",
-    title: "Product Development",
-    description:
-      "End-to-end development from concept to launch, building scalable products that users love.",
-    icon: "rocket",
-    features: [
-      "MVP Development",
-      "Full-Stack Engineering",
-      "API Design",
-      "System Architecture",
-    ],
-    color: "#00FF9D",
-  },
-  {
-    id: "ai-integration",
-    title: "AI Integration",
-    description:
-      "Leverage cutting-edge AI to automate workflows, enhance user experiences, and unlock insights.",
-    icon: "brain",
-    features: [
-      "LLM Integration",
-      "Custom Models",
-      "Data Pipelines",
-      "Vector Databases",
-    ],
-    color: "#6366F1",
-  },
-  {
-    id: "cloud-infrastructure",
-    title: "Cloud & DevOps",
-    description:
-      "Design and implement cloud infrastructure that scales automatically and costs less.",
-    icon: "cloud",
-    features: ["AWS/GCP/Azure", "Kubernetes", "CI/CD Pipelines", "Monitoring"],
-    color: "#BF00FF",
-  },
-  {
-    id: "mobile-apps",
-    title: "Mobile Apps",
-    description:
-      "Native and cross-platform mobile applications with stunning UI and smooth performance.",
-    icon: "phone",
-    features: ["React Native", "Flutter", "iOS Native", "Android Native"],
-    color: "#FF9900",
-  },
-];
+import {
+  industries,
+  popularBuilds,
+  serviceCategories,
+} from "../data/serviceCatalog";
 
-// Icon SVG paths
+const featuredIndustries = industries.slice(0, 8);
+
 const iconPaths: Record<string, string> = {
-  rocket:
-    "M5 16l-1.42 1.42a1 1 0 0 0-.29.82l.5 3a1 1 0 0 0 .7.7l3 .5a1 1 0 0 0 .82-.3L10 20m-5-4l8.5-8.5m-6.36 4.36l2.83 2.83M18.364 5.636a9 9 0 0 1-12.728 12.728M21 3l-5 5m5-5v5m0-5h-5",
-  brain:
-    "M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.54m4.5-.5a2.5 2.5 0 0 1 4.26 1.54 2.5 2.5 0 0 1 1.3 4.24 3 3 0 0 1-.34 5.58 2.5 2.5 0 0 1-2.96 3.08A2.5 2.5 0 0 1 12 19.5v-15",
-  cloud: "M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z",
+  globe:
+    '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 0 20"/><path d="M12 2a15.3 15.3 0 0 0 0 20"/>',
+  panels:
+    '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 20V10"/>',
   phone:
-    "M16 2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm-4 18a1 1 0 1 1 0-2 1 1 0 0 1 0 2z",
+    '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
+  building:
+    '<path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/>',
+  cart:
+    '<circle cx="9" cy="20" r="1"/><circle cx="17" cy="20" r="1"/><path d="M3 4h2l2.4 10.5a2 2 0 0 0 2 1.5h7.8a2 2 0 0 0 1.9-1.4L21 8H6"/>',
+  bot:
+    '<rect x="4" y="8" width="16" height="10" rx="2"/><path d="M12 4v4"/><path d="M8 12h.01"/><path d="M16 12h.01"/><path d="M9 16h6"/>',
+  cloud:
+    '<path d="M17.5 19H8a6 6 0 1 1 5.6-8.1A4.5 4.5 0 1 1 17.5 19Z"/><path d="M12 13v4"/><path d="m9 15 3-3 3 3"/>',
+  spark:
+    '<path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/>',
 };
 ---
 
 <section
-  class="py-24 relative bg-gradient-to-b from-obsidian via-carbon to-obsidian"
+  id="services"
+  class="py-24 relative overflow-hidden bg-gradient-to-b from-obsidian via-carbon to-obsidian"
 >
-  <div class="section-container">
-    {/* Section Header */}
-    <div class="text-center mb-16">
-      <span
-        class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-electric-purple border border-electric-purple/30 rounded-full"
-      >
-        What We Do
-      </span>
-      <h2 class="text-display-md font-display font-bold text-white mb-4">
-        Our Services
-      </h2>
-      <p class="max-w-2xl mx-auto text-white/70">
-        From initial concept to production scale, we provide comprehensive
-        engineering services to transform your vision into reality.
-      </p>
+  <div class="absolute inset-0 grid-lines opacity-20" aria-hidden="true"></div>
+  <div
+    class="absolute -top-32 left-1/2 h-72 w-[40rem] -translate-x-1/2 rounded-full bg-cyber-lime/10 blur-[120px]"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="section-container relative">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-end mb-14">
+      <div>
+        <span
+          class="inline-block px-4 py-1 mb-4 text-xs font-mono uppercase tracking-widest text-electric-purple border border-electric-purple/30 rounded-full"
+        >
+          What We Build
+        </span>
+        <h2 class="text-display-md font-display font-bold text-white mb-4">
+          Services, neatly categorized
+        </h2>
+        <p class="max-w-3xl text-white/70">
+          From a simple business website to full ERP, CRM, HRMS, ecommerce,
+          mobile apps, automations, and cloud infrastructure, we cover the full
+          software journey.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-3">
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+          <span class="block text-3xl font-mono font-bold text-cyber-lime">
+            08
+          </span>
+          <span class="text-xs uppercase tracking-wide text-white/45">
+            service areas
+          </span>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+          <span class="block text-3xl font-mono font-bold text-electric-indigo">
+            16
+          </span>
+          <span class="text-xs uppercase tracking-wide text-white/45">
+            common builds
+          </span>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+          <span class="block text-3xl font-mono font-bold text-electric-purple">
+            10
+          </span>
+          <span class="text-xs uppercase tracking-wide text-white/45">
+            industries
+          </span>
+        </div>
+      </div>
     </div>
 
-    {/* Services Grid - Bento Layout */}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5">
       {
-        services.map((service, index) => (
-          <div
-            class="group relative p-8 rounded-2xl glass-card hover:bg-white/[0.03] transition-all duration-500 border border-glass-border hover:border-white/20"
+        serviceCategories.map((service, index) => (
+          <a
+            href={`/services#${service.id}`}
+            class="group relative min-h-[23rem] overflow-hidden rounded-2xl border border-white/10 bg-black/35 p-6 transition-all duration-500 hover:-translate-y-1 hover:border-white/25 hover:bg-white/[0.04]"
             style={`--service-color: ${service.color}`}
           >
-            {/* Glow Effect on Hover */}
             <div
-              class="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-              style={`background: radial-gradient(circle at top left, ${service.color}10, transparent 50%)`}
+              class="absolute inset-x-0 top-0 h-1 opacity-80 transition-all duration-500 group-hover:h-1.5"
+              style={`background: ${service.color}`}
+            />
+            <div
+              class="absolute -right-14 -top-14 h-32 w-32 rounded-full opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-50"
+              style={`background: ${service.color}`}
+              aria-hidden="true"
             />
 
-            {/* Icon */}
-            <div
-              class="relative w-14 h-14 rounded-xl flex items-center justify-center mb-6 border-2"
-              style={`border-color: ${service.color}; background: ${service.color}10`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-7 h-7"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke={service.color}
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d={iconPaths[service.icon]} />
-              </svg>
-            </div>
-
-            {/* Title */}
-            <h3 class="relative text-2xl font-display font-semibold text-white mb-3 group-hover:text-cyber-lime transition-colors">
-              {service.title}
-            </h3>
-
-            {/* Description */}
-            <p class="relative text-white/70 mb-6">{service.description}</p>
-
-            {/* Features */}
-            <div class="relative grid grid-cols-2 gap-2">
-              {service.features.map((feature) => (
-                <div class="flex items-center gap-2">
-                  <span
-                    class="w-1.5 h-1.5 rounded-full"
-                    style={`background: ${service.color}`}
-                  />
-                  <span class="text-sm text-white/50">{feature}</span>
+            <div class="relative flex h-full flex-col">
+              <div class="mb-5 flex items-start justify-between gap-4">
+                <div
+                  class="flex h-12 w-12 items-center justify-center rounded-xl border bg-white/[0.03]"
+                  style={`border-color: ${service.color}55; color: ${service.color}; background: ${service.color}10`}
+                >
+                  <svg
+                    class="h-6 w-6"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <Fragment set:html={iconPaths[service.icon]} />
+                  </svg>
                 </div>
-              ))}
-            </div>
+                <span class="font-mono text-xs text-white/30">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
 
-            {/* Learn More Link */}
-            <a
-              href={`/services#${service.id}`}
-              class="relative mt-6 inline-flex items-center gap-2 text-sm font-medium transition-colors group/link"
-              style={`color: ${service.color}`}
-            >
-              <span>Learn more</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-4 h-4 transition-transform group-hover/link:translate-x-1"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+              <span
+                class="mb-2 text-xs font-mono uppercase tracking-widest"
+                style={`color: ${service.color}`}
               >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </a>
-          </div>
+                {service.eyebrow}
+              </span>
+              <h3 class="text-xl font-display font-semibold text-white mb-3">
+                {service.title}
+              </h3>
+              <p class="text-sm leading-relaxed text-white/60">
+                {service.description}
+              </p>
+
+              <div class="mt-6 flex flex-wrap gap-2">
+                {service.examples.map((example) => (
+                  <span class="rounded-lg border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-white/60">
+                    {example}
+                  </span>
+                ))}
+              </div>
+
+              <span
+                class="mt-auto inline-flex items-center gap-2 pt-7 text-sm font-medium transition-transform group-hover:translate-x-1"
+                style={`color: ${service.color}`}
+              >
+                View details
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </span>
+            </div>
+          </a>
         ))
       }
     </div>
 
-    {/* CTA */}
-    <div class="mt-16 text-center">
-      <a href="/contact" class="btn-brutal text-lg"> Start Your Project </a>
+    <div class="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] p-5 md:p-6">
+      <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h3 class="text-lg font-display font-semibold text-white">
+            Popular project types
+          </h3>
+          <p class="text-sm text-white/50">
+            The common starting points clients ask us to build.
+          </p>
+        </div>
+        <a
+          href="/contact"
+          class="inline-flex items-center justify-center rounded-lg border border-cyber-lime/40 px-4 py-2 text-sm font-medium text-cyber-lime transition-colors hover:bg-cyber-lime hover:text-obsidian"
+        >
+          Start a project
+        </a>
+      </div>
+      <div class="mt-5 flex flex-wrap gap-2">
+        {
+          popularBuilds.map((build) => (
+            <span class="rounded-full border border-white/10 bg-obsidian/60 px-3 py-1.5 text-sm text-white/65">
+              {build}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="mt-16">
+      <div class="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <span class="text-xs font-mono uppercase tracking-widest text-cyber-lime">
+            Industries
+          </span>
+          <h3 class="mt-2 text-3xl font-display font-bold text-white">
+            Built for the way your business runs
+          </h3>
+        </div>
+        <a
+          href="/services#industries"
+          class="inline-flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-cyber-lime"
+        >
+          See all industries
+          <svg
+            class="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {
+          featuredIndustries.map((industry) => (
+            <div class="group rounded-2xl border border-white/10 bg-black/25 p-5 transition-colors hover:border-white/20 hover:bg-white/[0.03]">
+              <div class="mb-4 flex items-center gap-3">
+                <span
+                  class="h-3 w-3 rounded-full shadow-[0_0_18px_currentColor]"
+                  style={`color: ${industry.color}; background: ${industry.color}`}
+                />
+                <h4 class="font-display font-semibold text-white">
+                  {industry.name}
+                </h4>
+              </div>
+              <p class="text-sm leading-relaxed text-white/55">
+                {industry.summary}
+              </p>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
 </section>

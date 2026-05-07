@@ -10,7 +10,9 @@
     "cms:proxy": "pnpm dlx decap-server"
   },
   "dependencies": {
+    "@astrojs/mdx": "^5.0.4",
     "@astrojs/react": "^5.0.4",
+    "@astrojs/sitemap": "^3.7.2",
     "@google/generative-ai": "^0.24.1",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.4.2",
