@@ -7,6 +7,9 @@ import ServicesPreview from "../components/ServicesPreview.astro";
 import Testimonials from "../components/Testimonials";
 import Marquee from "../components/Marquee.astro";
 import Footer from "../components/Footer.astro";
+import WhyWorkWithUs from "../components/WhyWorkWithUs.astro";
+import Process from "../components/Process.astro";
+import DedicatedTeam from "../components/DedicatedTeam.astro";
 ---
 
 <Layout title="Home">
@@ -18,6 +21,15 @@ import Footer from "../components/Footer.astro";
 
   <!-- Services Preview Section -->
   <ServicesPreview />
+
+  <!-- Why Work With Us Section -->
+  <WhyWorkWithUs />
+
+  <!-- Process Section -->
+  <Process />
+
+  <!-- Dedicated Team Section -->
+  <DedicatedTeam />
 
   <!-- Tech Stack Section -->
   <TechStack client:visible />

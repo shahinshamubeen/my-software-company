@@ -1,77 +1,167 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const techStack = [
+const categories = [
   {
     id: 'frontend',
-    title: 'Lightning-Fast Interfaces',
-    tags: ['Speed', 'SEO-Optimized', 'Engaging'],
-    features: [
-      'Instant-loading websites',
-      'Ranks higher on Google Search',
-      'Fluid, app-like user experiences'
-    ],
-    icon: '/icons/react.svg',
+    name: 'Frontend & UI',
     accent: 'bg-cyber-lime',
-    textAccent: 'text-cyber-lime',
-    borderHover: 'group-hover:border-cyber-lime/50',
-    shadowHover: 'group-hover:shadow-[0_0_30px_rgba(0,255,157,0.15)]',
+    borderHover: 'hover:border-cyber-lime/40',
+    textGlow: 'text-cyber-lime',
+    shadow: 'shadow-[0_0_20px_rgba(0,255,157,0.4)]',
+    techs: [
+      { name: 'React', slug: 'react' },
+      { name: 'Next.js', slug: 'nextdotjs' },
+      { name: 'Vue.js', slug: 'vuedotjs' },
+      { name: 'Svelte', slug: 'svelte' },
+      { name: 'Astro', slug: 'astro' },
+      { name: 'Angular', slug: 'angular' },
+      { name: 'TypeScript', slug: 'typescript' },
+      { name: 'Tailwind CSS', slug: 'tailwindcss' },
+      { name: 'Framer', slug: 'framer' },
+      { name: 'Three.js', slug: 'threedotjs' },
+      { name: 'Redux', slug: 'redux' },
+      { name: 'Vite', slug: 'vite' }
+    ]
   },
   {
     id: 'backend',
-    title: 'Bulletproof Infrastructure',
-    tags: ['Secure', 'Reliable', 'Scalable'],
-    features: [
-      'Never crashes under heavy traffic',
-      'Bank-grade secure data protection',
-      'Grows effortlessly with your business'
-    ],
-    icon: '/icons/go.svg',
+    name: 'Backend & Core',
     accent: 'bg-electric-indigo',
-    textAccent: 'text-electric-indigo',
-    borderHover: 'group-hover:border-electric-indigo/50',
-    shadowHover: 'group-hover:shadow-[0_0_30px_rgba(99,102,241,0.15)]',
+    borderHover: 'hover:border-electric-indigo/40',
+    textGlow: 'text-electric-indigo',
+    shadow: 'shadow-[0_0_20px_rgba(99,102,241,0.4)]',
+    techs: [
+      { name: 'Node.js', slug: 'nodedotjs' },
+      { name: 'Python', slug: 'python' },
+      { name: 'Go', slug: 'go' },
+      { name: 'Java', slug: 'openjdk' },
+      { name: 'C#', slug: 'csharp' },
+      { name: 'Rust', slug: 'rust' },
+      { name: 'Ruby on Rails', slug: 'rubyonrails' },
+      { name: 'PHP', slug: 'php' },
+      { name: 'GraphQL', slug: 'graphql' },
+      { name: 'Express', slug: 'express' },
+      { name: 'NestJS', slug: 'nestjs' },
+      { name: 'Socket.io', slug: 'socketdotio' }
+    ]
+  },
+  {
+    id: 'database',
+    name: 'Data & Storage',
+    accent: 'bg-electric-purple',
+    borderHover: 'hover:border-electric-purple/40',
+    textGlow: 'text-electric-purple',
+    shadow: 'shadow-[0_0_20px_rgba(191,0,255,0.4)]',
+    techs: [
+      { name: 'PostgreSQL', slug: 'postgresql' },
+      { name: 'MySQL', slug: 'mysql' },
+      { name: 'MongoDB', slug: 'mongodb' },
+      { name: 'Redis', slug: 'redis' },
+      { name: 'Elasticsearch', slug: 'elasticsearch' },
+      { name: 'Supabase', slug: 'supabase' },
+      { name: 'Firebase', slug: 'firebase' },
+      { name: 'Snowflake', slug: 'snowflake' },
+      { name: 'Cassandra', slug: 'apachecassandra' },
+      { name: 'DynamoDB', slug: 'amazondynamodb' },
+      { name: 'Neo4j', slug: 'neo4j' },
+      { name: 'Kafka', slug: 'apachekafka' }
+    ]
+  },
+  {
+    id: 'cloud',
+    name: 'Cloud & DevOps',
+    accent: 'bg-terminal-green',
+    borderHover: 'hover:border-terminal-green/40',
+    textGlow: 'text-terminal-green',
+    shadow: 'shadow-[0_0_20px_rgba(0,255,65,0.4)]',
+    techs: [
+      { name: 'AWS', slug: 'amazonwebservices' },
+      { name: 'Google Cloud', slug: 'googlecloud' },
+      { name: 'Azure', slug: 'microsoftazure' },
+      { name: 'Docker', slug: 'docker' },
+      { name: 'Kubernetes', slug: 'kubernetes' },
+      { name: 'Terraform', slug: 'terraform' },
+      { name: 'GitHub Actions', slug: 'githubactions' },
+      { name: 'GitLab', slug: 'gitlab' },
+      { name: 'Vercel', slug: 'vercel' },
+      { name: 'Cloudflare', slug: 'cloudflare' },
+      { name: 'Datadog', slug: 'datadog' },
+      { name: 'Nginx', slug: 'nginx' }
+    ]
   },
   {
     id: 'ai',
-    title: 'Intelligent Automation',
-    tags: ['AI-Driven', 'Efficient', '24/7'],
-    features: [
-      'Automate repetitive daily tasks',
-      'Smart, autonomous customer service',
-      'Drastically lower operational costs'
-    ],
-    icon: '/icons/python.svg',
-    accent: 'bg-electric-purple',
-    textAccent: 'text-electric-purple',
-    borderHover: 'group-hover:border-electric-purple/50',
-    shadowHover: 'group-hover:shadow-[0_0_30px_rgba(191,0,255,0.15)]',
+    name: 'AI & Machine Learning',
+    accent: 'bg-warning-yellow',
+    borderHover: 'hover:border-warning-yellow/40',
+    textGlow: 'text-warning-yellow',
+    shadow: 'shadow-[0_0_20px_rgba(255,215,0,0.4)]',
+    techs: [
+      { name: 'OpenAI', slug: 'openai' },
+      { name: 'Anthropic', slug: 'anthropic' },
+      { name: 'TensorFlow', slug: 'tensorflow' },
+      { name: 'PyTorch', slug: 'pytorch' },
+      { name: 'LangChain', slug: 'langchain' },
+      { name: 'Hugging Face', slug: 'huggingface' },
+      { name: 'Scikit-learn', slug: 'scikitlearn' },
+      { name: 'Pinecone', slug: 'pinecone' },
+      { name: 'Jupyter', slug: 'jupyter' },
+      { name: 'Keras', slug: 'keras' },
+      { name: 'OpenCV', slug: 'opencv' },
+      { name: 'Python', slug: 'python' }
+    ]
+  },
+  {
+    id: 'mobile',
+    name: 'Mobile & Apps',
+    accent: 'bg-hot-pink',
+    borderHover: 'hover:border-hot-pink/40',
+    textGlow: 'text-hot-pink',
+    shadow: 'shadow-[0_0_20px_rgba(255,0,110,0.4)]',
+    techs: [
+      { name: 'React Native', slug: 'react' },
+      { name: 'Flutter', slug: 'flutter' },
+      { name: 'Swift', slug: 'swift' },
+      { name: 'Kotlin', slug: 'kotlin' },
+      { name: 'Expo', slug: 'expo' },
+      { name: 'Android', slug: 'android' },
+      { name: 'Apple', slug: 'apple' },
+      { name: 'Capacitor', slug: 'capacitor' },
+      { name: 'Ionic', slug: 'ionic' },
+      { name: 'Tauri', slug: 'tauri' },
+      { name: 'Electron', slug: 'electron' },
+      { name: 'Unity', slug: 'unity' }
+    ]
   }
 ];
 
 export default function TechStack() {
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState(categories[0].id);
 
   return (
-    <section className="py-24 md:py-40 relative bg-obsidian overflow-hidden">
-      {/* Background Ambience */}
-      <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-30 mix-blend-screen">
-        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-electric-indigo/10 rounded-full blur-[128px]"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-cyber-lime/10 rounded-full blur-[128px]"></div>
+    <section className="py-24 md:py-32 relative bg-obsidian overflow-hidden border-t border-white/5">
+      {/* Dynamic Background Ambience */}
+      <div className="absolute inset-0 pointer-events-none opacity-[0.15] transition-colors duration-1000 mix-blend-screen">
+        <div 
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full blur-[150px] transition-all duration-1000 ${
+            categories.find(c => c.id === activeCategory)?.accent || 'bg-white/10'
+          }`}
+        ></div>
       </div>
 
       <div className="section-container relative z-10">
         
-        {/* Header Section */}
-        <div className="text-center mb-20 relative z-20">
+        {/* Section Header */}
+        <div className="text-center mb-16 relative z-20">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md"
           >
-            <span className="w-2 h-2 rounded-full bg-electric-purple animate-pulse"></span>
-            <span className="text-sm font-mono text-white/80 tracking-wide uppercase">Engineering Foundation</span>
+            <span className={`w-2 h-2 rounded-full animate-pulse transition-colors duration-500 ${categories.find(c => c.id === activeCategory)?.accent}`}></span>
+            <span className="text-sm font-mono text-white/80 tracking-wide uppercase">Complete Arsenal</span>
           </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -80,7 +170,7 @@ export default function TechStack() {
             transition={{ delay: 0.1 }}
             className="text-display-md md:text-display-lg font-display font-bold text-white mb-6"
           >
-            Our Technology Stack
+            Built With The Best
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -89,98 +179,111 @@ export default function TechStack() {
             transition={{ delay: 0.2 }}
             className="max-w-2xl mx-auto text-lg text-white/60 leading-relaxed"
           >
-            We don't rely on dated tech. We use modern engineering to guarantee your products are lightning-fast, perfectly secure, and capable of scaling infinitely.
+            We deploy the right tools for the job. From highly-interactive frontend interfaces to infinitely scalable infrastructure and bleeding-edge AI models.
           </motion.p>
         </div>
 
-        {/* =========================================
-            BENTO GRID LAYOUT
-            ========================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
-          {techStack.map((tech, index) => (
-            <motion.div
-              key={tech.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.15 }}
-              onMouseEnter={() => setHoveredCard(tech.id)}
-              onMouseLeave={() => setHoveredCard(null)}
-              className={`
-                group relative w-full flex flex-col justify-between rounded-2xl bg-black/40 backdrop-blur-xl 
-                border border-white/10 p-8 md:p-10 transition-all duration-500 overflow-hidden
-                ${tech.borderHover} ${tech.shadowHover}
-              `}
-            >
-              {/* Card internal gradient glow on hover */}
-              <div 
-                className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 ${tech.accent}`}
-                style={{ mixBlendMode: 'screen', filter: 'blur(40px)' }}
-              />
-
-              <div className="relative z-10 flex flex-col h-full">
-                {/* Header Row */}
-                <div className="flex items-center justify-between mb-8">
-                  <div className="w-14 h-14 relative flex items-center justify-center">
-                    <div className="absolute inset-0 bg-white/5 rounded-xl blur-md group-hover:bg-white/10 transition-colors"></div>
-                    <div className={`relative w-full h-full p-2.5 bg-white/5 border border-white/10 rounded-xl group-hover:border-white/20 transition-all flex items-center justify-center`}>
-                      <img 
-                        src={tech.icon} 
-                        alt={tech.title} 
-                        className="w-full h-full object-contain filter drop-shadow-md opacity-80 group-hover:opacity-100 transition-all"
-                        style={{ filter: tech.id === 'ai' ? 'invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.3))' : 'none' }}
-                      />
-                    </div>
+        {/* Layout Grid */}
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12">
+          
+          {/* Categories Sidebar */}
+          <div className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 hide-scrollbar w-full lg:w-72 shrink-0 relative z-20">
+            {categories.map((category) => {
+              const isActive = activeCategory === category.id;
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`
+                    relative flex items-center justify-between px-5 py-4 rounded-xl text-left whitespace-nowrap lg:whitespace-normal transition-all duration-300 border
+                    ${isActive 
+                      ? `bg-white/[0.05] border-white/10` 
+                      : `bg-transparent border-transparent text-white/50 hover:bg-white/[0.02] hover:text-white/80`
+                    }
+                  `}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`w-2 h-2 rounded-full transition-all duration-300 ${isActive ? `${category.accent} ${category.shadow}` : 'bg-white/20'}`}></div>
+                    <span className={`font-display font-semibold text-lg tracking-wide transition-colors ${isActive ? 'text-white' : ''}`}>
+                      {category.name}
+                    </span>
                   </div>
                   
-                  {/* Decorative dot indicator */}
-                  <div className="w-2 h-2 rounded-full bg-white/20 group-hover:bg-white/80 transition-colors duration-300"></div>
-                </div>
+                  {isActive && (
+                    <motion.div 
+                      layoutId="activeTabIndicator"
+                      className={`absolute bottom-0 left-0 right-0 h-[2px] lg:bottom-0 lg:top-0 lg:left-0 lg:right-auto lg:w-[3px] lg:h-full rounded-full ${category.accent}`}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
 
-                {/* Content */}
-                <div className="mt-auto">
-                  <h3 className="text-xl font-display font-semibold text-white mb-5 group-hover:text-white transition-colors duration-300">
-                    {tech.title}
-                  </h3>
-                  
-                  {/* Tech Tags */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {tech.tags.map(tag => (
-                      <span 
-                        key={tag} 
-                        className="px-2.5 py-1 text-xs font-mono tracking-wide rounded border transition-colors duration-300 bg-white/5 border-white/10 text-white/70 group-hover:border-white/20 group-hover:text-white/90 group-hover:shadow-sm"
+          {/* Tech Grid Display */}
+          <div className="flex-1 min-h-[500px] relative z-10">
+            <AnimatePresence mode="wait">
+              {categories.map((category) => (
+                category.id === activeCategory && (
+                  <motion.div
+                    key={category.id}
+                    initial={{ opacity: 0, scale: 0.98, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.98, y: -10 }}
+                    transition={{ duration: 0.4, ease: "easeOut" }}
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4"
+                  >
+                    {category.techs.map((tech, index) => (
+                      <motion.div
+                        key={tech.name}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.03 }}
+                        className={`
+                          group relative flex items-center gap-4 p-4 md:p-5 rounded-xl 
+                          bg-white/[0.02] border border-white/5 backdrop-blur-sm
+                          transition-all duration-300 overflow-hidden cursor-default
+                          hover:bg-white/[0.04] ${category.borderHover} hover:-translate-y-1
+                        `}
                       >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                        {/* Hover Gradient Overlay */}
+                        <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 bg-gradient-to-br from-transparent to-${category.accent.replace('bg-', '')}`}></div>
+                        
+                        {/* External SVG Logo from Simple Icons */}
+                        <div className="relative w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-white/20 transition-all duration-300 shadow-inner-glow">
+                          <img 
+                            src={`https://cdn.simpleicons.org/${tech.slug}/ffffff`} 
+                            alt={tech.name}
+                            className="w-5 h-5 opacity-70 group-hover:opacity-100 transition-opacity duration-300"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).style.display = 'none';
+                            }}
+                          />
+                        </div>
 
-                  {/* Visual Checklist */}
-                  <ul className="space-y-3">
-                    {tech.features.map(feature => (
-                      <li key={feature} className="flex items-start gap-3 text-sm text-white/60 group-hover:text-white/80 transition-colors duration-300">
-                        <svg 
-                          className={`w-5 h-5 flex-shrink-0 ${tech.textAccent} opacity-80 mt-0.5 drop-shadow-md`} 
-                          fill="none" 
-                          viewBox="0 0 24 24" 
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span className="leading-snug">{feature}</span>
-                      </li>
+                        <span className={`font-display text-base font-semibold text-white/80 group-hover:${category.textGlow} transition-colors duration-300`}>
+                          {tech.name}
+                        </span>
+                      </motion.div>
                     ))}
-                  </ul>
-                </div>
-              </div>
-              
-              {/* Bottom accent line on hover */}
-              <div className={`absolute bottom-0 left-0 h-1 w-0 group-hover:w-full transition-all duration-700 ease-out ${tech.accent}`}></div>
-            </motion.div>
-          ))}
+                  </motion.div>
+                )
+              ))}
+            </AnimatePresence>
+          </div>
+          
         </div>
-
       </div>
+
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
     </section>
   );
 }

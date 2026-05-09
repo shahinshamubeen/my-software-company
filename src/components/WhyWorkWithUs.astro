@@ -1,0 +1,74 @@
+---
+const features = [
+  {
+    title: "Communication That Doesn't Frustrate You",
+    description: "You get a dedicated account manager, weekly video syncs, and async updates via Slack or Teams. No chasing for status. No 3-day email delays. You'll always know exactly what's happening.",
+    icon: `<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>`
+  },
+  {
+    title: "Experienced Engineers, Not Just Available Ones",
+    description: "Our team has hands-on experience building production systems - not just completing tutorials. Every engineer assigned to your project is vetted for technical depth and communication quality.",
+    icon: `<polyline stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" points="16 18 22 12 16 6"/><polyline stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" points="8 6 2 12 8 18"/>`
+  },
+  {
+    title: "You Own Everything, Always",
+    description: "Your code, your IP, your data - from day one. We work inside your GitHub, on your infrastructure, with your tools. When the engagement ends, there's nothing to hand over because it was always yours.",
+    icon: `<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 12 2 2 4-4"/>`
+  },
+  {
+    title: "Flexible Engagement Models",
+    description: "Fixed-price project? Time & materials? Dedicated monthly team? We adapt to how you want to work - not the other way around. Start small, scale up when you're confident in the partnership.",
+    icon: `<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3v5h5"/>`
+  }
+];
+---
+
+<section id="why-us" class="py-24 relative overflow-hidden bg-void">
+  <div class="absolute inset-0 grid-lines opacity-10" aria-hidden="true"></div>
+  
+  <div class="section-container relative z-10">
+    <div class="text-center max-w-4xl mx-auto mb-16">
+      <span class="inline-block px-4 py-1 mb-6 text-xs font-mono uppercase tracking-widest text-electric-indigo border border-electric-indigo/30 rounded-full">
+        Why Work With Us
+      </span>
+      <h2 class="text-display-md font-display font-bold text-white mb-6 leading-tight">
+        Senior-Level Engineers. <span class="text-electric-indigo">Startup Agility.</span> Enterprise Discipline.
+      </h2>
+      <p class="text-lg text-white/70 max-w-3xl mx-auto leading-relaxed">
+        We're not a body shop. We're a team of experienced builders who've shipped real products, managed complex infrastructure, and solved hard engineering problems - for companies across multiple industries.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+      {features.map((feature, index) => (
+        <div class="group relative rounded-2xl border border-white/10 bg-white/[0.02] p-8 transition-all duration-500 hover:bg-white/[0.04] hover:border-electric-indigo/30">
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-br from-electric-indigo/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" aria-hidden="true"></div>
+          
+          <div class="relative z-10 flex flex-col md:flex-row gap-6">
+            <div class="flex-shrink-0">
+              <div class="flex h-14 w-14 items-center justify-center rounded-xl border border-electric-indigo/30 bg-electric-indigo/10 text-electric-indigo transition-transform duration-500 group-hover:scale-110 group-hover:bg-electric-indigo/20">
+                <svg
+                  class="h-6 w-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <Fragment set:html={feature.icon} />
+                </svg>
+              </div>
+            </div>
+            
+            <div>
+              <h3 class="text-xl font-display font-semibold text-white mb-3 group-hover:text-electric-indigo transition-colors duration-300">
+                {feature.title}
+              </h3>
+              <p class="text-sm leading-relaxed text-white/60">
+                {feature.description}
+              </p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
